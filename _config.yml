@@ -84,6 +84,12 @@ deploy:
   repository: git@github.com:CalmCenter/calmcenter.github.io.git
   branch: master
   
+symbols_count_time:
+ symbols: true 
+ time: true 
+ total_symbols: true 
+ total_time: true
+
 live2d:
   enable: true
   scriptFrom: local
