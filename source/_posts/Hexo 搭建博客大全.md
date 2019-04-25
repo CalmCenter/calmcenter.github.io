@@ -1,6 +1,6 @@
 ---
 
-title: 终于搭起了博客
+title: Hexo 搭建博客大全
 date: 2019-04-18 17:32:22
 categories: Hexo
 tags: [Hexo, NexT, 博客]
