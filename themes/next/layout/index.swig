@@ -10,8 +10,16 @@
 
 {% block content %}
   <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
+	{% for post in page.posts %}
+      {% set hide = false %}
+      {% if theme.hide.hide_post %}
+        {% if post.hide %}
+          {% set hide = true %}
+        {% endif %}
+      {% endif %}
+      {% if !hide %}
+        {{ post_template.render(post, true) }}
+      {% endif %}
     {% endfor %}
   </section>
 

@@ -5,7 +5,7 @@
 # Site
 title: CalmCenter
 subtitle: 台风眼
-description: 
+description: 目标设置到月球，即使陨落也是在群星之间！
 keywords:
 author: CalmCenter Lv
 language: zh-Hans
@@ -85,11 +85,25 @@ deploy:
   repository: git@github.com:CalmCenter/calmcenter.github.io.git
   branch: master
   
+# 本地搜索
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+  
 symbols_count_time:
  symbols: true 
  time: true 
  total_symbols: true 
  total_time: true
+
+#sitemap:
+#  path: sitemap.xml
+#baidusitemap:
+#  path: baidusitemap.xml
+  
+#url: https://calmcenter.github.io/
 
 live2d:
   enable: true

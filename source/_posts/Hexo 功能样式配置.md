@@ -16,6 +16,9 @@ tags: [Hexo, git, github]
 - 添加 `Live2D` 
 - 图片相关
 - 打赏、评论、复制功能
+- `DaoVoice` 实现在线联系
+- 文章置顶
+- 搜索功能
 - 细节美化
 
 ```
@@ -48,6 +51,8 @@ theme: next
 ```
 
 这样 `next` 样式就设置好了，快打开看看吧  [http://localhost:4000/](http://localhost:4000/)
+
+**注意:如果你是 `git` 直接 `clone` 的，会自带 `.git` 和 `.github` 文件，需要删掉 `.git` 和 `.github` 文件，如果不删在 [Hexo 管理代码](https://calmcenter.github.io/2019/04/18/Hexo%20%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81/) 一文中会出现 `them/next` 里的文件提交不上去的问题**
 
 ### 设置语言、标题等
 
@@ -250,9 +255,7 @@ hexo clean
 
 成功后会提示你未找到相关 `issues`  ，需要你登录
 
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190426155441.png" style="zoom:100%">
-
-
+![](https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190426155441.png)
 
 ### 代码块复制功能
 
@@ -271,13 +274,192 @@ codeblock:
 
 ### `DaoVoice` 实现在线联系
 
-1. 注册登录 注册登录 `DaoVoice`
+1. 注册登录 `DaoVoice`
 
-[DaoVoice](http://www.daovoice.io/) 点击
+[DaoVoice](http://www.daovoice.io/) 点击进行登录注册，邀请码
+
+```
+c1f73bd5
+```
+
+登录成功后，你可能是这个目录
+
+<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428141105.png" style="zoom:50%">
+
+这样的话你需要关掉这个页面，重新进入 [DaoVoice](http://www.daovoice.io/) 点击登录，如果最后看到是这个目录
+
+<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428141212.png" style="zoom:50%">
+
+那就可以继续下面的 ~ 
+
+2. 集成 
+
+找到你的 `app_id`
+
+<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428141938.png" style="zoom:30%">
+
+并将 `1` 和 `2` 的代码 粘贴到 ` themes/next/layout/_partials/head.swig` 
+
+```
+{% if theme.daovoice %}
+<script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/你的appid.js","daovoice")</script>
+daovoice('init', {
+  app_id: "你的appid"
+});
+daovoice('update');
+{% endif %}
+```
+
+**有两处需要填写你的 `appid` 并且要加 `if` 开始和结束代码**
+
+然后再  `NexT 配置文件` 中添加
+
+```
+daovoice: true
+daovoice_app_id: 你的appid
+```
+
+编译并运行 `Hexo` 
+
+```
+hexo g && hexo s
+```
+
+会发现 `DaoVoice` 官网会提示
+
+<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428143112.png" style="zoom:30%">
+
+3. 绑定微信
+
+点击右上角头像，然后点击绑定微信
+
+![](https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428143854.png)
+
+![](https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428143916.png)
+
+这样，可以同时在 `DaoVoice` 网页的对话页面，和微信小程序 `DaoVoice` 同时回复~ 
+
+### 文章置顶
+
+1. 将 `node_modules/hexo-generator-index/lib/generator.js` 文件内的内容替换为
+
+```
+'use strict';
+var pagination = require('hexo-pagination');
+module.exports = function(locals){
+  var config = this.config;
+  var posts = locals.posts;
+    posts.data = posts.data.sort(function(a, b) {
+        if(a.top && b.top) { // 两篇文章top都有定义
+            if(a.top == b.top) return b.date - a.date; // 若top值一样则按照文章日期降序排
+            else return b.top - a.top; // 否则按照top值降序排
+        }
+        else if(a.top && !b.top) { // 以下是只有一篇文章top有定义，那么将有top的排在前面（这里用异或操作居然不行233）
+            return -1;
+        }
+        else if(!a.top && b.top) {
+            return 1;
+        }
+        else return b.date - a.date; // 都没定义按照文章日期降序排
+    });
+  var paginationDir = config.pagination_dir || 'page';
+  return pagination('', posts, {
+    perPage: config.index_generator.per_page,
+    layout: ['index', 'archive'],
+    format: paginationDir + '/%d/',
+    data: {
+      __index: true
+    }
+  });
+};
+```
+
+2. 在文章头部添加 `top` 值
+
+```
+title: Hexo 搭建博客大全
+date: 2019-04-18 17:32:22
+categories: Hexo
+tags: [Hexo, NexT, 博客]
+top: 100
+```
+
+### 搜索功能
+
+1. 安装插件
+
+```
+npm install hexo-generator-searchdb --save
+```
+
+2. 在 `Hexo 配置文件` 中添加 
+
+```
+# 本地搜索
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+```
+
+3. 在 `NexT 配置文件` 启动搜索功能
+
+```
+local_search:
+  enable: true
+  trigger: auto
+  top_n_per_article: 1
+  unescape: false
+```
+
+4. 完成，清理缓存编译运行
+
+```
+hexo clean && hexo g && hexo s
+```
+
+### 隐藏特定文章
+
+比如说没写完的 ~ 
+
+首先修改 `/themes/next/layout/index.swig` 文件，把
+
+```
+   {% for post in page.posts %}
+     {{ post_template.render(post, true) }}
+   {% endfor %}
+```
+
+替换成
+
+```
+   {% for post in page.posts %}
+      {% set hide = false %}
+      {% if theme.hide.hide_post %}
+        {% if post.hide %}
+          {% set hide = true %}
+        {% endif %}
+      {% endif %}
+      {% if !hide %}
+        {{ post_template.render(post, true) }}
+      {% endif %}
+    {% endfor %}
+```
+
+在 `NexT 配置文件`  添加代码
+
+```
+# Hide single post
+hide:
+  hide_post: true
+```
+
+
 
 ### 细节美化
 
-#### 头像
+#### ● 头像
 
 在`NexT 配置文件` 中，找到 `avatar` 字段
 
@@ -288,7 +470,7 @@ codeblock:
 | opacity | 透明度                                                       |
 | rotated | 旋转动画                                                     |
 
-#### 回到顶部
+#### ● 回到顶部
 
 打开 `NexT 配置文件` 搜索 `back2top`  
 
@@ -301,7 +483,7 @@ back2top:
   scrollpercent: true
 ```
 
-#### 页面底部优化
+#### ● 页面底部优化
 
 - 跳动的心
 
@@ -365,7 +547,7 @@ symbols_count_time:
 
 **注: 格式很重要** 
 
-#### 圆角布局
+#### ● 圆角布局
 
 参考自作者 [EnjoyToShare](https://blog.enjoytoshare.club/article/hexo-do-optimization.html) 在这篇文章 3.12，这篇里边还有好多好看的样式 ~
 
@@ -377,7 +559,7 @@ $border-radius-inner            = 15px 15px 15px 15px;
 $border-radius                  = 15px;
 ```
 
-#### 文章标签、分类
+#### ● 文章标签、分类
 
 我们在用 `hexo new post` 创建文件时
 
@@ -491,7 +673,7 @@ menu:
 
 将 `tags` 和 `categories` 打开，完成 ~ 
 
-#### 强调颜色
+#### ● 强调颜色
 
 参考自作者 [Moorez](https://www.jianshu.com/p/f054333ac9e6) 
 
@@ -537,7 +719,7 @@ code {
 
 设置网站图标
 
-#### 设置网站图标
+#### ● 设置网站图标
 
 参考自作者 [Moorez](https://www.jianshu.com/p/f054333ac9e6) 
 

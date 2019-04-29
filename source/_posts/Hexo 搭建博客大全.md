@@ -3,7 +3,8 @@
 title: Hexo 搭建博客大全
 date: 2019-04-18 17:32:22
 categories: Hexo
-tags: [Hexo, NexT, 博客]
+tags: [Hexo, NexT, git, github, libe2d, 博客]
+top: 100
 ---
 ## 一、为什么要写这篇文章
 
@@ -41,11 +42,14 @@ tags: [Hexo, NexT, 博客]
 
 ## [功能样式配置 more](https://calmcenter.github.io/2019/04/18/Hexo%20%E5%8A%9F%E8%83%BD%E6%A0%B7%E5%BC%8F%E9%85%8D%E7%BD%AE/)
 
-- `NexT` 主题设置
+- NexT` 主题设置
 - 基础样式设置
 - 添加 `Live2D` 
 - 图片相关
 - 打赏、评论、复制功能
+- `DaoVoice` 实现在线联系
+- 文章置顶
+- 搜索功能
 - 细节美化
 
 ------

@@ -8,7 +8,7 @@ tags: [Hexo, git, github]
 
 目录请看 [Hexo 搭建博客大全](https://calmcenter.github.io/2019/04/18/Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A4%A7%E5%85%A8/)
 
-## 二、本文主要记载
+## 本文主要记载
 
 - `git` 拉取代码
 - `git` 创建分支
@@ -114,6 +114,10 @@ git push origin --delete <分支名称>
 ```
 git status
 ```
+
+**注意:如果你之前是 `git` 直接 `clone` 的 `NexT` ，在 `them/next` 会自带 `.git` 和 `.github` 文件，需要删掉 `.git` 和 `.github` 文件，如果不删会出现 `them/next` 里的文件提交不上去的问题**
+
+### 设置语言、标题等
 
 #### 1.3.2 添加到暂存区
 
