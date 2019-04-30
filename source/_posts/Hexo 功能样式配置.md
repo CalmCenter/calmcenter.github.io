@@ -735,7 +735,28 @@ favicon:
 
 <img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesblog_title.png" style="zoom:100%">
 
+####  ●  主页文章添加边框阴影效果
 
+在 `theme/next/source/css/_custom/custom.styl`  文件下添加
+
+```
+// 主页文章添加阴影效果
+.post {
+	margin-top: 30px;
+	margin-bottom: 30px;
+//border-radius: 15px;
+	-webkit-box-shadow: 15px 20px 20px rgba(119,118,118,.6);
+	-moz-box-shadow: 15px 20px 20px rgba(119,118,118,.6);
+}
+```
+
+如果你用了之前的圆角布局，需要把 `border-radius: 15px;` 的注释删掉。
+
+应用主要作用实在 `-webkit-box-shadow` 和 `-moz-box-shadow` 属性上。
+
+基于主流浏览器上使用 `box-shadow` 属性时，我们需要将属性的名称写成 `-webkit-box-shadow` 的形式。Firefox浏览器则需要写成 `-moz-box-shadow` 的形式。
+
+四个值分别为 `X轴`与 `Y轴` 移动 、`阴影值大小` 、`阴影颜色rgba`
 
 ------
 
