@@ -13,9 +13,10 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://calmcenter.github.io/
 root: /
-permalink: :year/:month/:day/:title/
+#permalink: :year/:month/:day/:title/
+permalink: :title/
 permalink_defaults:
 
 # Directory
@@ -98,12 +99,12 @@ symbols_count_time:
  total_symbols: true 
  total_time: true
 
-#sitemap:
-#  path: sitemap.xml
-#baidusitemap:
-#  path: baidusitemap.xml
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
   
-#url: https://calmcenter.github.io/
+
 
 live2d:
   enable: true

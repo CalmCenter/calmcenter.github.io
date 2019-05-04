@@ -172,19 +172,21 @@ scheme: Gemini
 
 ### 图片全屏查看
 
-首先进入 `hexo\themes\next\source\lib` 目录，下载插件
+首先进入 `hexo/themes/next/source/lib` 目录，下载插件
 
 ```
 git clone https://github.com/theme-next/theme-next-fancybox3 fancybox
 ```
 
-然后更改 `NexT 配置文件`  
+然后更改 `NexT 配置文件` 
 
 ```
 fancybox: true
 ```
 
 完成 ~ 
+
+**注意:如果你是 `git` 直接 `clone` 的，会自带 `.git` 和 `.github` 文件，需要删掉 `.git` 和 `.github` 文件，如果不删在 [Hexo 管理代码](https://calmcenter.github.io/2019/04/18/Hexo%20%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81/) 一文中会出现 `them/next/source/lib/fancybox` 里的文件提交不上去的问题**
 
 ### 打赏功能
 
