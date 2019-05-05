@@ -16,7 +16,7 @@ timezone:
 url: https://calmcenter.github.io/
 root: /
 #permalink: :year/:month/:day/:title/
-permalink: :title/
+permalink: :year/:title.html
 permalink_defaults:
 
 # Directory
@@ -83,8 +83,12 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:CalmCenter/calmcenter.github.io.git
-  branch: master
+  #repository: git@github.com:CalmCenter/calmcenter.github.io.git
+  #branch: master
+  repo:
+    github: git@github.com:CalmCenter/calmcenter.github.io.git,master
+    coding: git@git.dev.tencent.com:CalmCenter/calmcenter.coding.me.git,master
+    
   
 # 本地搜索
 search:

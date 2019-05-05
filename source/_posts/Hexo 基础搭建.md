@@ -8,7 +8,7 @@ tags: [Hexo, github, git]
 
 目录请看 [Hexo 搭建博客大全](https://calmcenter.github.io/2019/04/18/Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A4%A7%E5%85%A8/)
 
-## 本文主要记载
+# 本文主要记载
 
 - 搭建本地博客
 - 部署到 `Github Pages`
@@ -22,7 +22,7 @@ tags: [Hexo, github, git]
 
 <!--more-->
 
-## 一、搭建本地博客
+## 一、 搭建本地博客
 
 ### 1.1 首先安装 `Node.js`
 
@@ -131,9 +131,9 @@ hexo s
 
 **敲黑板！！ 这里重点就是项目名称必须是 `自己名称.github.io`  **
 
-### 2.3 配置SSH密钥
+### 2.3 配置 `SSH` 密钥
 
-#### 2.3.1 查看是否存在SSH密钥
+#### 2.3.1 查看是否存在 `SSH` 密钥
 
 首先通过输入命令
 
@@ -143,7 +143,7 @@ cd ~/. ssh
 
 如果存在则会进入此目录,可以略过 4.3.2，否则会提示你不存在，那么继续 4.3.2
 
-#### 2.3.2 创建新的SSH密钥
+#### 2.3.2 创建新的 `SSH` 密钥
 
 ```
 ssh-keygen -t rsa -C "your_email@example.com"
@@ -158,7 +158,7 @@ Enter same passphrase again: [Type passphrase again]
 
 如果你放心，可以不用密码，直接回车，这样每次提交的时候比较方便。
 
-#### 2.3.3 在  [GitHub](https://github.com/) 添加你的公钥
+#### 2.3.3 在 `GitHub` 添加你的公钥
 
 1. 首先拷贝公钥内容（ mac 可能用不了，需要手动找到这个文件复制内容）
 
@@ -170,7 +170,7 @@ clip < ~/.ssh/id_rsa.pub
 
 <img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturessetting.png" style="zoom:50%">
 
-3. 进入设置页，选择SSH
+3. 进入设置页，选择 `SSH` 
 
 <img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturessetting_list.png" style="zoom:50%">
 

@@ -28,21 +28,21 @@ top: 100
 
 <!--more-->
 
-## [`Hexo` 基础搭建 more](https://calmcenter.github.io/Hexo%20%E5%9F%BA%E7%A1%80%E6%90%AD%E5%BB%BA/)
+## [`Hexo` 基础搭建 more](https://calmcenter.github.io/2019/Hexo%20%E5%9F%BA%E7%A1%80%E6%90%AD%E5%BB%BA.html)
 
 - 搭建本地博客
 - 部署到 `Github Pages`
 
-## [管理代码( `git` 基本操作) more](https://calmcenter.github.io/Hexo%20%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81/)
+## [管理代码( `git` 基本操作) more](https://calmcenter.github.io/2019/Hexo%20%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81.html)
 
 - `git` 拉取代码
 - `git` 创建分支
 - `git` 提交分支代码
 - 其他终端如何使用 `Hexo` 源码
 
-## [功能样式配置 more](https://calmcenter.github.io/Hexo%20%E5%8A%9F%E8%83%BD%E6%A0%B7%E5%BC%8F%E9%85%8D%E7%BD%AE/)
+## [功能样式配置 more](https://calmcenter.github.io/2019/Hexo%20%E5%8A%9F%E8%83%BD%E6%A0%B7%E5%BC%8F%E9%85%8D%E7%BD%AE.html)
 
-- NexT` 主题设置
+- `NexT` 主题设置
 - 基础样式设置
 - 添加 `Live2D` 
 - 图片相关
@@ -51,6 +51,12 @@ top: 100
 - 文章置顶
 - 搜索功能
 - 细节美化
+
+## [网站管理 more](https://calmcenter.github.io/2019/%E7%BD%91%E7%AB%99%E7%AE%A1%E7%90%86.html)
+
+- 个人域名
+- 加入 `Coding` 服务器
+- `SEO`  推广
 
 ------
 

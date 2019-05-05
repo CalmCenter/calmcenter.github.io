@@ -110,7 +110,7 @@ live2d:
 
 这样一只可爱的小白狗就出现了。
 
-如果要加载自定义模型，需要将模型放到 `\themes\next\source` 目录下。然后修改 `Hexo 配置文件` ，将 `model.use` 写成 `/live2d_models/kesshouban/kesshouban.model.json` ，我再 `source` 下有个文件夹 `live2d_models` 这里需要指向 `.model.json` 文件。
+如果要加载自定义模型，需要在根目录新建文件夹 `live2d_models` 下，再新建一个文件夹 `kesshouban （此处自定义）` 然后将资源文件放入 `kesshouban ` 内 。然后修改 `Hexo 配置文件` ，将 `model.use` 写成 `kesshouban` 。
 
 ### `NexT` 样式
 
@@ -743,16 +743,18 @@ favicon:
 
 ```
 // 主页文章添加阴影效果
-.post {
-	margin-top: 30px;
-	margin-bottom: 30px;
-//border-radius: 15px;
-	-webkit-box-shadow: 15px 20px 20px rgba(119,118,118,.6);
-	-moz-box-shadow: 15px 20px 20px rgba(119,118,118,.6);
+.posts-expand { 
+	.post {
+		margin-top: 30px;
+		margin-bottom: 30px;
+	//border-radius: 15px;
+		-webkit-box-shadow: 5px 5px 20px rgba(119,118,118,.6);
+		-moz-box-shadow: 5px 5px 20px rgba(119,118,118,.6);
+	}
 }
 ```
 
-如果你用了之前的圆角布局，需要把 `border-radius: 15px;` 的注释删掉。
+很多博客上都没有 `posts-expand` 这一层，如果没有这一层，你的归档页面将会变得很丑~如果你用了之前的圆角布局，需要把 `border-radius: 15px;` 的注释删掉。
 
 应用主要作用实在 `-webkit-box-shadow` 和 `-moz-box-shadow` 属性上。
 
