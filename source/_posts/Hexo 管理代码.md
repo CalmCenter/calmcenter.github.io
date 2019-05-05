@@ -115,7 +115,7 @@ git push origin --delete <分支名称>
 git status
 ```
 
-**注意:如果你之前是 `git` 直接 `clone` 的 `NexT` ，在 `them/next` 会自带 `.git` 和 `.github` 文件，需要删掉 `.git` 和 `.github` 文件，如果不删会出现 `them/next` 里的文件提交不上去的问题**
+**注意:如果你之前是 `git` 直接 `clone` 的 `NexT` ，在拉取目录会自带 `.git` 和 `.github` 文件，需要删掉 `.git` 和 `.github` 文件，如果不删会出现拉取目录里的文件提交不上去的问题**
 
 ### 设置语言、标题等
 

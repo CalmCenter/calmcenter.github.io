@@ -3,12 +3,10 @@ title: SEO 推广
 date: 2019-04-18 17:32:22
 categories: Hexo
 tags: [Hexo, seo]
-hide: true
-
-
+hide: false
 ---
 
-目录请看 [Hexo 搭建博客大全](https://calmcenter.github.io/2019/04/18/Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A4%A7%E5%85%A8/)
+目录请看 [Hexo 搭建博客大全](https://calmcenter.github.io/Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A4%A7%E5%85%A8/)
 
 ## 本文主要记载
 
