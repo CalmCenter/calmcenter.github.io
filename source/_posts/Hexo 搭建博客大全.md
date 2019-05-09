@@ -52,6 +52,13 @@ top: 100
 - 搜索功能
 - 细节美化
 
+## [`live2D` 看板娘 more](https://calmcenter.club/2019/Live2D%20%E7%9C%8B%E6%9D%BF%E5%A8%98.html)
+
+- 使用 `hexo-helper-live2d` 完成看板娘
+- 自定义看板娘(右下角那个~)
+  - 运行、接入 `Demo`
+  - 更换、修改模型
+
 ## [网站管理 more](https://calmcenter.github.io/2019/%E7%BD%91%E7%AB%99%E7%AE%A1%E7%90%86.html)
 
 - 个人域名

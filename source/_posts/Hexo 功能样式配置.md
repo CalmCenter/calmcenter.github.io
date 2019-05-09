@@ -7,7 +7,7 @@ hide: true
 
 ---
 
-目录请看 [Hexo 搭建博客大全](https://calmcenter.github.io/2019/04/18/Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A4%A7%E5%85%A8/)
+目录请看  [Hexo 搭建博客大全](https://calmcenter.club/2019/Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A4%A7%E5%85%A8.html)
 
 ## 本文主要记载
 
@@ -66,51 +66,6 @@ theme: next
 | author      | 作者(您的名字)                 |
 | language    | 语言 (zh-CN，en等)             |
 | timezone    | 网站时区，默认使用您电脑的时区 |
-
-### [Live2D  GitHub](https://github.com/EYHN/hexo-helper-live2d)
-
-我的 `Live2D` 版本是 `3.1.1`
-
-首先安装配置 hexo-helper-live2d，在 `hexo` 根目录下执行
-
-```
-npm install hexo-helper-live2d --save
-```
-
-插件就安装完成了，你可一下选一个 [模型](https://huaji8.top/post/live2d-plugin-2.0/) 这个给出了展示效果，但是不全， [更多模型](https://github.com/xiazeyu/live2d-widget-models) 这个没有展示效果，比之前的全一点，可以自己试试效果 ~
-
-在模型中记住自己选择模型的名字 `live2d-widget-model-你选中的模型名字` ，然后进行安装
-
-```
-npm install live2d-widget-model-wanko --save
-```
-
-然后再 `Hexo 配置文件` 中，添加如下代码，**代码格式很重要！！！** 有时候复制进去没有缩进，效果是出不来的。
-
-```
-live2d:
-  enable: true
-  scriptFrom: local
-  pluginRootPath: live2dw/
-  pluginJsPath: lib/
-  pluginModelPath: assets/
-  tagMode: false
-  debug: false
-  model:
-    use: live2d-widget-model-wanko
-  display:
-    position: left
-    width: 150
-    height: 300
-  mobile:
-    show: true
-  react:
-    opacity: 0.7
-```
-
-这样一只可爱的小白狗就出现了。
-
-如果要加载自定义模型，需要在根目录新建文件夹 `live2d_models` 下，再新建一个文件夹 `kesshouban （此处自定义）` 然后将资源文件放入 `kesshouban ` 内 。然后修改 `Hexo 配置文件` ，将 `model.use` 写成 `kesshouban` 。
 
 ### `NexT` 样式
 
@@ -192,7 +147,7 @@ fancybox: true
 
 参考自作者 [EnjoyToShare 《Hexo的NexT主题打赏功能》](https://blog.enjoytoshare.club/article/hexo-do-donate.html)  
 
-准备好收款二维码，放入 `hexo\themes\next\source\images` ，打开 `NexT 配置文件` 
+准备好收款二维码，放入 `hexo/themes/next/source/images` ，打开 `NexT 配置文件` 
 
 ```
 reward_settings:
@@ -553,7 +508,7 @@ symbols_count_time:
 
 参考自作者 [EnjoyToShare](https://blog.enjoytoshare.club/article/hexo-do-optimization.html) 在这篇文章 3.12，这篇里边还有好多好看的样式 ~
 
-在 `\themes\next\source\css\_variables` 中的 `Gemini.styl` 文件添加
+在 `/themes/next/source/css/_variables` 中的 `Gemini.styl` 文件添加
 
 ```
 // 修改主题页面布局为圆角
@@ -597,7 +552,7 @@ categories: Hexo
 hexo new page categories
 ```
 
-会提示我们输入目录 `\source\categories\index.md`  ，打开这个 `index.md` ，加入 `type` 这个页面用于做什么的，`comment` 是否开启评论，前提是你有评论功能的话。
+会提示我们输入目录 `/source/categories/index.md`  ，打开这个 `index.md` ，加入 `type` 这个页面用于做什么的，`comment` 是否开启评论，前提是你有评论功能的话。
 
 ```
 title: categories
@@ -625,7 +580,7 @@ tags: [Hexo, NexT, 博客]
 hexo new page tags
 ```
 
-创建完成后，为 `tags\index.md` 添加内容 
+创建完成后，为 `tags/index.md` 添加内容 
 
 ```
 title: categories
@@ -681,7 +636,7 @@ menu:
 
 - ‘’ 内容样式的修改
 
-打开 `\themes\next\source\css\_custom\custom.styl` ，在里面加入
+打开 `/hemes/next/source/css/_custom/custom.styl` ，在里面加入
 
 ```
 // Custom styles.
@@ -703,7 +658,7 @@ code {
 
 - 链接样式修改
 
-修改文件 `themes\next\source\css\_common\components\post\post.styl`，在末尾添加如下css样式
+修改文件 `/themes/next/source/css/_common/components/post/post.styl`，在末尾添加如下css样式
 
 ```
 // 文章内链接文本样式

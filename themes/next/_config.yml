@@ -1218,7 +1218,7 @@ vendors:
   disqusjs_css:
 
 
-daovoice: true
+daovoice: false
 daovoice_app_id: c1f73bd5
 
 mylinks:
