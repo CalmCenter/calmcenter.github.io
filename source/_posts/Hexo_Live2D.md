@@ -127,5 +127,61 @@ hexo clean && hexo g && hexo s
 
 ### 3. 更换模型
 
+感谢 [猫与向日葵](https://imjad.cn/) 提供血小板模型 [下载地址](https://cdn.imjad.cn/usr/uploads/kesshouban_v2.7z)
+
+在 `hexo/next/source/live2d/model` 中新建一个文件夹，将压缩包里面的内容，也就是模型放到里面，然后修改 `model.json` 
+
+```
+{
+	"type": "Live2D Model Setting",
+	"name": "model",
+	"model": "model.moc",
+	"textures": [
+		"model.2048/texture_00.png"
+	],
+	"layout":{
+        "center_x":0.0,
+        "center_y":-0.1,
+        "width":2
+    },
+    "hit_areas_custom":{
+        "head_x":[-0.35, 0.6],
+        "head_y":[0.19, -0.2],
+        "body_x":[-0.3, -0.25],
+        "body_y":[0.3, -0.9]
+    },
+	"motions":{
+		"idle":[
+			{"file":"motions/Idle.mtn"}
+		],
+        "sleepy":[
+            {"file":"motions/Nemui.mtn"}
+        ],
+		"flick_head":[
+			{"file":"motions/Anone_Synced.mtn"}
+		],
+		"tap_body":[
+			{"file":"motions/Dance.mtn"}
+		],
+	}
+}
+```
+
+最终成这样，一个标点都不能错 ！主要是 `layout(用于)` 和 `hit_areas_custom` 
+
+然后将  `/theme/next/layout/layout.swig` 的 `<footer>` 添加的那句话
+
+```
+ <script type="text/javascript">
+          loadlive2d("live2d", "/live2d/model/xxb/model.json");
+      </script>
+```
+
+将 `xxb` 改成你新建的文件夹名字，编译运行
+
+```
+hexo g && hexo s
+```
+
 ### 4. 修改模型
 

@@ -29,12 +29,6 @@
 		],
 		"tap_body":[
 			{"file":"motions/Dance.mtn"}
-		],
-		"":[
-			{"file":"motions/Idle.mtn"},
-			{"file":"motions/Nemui.mtn"},
-			{"file":"motions/Anone_Synced.mtn"},
-			{"file":"motions/Dance.mtn"}
 		]
 	}
 }

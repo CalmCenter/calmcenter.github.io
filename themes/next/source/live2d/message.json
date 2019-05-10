@@ -25,12 +25,8 @@
             "text": ["干嘛呢你，快把手拿开", "鼠…鼠标放错地方了！"]
         },
         {
-            "selector": ".gt-header-textarea]",
-            "text": ["说点什么吧，Calm 会很高兴的","既然都来了，何不留下点什么再离开？"]
-        },
-        {
-            "selector": ".gt-btn .gt-btn-preview",
-            "text": ["这里可以预览最后的格式哦"]
+            "selector": "#reward-button",
+            "text": ["要给我买糖吃吗？"]
         }
     ],
     "click": [
@@ -39,8 +35,8 @@
             "text": ["不要动手动脚的！快把手拿开~~", "真…真的是不知羞耻！","Hentai！", "再摸的话我可要报警了！⌇●﹏●⌇", "110吗，这里有个变态一直在摸我(ó﹏ò｡)"]
         },
         {
-            "selector": ".gt-header-textarea",
-            "text": ["记得要在 Calm 面前夸夸我哦 ~ "]
+            "selector": "#gitalk-container.comments",
+            "text": ["说点什么吧，Calm 会很高兴的","既然都来了，何不留下点什么再离开？","记得要在 Calm 面前夸夸我哦 ~ "]
         }
     ]
 }
