@@ -1199,7 +1199,7 @@ vendors:
   # md5: //cdn.jsdelivr.net/npm/js-md5@0/src/md5.min.js
   gitalk_js:
   gitalk_css:
-  md5:
+  md5: //cdn.jsdelivr.net/npm/js-md5@0/src/md5.min.js
 
   # likely
   # See: https://github.com/ilyabirman/Likely
@@ -1218,7 +1218,7 @@ vendors:
   disqusjs_css:
 
 
-daovoice: false
+daovoice: true
 daovoice_app_id: c1f73bd5
 
 mylinks:

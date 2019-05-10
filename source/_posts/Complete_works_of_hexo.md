@@ -19,6 +19,7 @@ top: 100
 * `Hexo` 基础搭建
 * 管理代码( `git` 基本操作)
 * 装饰博客
+* 网站管理
 ```
 本文环境是 win10 或 win 7。mac 再执行 npm 时需要在前面添加 sudo
 本文整理于各大佬文章，文中会给出相应链接，如有侵权，请联系我修改或删除。
@@ -28,19 +29,19 @@ top: 100
 
 <!--more-->
 
-## [`Hexo` 基础搭建 more](https://calmcenter.github.io/2019/Hexo%20%E5%9F%BA%E7%A1%80%E6%90%AD%E5%BB%BA.html)
+## [`Hexo` 基础搭建 more](https://calmcenter.club/2019/Hexo_bash.html)
 
 - 搭建本地博客
 - 部署到 `Github Pages`
 
-## [管理代码( `git` 基本操作) more](https://calmcenter.github.io/2019/Hexo%20%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81.html)
+## [管理代码( `git` 基本操作) more](https://calmcenter.club/2019/Hexo_code_management.html)
 
 - `git` 拉取代码
 - `git` 创建分支
 - `git` 提交分支代码
 - 其他终端如何使用 `Hexo` 源码
 
-## [功能样式配置 more](https://calmcenter.github.io/2019/Hexo%20%E5%8A%9F%E8%83%BD%E6%A0%B7%E5%BC%8F%E9%85%8D%E7%BD%AE.html)
+## [功能样式配置 more](https://calmcenter.club/2019/Hexo_functional_style.html)
 
 - `NexT` 主题设置
 - 基础样式设置
@@ -52,14 +53,14 @@ top: 100
 - 搜索功能
 - 细节美化
 
-## [`live2D` 看板娘 more](https://calmcenter.club/2019/Live2D%20%E7%9C%8B%E6%9D%BF%E5%A8%98.html)
+## [`live2D` 看板娘 more](https://calmcenter.club/2019/Hexo_Live2D.html)
 
 - 使用 `hexo-helper-live2d` 完成看板娘
 - 自定义看板娘(右下角那个~)
   - 运行、接入 `Demo`
   - 更换、修改模型
 
-## [网站管理 more](https://calmcenter.github.io/2019/%E7%BD%91%E7%AB%99%E7%AE%A1%E7%90%86.html)
+## [网站管理 more](https://calmcenter.club/2019/Hexo_website_management.html)
 
 - 个人域名
 - 加入 `Coding` 服务器
@@ -67,3 +68,4 @@ top: 100
 
 ------
 
+## `来都来了 ~ 在评论留下你的足迹可否 ？`

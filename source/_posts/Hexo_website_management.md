@@ -8,7 +8,7 @@ hide: true
 
 ---
 
-目录请看  [Hexo 搭建博客大全](https://calmcenter.club/2019/Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A4%A7%E5%85%A8.html)
+目录请看  [Hexo 搭建博客大全](https://calmcenter.club/2019/Complete_works_of_hexo.html)
 
 ## 本文主要记载
 
@@ -42,7 +42,7 @@ hide: true
 clip < ~/.ssh/id_rsa.pub
 ```
 
-然后点击 `SSH`公钥 设置即可，如果没有设置过 `github` 请参考 [Hexo 基础搭建 - 配置 SSH 秘钥部分](https://calmcenter.github.io/2019/Hexo%20%E5%9F%BA%E7%A1%80%E6%90%AD%E5%BB%BA.html#2-3-%E9%85%8D%E7%BD%AE-SSH-%E5%AF%86%E9%92%A5)
+然后点击 `SSH`公钥 设置即可，如果没有设置过 `github` 请参考 [Hexo 基础搭建 - 配置 SSH 秘钥部分](https://calmcenter.club/2019/Hexo_bash.html#2-3-%E9%85%8D%E7%BD%AE-SSH-%E5%AF%86%E9%92%A5)
 
 3. 验证
 

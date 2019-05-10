@@ -7,7 +7,7 @@ hide: true
 
 ---
 
-目录请看 [Hexo 搭建博客大全](https://calmcenter.club/2019/Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A4%A7%E5%85%A8.html)
+目录请看 [Hexo 搭建博客大全](https://calmcenter.club/2019/Complete_works_of_hexo.html)
 
 # 本文主要记载
 

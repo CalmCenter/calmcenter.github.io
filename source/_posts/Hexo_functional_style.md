@@ -7,7 +7,7 @@ hide: true
 
 ---
 
-目录请看  [Hexo 搭建博客大全](https://calmcenter.club/2019/Hexo%20%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A4%A7%E5%85%A8.html)
+目录请看  [Hexo 搭建博客大全](https://calmcenter.club/2019/Complete_works_of_hexo.html)
 
 ## 本文主要记载
 
@@ -52,7 +52,7 @@ theme: next
 
 这样 `next` 样式就设置好了，快打开看看吧  [http://localhost:4000/](http://localhost:4000/)
 
-**注意:如果你是 `git` 直接 `clone` 的，会自带 `.git` 和 `.github` 文件，需要删掉 `.git` 和 `.github` 文件，如果不删在 [Hexo 管理代码](https://calmcenter.github.io/2019/04/18/Hexo%20%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81/) 一文中会出现 `them/next` 里的文件提交不上去的问题**
+**注意:如果你是 `git` 直接 `clone` 的，会自带 `.git` 和 `.github` 文件，需要删掉 `.git` 和 `.github` 文件，如果不删在 [Hexo 管理代码](https://calmcenter.club/2019/Hexo_code_management.html) 一文中会出现 `them/next` 里的文件提交不上去的问题**
 
 ### 设置语言、标题等
 
@@ -141,7 +141,7 @@ fancybox: true
 
 完成 ~ 
 
-**注意:如果你是 `git` 直接 `clone` 的，会自带 `.git` 和 `.github` 文件，需要删掉 `.git` 和 `.github` 文件，如果不删在 [Hexo 管理代码](https://calmcenter.github.io/2019/04/18/Hexo%20%E7%AE%A1%E7%90%86%E4%BB%A3%E7%A0%81/) 一文中会出现 `them/next/source/lib/fancybox` 里的文件提交不上去的问题**
+**注意:如果你是 `git` 直接 `clone` 的，会自带 `.git` 和 `.github` 文件，需要删掉 `.git` 和 `.github` 文件，如果不删在 [Hexo 管理代码](https://calmcenter.club/2019/Hexo_code_management.html) 一文中会出现 `them/next/source/lib/fancybox` 里的文件提交不上去的问题**
 
 ### 打赏功能
 
@@ -214,6 +214,10 @@ hexo clean
 
 ![](https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190426155441.png)
 
+**如果有自己的域名记得把 Authorization callback URL 设置成自己的 域名地址** `Authorization callback URL` 在 [github setting](https://github.com/settings/developers) 点击自己绑定的进去修改
+
+**2019/5/10 踩坑记录，文章的文件名，中文会有问题，导致一直跳转首页并登陆不上，title  可以是中文**
+
 ### 代码块复制功能
 
 在 `NexT 配置文件` 中
@@ -227,7 +231,7 @@ codeblock:
     style:
 ```
 
-`NexT` 随着版本的升级，省去了很多操作，基本都省开关设置了
+`NexT` 随着版本的升级，省去了很多操作，基本都剩开关的设置了
 
 ### `DaoVoice` 实现在线联系
 
