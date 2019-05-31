@@ -3,7 +3,7 @@ title: Live2D 看板娘
 date: 2019-05-9 14:32:22
 categories: live2D
 tags: [live2D]
-hide: true
+hide: false
 
 
 ---
@@ -41,7 +41,7 @@ npm install live2d-widget-model-wanko --save
 
 然后再 `Hexo 配置文件` 中，添加如下代码，**代码格式很重要！！！** 有时候复制进去没有缩进，效果是出不来的。
 
-```
+```yml
 live2d:
   enable: true
   scriptFrom: local
@@ -94,23 +94,23 @@ http://localhost:4000/demo.html
 
 然后将 `demo.html` 中的代码整理出来
 
-```
- <link rel="stylesheet" href="/live2d/css/live2d.css" />
-      <div id="landlord">
-          <div class="message" style="opacity:0"></div>
-          <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
-          <div class="hide-button">隐藏</div>
-      </div>
-      <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-      <script type="text/javascript">
-          var message_Path = '/live2d/'
-          var home_Path = 'https://calmcenter.club/'
-      </script>
-      <script type="text/javascript" src="/live2d/js/live2d.js"></script>
-      <script type="text/javascript" src="/live2d/js/message.js"></script>
-      <script type="text/javascript">
-          loadlive2d("live2d", "/live2d/model/tia/model.json");
-      </script>
+```xml
+<link rel="stylesheet" href="/live2d/css/live2d.css" />
+<div id="landlord">
+  <div class="message" style="opacity:0"></div>
+  <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+  <div class="hide-button">隐藏</div>
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+  var message_Path = '/live2d/'
+  var home_Path = 'https://calmcenter.club/'
+</script>
+<script type="text/javascript" src="/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/live2d/js/message.js"></script>
+<script type="text/javascript">
+  loadlive2d("live2d", "/live2d/model/tia/model.json");
+</script>
 ```
 
 粘贴到 `/theme/next/layout/layout.swig` 的 `<footer>` 标签下
@@ -131,50 +131,53 @@ hexo clean && hexo g && hexo s
 
 在 `hexo/next/source/live2d/model` 中新建一个文件夹，将压缩包里面的内容，也就是模型放到里面，然后修改 `model.json` 
 
-```
-{
-	"type": "Live2D Model Setting",
-	"name": "model",
-	"model": "model.moc",
-	"textures": [
-		"model.2048/texture_00.png"
-	],
-	"layout":{
-        "center_x":0.0,
-        "center_y":-0.1,
-        "width":2
+```json
+{	
+    "type": "Live2D Model Setting",
+    "name": "model",
+    "version":"1.0.0",
+    "model": "model.moc",
+    "textures": [
+      "model.2048/texture_00.png"
+    ],
+    "layout":{
+      "center_x":0.0,
+      "center_y":0.05,
+      "width":1.8
     },
     "hit_areas_custom":{
-        "head_x":[-0.35, 0.6],
-        "head_y":[0.19, -0.2],
-        "body_x":[-0.3, -0.25],
-        "body_y":[0.3, -0.9]
+      "head_x":[-0.35, 0.6],
+      "head_y":[0.19, -0.2],
+      "body_x":[-0.3, -0.25],
+      "body_y":[0.3, -0.9]
     },
-	"motions":{
-		"idle":[
-			{"file":"motions/Idle.mtn"}
-		],
-        "sleepy":[
-            {"file":"motions/Nemui.mtn"}
-        ],
-		"flick_head":[
-			{"file":"motions/Anone_Synced.mtn"}
-		],
-		"tap_body":[
-			{"file":"motions/Dance.mtn"}
-		],
-	}
+    "motions":{
+      "idle":[
+        {"file":"motions/Idle.mtn"}
+      ],
+      "sleepy":[
+      	{"file":"motions/Nemui.mtn"}
+      ],
+      "flick_head":[
+      	{"file":"motions/Anone_Synced.mtn"}
+      ],
+      "tap_body":[
+      	{"file":"motions/Dance.mtn"}
+      ]
+    }
 }
 ```
+
+
 
 最终成这样，一个标点都不能错 ！主要是 `layout(用于)` 和 `hit_areas_custom` 
 
 然后将  `/theme/next/layout/layout.swig` 的 `<footer>` 添加的那句话
 
-```
- <script type="text/javascript">
-          loadlive2d("live2d", "/live2d/model/xxb/model.json");
-      </script>
+```css
+<script type="text/javascript">
+	loadlive2d("live2d", "/live2d/model/xxb/model.json");
+</script>
 ```
 
 将 `xxb` 改成你新建的文件夹名字，编译运行
