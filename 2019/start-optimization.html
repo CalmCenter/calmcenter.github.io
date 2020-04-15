@@ -430,21 +430,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-04-13
+                    2020-04-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.1k
+                    4.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    16 分
                 </div>
                 
 
@@ -463,16 +463,40 @@
                 <p>Android 性能第一篇，随着项目功能的迭（zeng）代（jia），启动速度也会受到影响，性能优化之路的第一步，也就是启动优化，个人认为非常重要，它可以直接影响 <strong>APP</strong> 的留存率，没有人希望自己应用半天打不开。这篇文章就开启 <em>启动优化</em>  之路。</p>
 <p><strong>注意：如果出现图片不显示问题请移步</strong> <a href="https://calmcenter.club/2019/PicNotShow.html">图片不显示问题</a></p>
 <h1 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h1><ul>
-<li>启动</li>
-<li>检测启动消耗<code>(敲黑板)</code></li>
-<li>启动优化<code>(干货)</code></li>
-<li>启动监控</li>
+<li><strong>1 启动</strong></li>
+<li><strong>2 检测启动消耗<code>(敲黑板)</code></strong><ul>
+<li>2.1 启动时间测量方式<ul>
+<li>2.1.1 adb 命令启动时间测量方式</li>
+<li>2.1.2 手动打点</li>
 </ul>
-<hr>
-<h2 id="一、-启动"><a href="#一、-启动" class="headerlink" title="一、 启动"></a>一、 启动</h2><p>Google官方文档 <a href="https://developer.android.com/topic/performance/launch-time.html" target="_blank" rel="noopener">《Launch-Time Performance》</a> 对应用启动优化的概述</p>
+</li>
+<li>2.2 启动耗时检测方式<ul>
+<li>2.2.1 TraceView</li>
+<li>2.2.2 systrace</li>
+<li>2.2.3 systrace + 函数插桩 AOP</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>3 启动优化<code>(干货)</code></strong><ul>
+<li>3.1 闪屏页展示</li>
+<li>3.2 异步启动实践</li>
+<li>3.3 数据重排</li>
+<li>3.4 类的加载</li>
+<li>3.5 延迟加载方案 IdleHandler</li>
+<li>3.6 其他优化思路</li>
+</ul>
+</li>
+<li><strong>4 启动监控</strong></li>
+</ul>
+<h2 id="1-启动"><a href="#1-启动" class="headerlink" title="1 启动"></a>1 启动</h2><hr>
+<p>Google官方文档 <a href="https://developer.android.com/topic/performance/launch-time.html" target="_blank" rel="noopener">《Launch-Time Performance》</a> 对应用启动优化的概述</p>
 <p>应用的启动分为冷启动、热启动、温启动，而启动最慢、挑战最大的就是冷启动：系统和App本身都有更多的工作要从头开始！我们只要知道我们处理的是冷启动的情况。</p>
-<h2 id="二、-检测启动消耗-敲黑板"><a href="#二、-检测启动消耗-敲黑板" class="headerlink" title="二、 检测启动消耗(敲黑板)"></a>二、 检测启动消耗<code>(敲黑板)</code></h2><p>“工欲善其事必先利其器”，我们需要先找到一款适合做启动优化分析的工具。</p>
-<h3 id="2-1-启动时间测量方式"><a href="#2-1-启动时间测量方式" class="headerlink" title="2.1 启动时间测量方式"></a>2.1 启动时间测量方式</h3><h4 id="2-1-1-adb-命令启动时间测量方式"><a href="#2-1-1-adb-命令启动时间测量方式" class="headerlink" title="2.1.1 adb 命令启动时间测量方式"></a>2.1.1 adb 命令启动时间测量方式</h4><pre><code>adb shell am start -W packagename/packagename.Activity</code></pre><p><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190829115742.png" alt=""></p>
+<h2 id="2-检测启动消耗-敲黑板"><a href="#2-检测启动消耗-敲黑板" class="headerlink" title="2 检测启动消耗(敲黑板)"></a>2 检测启动消耗<code>(敲黑板)</code></h2><hr>
+<p>“工欲善其事必先利其器”，我们需要先找到一款适合做启动优化分析的工具。</p>
+<h3 id="2-1-启动时间测量方式"><a href="#2-1-启动时间测量方式" class="headerlink" title="2.1 启动时间测量方式"></a>2.1 启动时间测量方式</h3><hr>
+<h4 id="2-1-1-adb-命令启动时间测量方式"><a href="#2-1-1-adb-命令启动时间测量方式" class="headerlink" title="2.1.1 adb 命令启动时间测量方式"></a>2.1.1 adb 命令启动时间测量方式</h4><hr>
+<pre><code>adb shell am start -W packagename/packagename.Activity</code></pre><p><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190829115742.png" alt=""></p>
 <p>划掉的红色部分都是包名</p>
 <table>
 <thead>
@@ -499,7 +523,8 @@
 </tr>
 </tbody></table>
 <p>线下方便使用、可以测量竞品、不能带到线上</p>
-<h4 id="2-1-2-手动打点"><a href="#2-1-2-手动打点" class="headerlink" title="2.1.2 手动打点"></a>2.1.2 手动打点</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LaunchTimer</span> <span class="token punctuation">{</span>
+<h4 id="2-1-2-手动打点"><a href="#2-1-2-手动打点" class="headerlink" title="2.1.2 手动打点"></a>2.1.2 手动打点</h4><hr>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LaunchTimer</span> <span class="token punctuation">{</span>
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">long</span> sTime<span class="token punctuation">;</span>
 
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">startRecord</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -534,7 +559,9 @@ mView<span class="token punctuation">.</span><span class="token function">getVie
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>在 View 将要绘制的时候去进行耗时的统计，<code>addOnDrawListener()</code> 需要 <code>API 16</code></p>
-<h3 id="2-2-启动耗时检测方式"><a href="#2-2-启动耗时检测方式" class="headerlink" title="2.2 启动耗时检测方式"></a>2.2 启动耗时检测方式</h3><h4 id="2-2-1-TraceView"><a href="#2-2-1-TraceView" class="headerlink" title="2.2.1 TraceView"></a>2.2.1 TraceView</h4><p>图形化界面的形式展示出执行时间、调用栈，包含所有线程，信息全面</p>
+<h3 id="2-2-启动耗时检测方式"><a href="#2-2-启动耗时检测方式" class="headerlink" title="2.2 启动耗时检测方式"></a>2.2 启动耗时检测方式</h3><hr>
+<h4 id="2-2-1-TraceView"><a href="#2-2-1-TraceView" class="headerlink" title="2.2.1 TraceView"></a>2.2.1 TraceView</h4><hr>
+<p>图形化界面的形式展示出执行时间、调用栈，包含所有线程，信息全面</p>
 <p>但是加入 <code>TraceView</code> 的代码后，运行时开销严重，整体都会变慢，可能会带骗优化方向</p>
 <ul>
 <li><h5 id="通过代码跟踪💦"><a href="#通过代码跟踪💦" class="headerlink" title="通过代码跟踪💦"></a>通过代码跟踪💦</h5></li>
@@ -609,7 +636,8 @@ Debug.stopMethodTracing();</code></pre><p>默认生成文件在 <code>mnt/sdcard
 <li>运行时开销严重，整体都会变慢(因为 <code>TraceView</code> 要抓取所有线程的所有执行函数以及顺序)</li>
 <li>可能会带偏优化方向(本来不好时间的函数可能加入 <code>TraceView</code> 后，变的非常耗时)</li>
 </ol>
-<h4 id="2-2-2-systrace"><a href="#2-2-2-systrace" class="headerlink" title="2.2.2 systrace"></a>2.2.2 systrace</h4><p>结合 Android 内核的数据，生成 HTML 报告，<code>API 18</code> 以上，推荐 <code>TraceCompat</code></p>
+<h4 id="2-2-2-systrace"><a href="#2-2-2-systrace" class="headerlink" title="2.2.2 systrace"></a>2.2.2 systrace</h4><hr>
+<p>结合 Android 内核的数据，生成 HTML 报告，<code>API 18</code> 以上，推荐 <code>TraceCompat</code></p>
 <ul>
 <li><h5 id="首先清空后台💦"><a href="#首先清空后台💦" class="headerlink" title="首先清空后台💦"></a>首先清空后台💦</h5></li>
 </ul>
@@ -644,7 +672,8 @@ TraceCompat.endSection();</code></pre><ul>
 <li>轻量级，开销小</li>
 <li>直观的反应 CPU 利用率</li>
 </ol>
-<h4 id="2-2-3-systrace-函数插桩-AOP-Aspect-Oriented-Programming"><a href="#2-2-3-systrace-函数插桩-AOP-Aspect-Oriented-Programming" class="headerlink" title="2.2.3 systrace + 函数插桩 AOP(Aspect Oriented Programming)"></a>2.2.3 systrace + 函数插桩 AOP(Aspect Oriented Programming)</h4><p> 面向切面编程，针对同一类问题的统一处理，无侵入添加代码。</p>
+<h4 id="2-2-3-systrace-函数插桩-AOP-Aspect-Oriented-Programming"><a href="#2-2-3-systrace-函数插桩-AOP-Aspect-Oriented-Programming" class="headerlink" title="2.2.3 systrace + 函数插桩 AOP(Aspect Oriented Programming)"></a>2.2.3 systrace + 函数插桩 AOP(Aspect Oriented Programming)</h4><hr>
+<p> 面向切面编程，针对同一类问题的统一处理，无侵入添加代码。</p>
 <p>在根目录的 <code>build.gradle</code> 下，最新版本请查看 <a href="https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx" target="_blank" rel="noopener">AspectJX 开源地址</a></p>
 <pre class=" language-groovy"><code class="language-groovy">classpath <span class="token string">'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.8'</span></code></pre>
 <p>在 <code>app</code> 模块下添加如下，通过我的测试这些引用只能添加在 <code>app</code> 模块下，添加在其他子模块下不生效。最新版本请查看 <a href="http://www.eclipse.org/aspectj/downloads.php#stable_release" target="_blank" rel="noopener">AspectJ官网</a></p>
@@ -704,53 +733,72 @@ TraceCompat.endSection();</code></pre><ul>
 <span class="token punctuation">}</span></code></pre>
 <p>这样就完成了 <code>AOP</code> 埋点辅助<code>systrace</code> 监控的方式。<code>AOP</code> 还有很多更强大更方便的用法，这里只是一种注解切入的方式。更多用法请查看其它文章。</p>
 <p>由于我现在使用 <code>AOP</code> 还存在很多问题，还在研究中。。。(上面的例子是可以使用的)</p>
-<h2 id="三、-启动优化-干货"><a href="#三、-启动优化-干货" class="headerlink" title="三、 启动优化(干货)"></a>三、 启动优化<code>(干货)</code></h2><h3 id="3-1-闪屏页展示"><a href="#3-1-闪屏页展示" class="headerlink" title="3.1 闪屏页展示"></a>3.1 闪屏页展示</h3><p>闪屏页是优化启动速度的一个小技巧，虽然对实际的启动速度没有任何帮助，但是能让用户感觉应用到应用在第一时间已经被打开。</p>
+<h2 id="3-启动优化-干货"><a href="#3-启动优化-干货" class="headerlink" title="3 启动优化(干货)"></a>3 启动优化<code>(干货)</code></h2><hr>
+<h3 id="3-1-闪屏页展示"><a href="#3-1-闪屏页展示" class="headerlink" title="3.1 闪屏页展示"></a>3.1 闪屏页展示</h3><hr>
+<p>闪屏页是优化启动速度的一个小技巧，虽然对实际的启动速度没有任何帮助，但是能让用户感觉应用到应用在第一时间已经被打开。</p>
 <p>合并闪屏和主页面的 Activity，减少一个 Activity 会给线上带来 100 毫秒左右的优化。但是如果这样做的话，管理时会非常复杂。</p>
 <p>闪屏如果存在网络请求，一般都是提前准备好闪屏页的，在下一次生效。</p>
 <p>具体操作文末参考中会有 ~ 这里不再说明。</p>
-<h3 id="3-2-异步启动实践"><a href="#3-2-异步启动实践" class="headerlink" title="3.2 异步启动实践"></a>3.2 异步启动实践</h3><h4 id="3-2-1-启动器"><a href="#3-2-1-启动器" class="headerlink" title="3.2.1 启动器"></a>3.2.1 启动器</h4><p>微信内部使用的 <a href="https://mp.weixin.qq.com/s/6Q818XA5FaHd7jJMFBG60w?" target="_blank" rel="noopener">mmkernel</a></p>
+<h3 id="3-2-异步启动实践"><a href="#3-2-异步启动实践" class="headerlink" title="3.2 异步启动实践"></a>3.2 异步启动实践</h3><hr>
+<h4 id="3-2-1-启动器"><a href="#3-2-1-启动器" class="headerlink" title="3.2.1 启动器"></a>3.2.1 启动器</h4><hr>
+<p>微信内部使用的 <a href="https://mp.weixin.qq.com/s/6Q818XA5FaHd7jJMFBG60w?" target="_blank" rel="noopener">mmkernel</a></p>
 <p>阿里最近开源的 <a href="https://github.com/alibaba/alpha" target="_blank" rel="noopener">Alpha</a> 启动框架</p>
 <p>慕课网中学习到的 启动器 <code>Task</code> </p>
 <p>它们为各个任务建立依赖关系，最终构成一个有向无环图。对于可以并发的任务，会通过线程池最大程度提升启动速度。</p>
-<h4 id="3-2-1-异步Layout子线程预加载"><a href="#3-2-1-异步Layout子线程预加载" class="headerlink" title="3.2.1 异步Layout子线程预加载"></a>3.2.1 异步Layout子线程预加载</h4><p>参考文章 <a href="https://juejin.im/post/5d63cdf7f265da03ed195f68?utm_source=gold_browser_extension#comment" target="_blank" rel="noopener">Android - 一种新奇的冷启动速度优化思路(Fragment极度懒加载 + Layout子线程预加载)</a> </p>
-<h3 id="3-3-数据重排"><a href="#3-3-数据重排" class="headerlink" title="3.3 数据重排"></a>3.3 数据重排</h3><h4 id="3-3-1-类重排"><a href="#3-3-1-类重排" class="headerlink" title="3.3.1 类重排"></a>3.3.1 类重排</h4><p>Facebook 开源的 Dex 优化工具 <a href="https://github.com/facebook/redex/blob/master/docs/Interdex.md" target="_blank" rel="noopener">ReDex</a></p>
+<h4 id="3-2-1-异步Layout子线程预加载"><a href="#3-2-1-异步Layout子线程预加载" class="headerlink" title="3.2.1 异步Layout子线程预加载"></a>3.2.1 异步Layout子线程预加载</h4><hr>
+<p>参考文章 <a href="https://juejin.im/post/5d63cdf7f265da03ed195f68?utm_source=gold_browser_extension#comment" target="_blank" rel="noopener">Android - 一种新奇的冷启动速度优化思路(Fragment极度懒加载 + Layout子线程预加载)</a> </p>
+<h3 id="3-3-数据重排"><a href="#3-3-数据重排" class="headerlink" title="3.3 数据重排"></a>3.3 数据重排</h3><hr>
+<h4 id="3-3-1-类重排"><a href="#3-3-1-类重排" class="headerlink" title="3.3.1 类重排"></a>3.3.1 类重排</h4><hr>
+<p>Facebook 开源的 Dex 优化工具 <a href="https://github.com/facebook/redex/blob/master/docs/Interdex.md" target="_blank" rel="noopener">ReDex</a></p>
 <p><a href="https://mp.weixin.qq.com/s/Hquq8iJvZuN-gynVFxCCNA" target="_blank" rel="noopener">都9102年了，Android 冷启动优化除了老三样还有哪些新招？</a></p>
-<h4 id="3-3-2-资源文件重排"><a href="#3-3-2-资源文件重排" class="headerlink" title="3.3.2 资源文件重排"></a>3.3.2 资源文件重排</h4><p>支付宝 <a href="https://mp.weixin.qq.com/s/79tAFx6zi3JRG-ewoapIVQ" target="_blank" rel="noopener">《通过安装包重排布优化 Android 端启动性能》</a></p>
-<h3 id="3-4-类的加载"><a href="#3-4-类的加载" class="headerlink" title="3.4 类的加载"></a>3.4 类的加载</h3><p>加载类的过程有一个 verify class 的步骤，它需要校验方法的每一个指令，是一个比较耗时的操作。我们可以通过 Hook 来去掉 verify 这个步骤，这对启动速度有几十毫秒的优化。最大的优化场景在于首次和覆盖安装时。</p>
+<h4 id="3-3-2-资源文件重排"><a href="#3-3-2-资源文件重排" class="headerlink" title="3.3.2 资源文件重排"></a>3.3.2 资源文件重排</h4><hr>
+<p>支付宝 <a href="https://mp.weixin.qq.com/s/79tAFx6zi3JRG-ewoapIVQ" target="_blank" rel="noopener">《通过安装包重排布优化 Android 端启动性能》</a></p>
+<h3 id="3-4-类的加载"><a href="#3-4-类的加载" class="headerlink" title="3.4 类的加载"></a>3.4 类的加载</h3><hr>
+<p>加载类的过程有一个 verify class 的步骤，它需要校验方法的每一个指令，是一个比较耗时的操作。我们可以通过 Hook 来去掉 verify 这个步骤，这对启动速度有几十毫秒的优化。最大的优化场景在于首次和覆盖安装时。</p>
 <p>这个黑科技可以大大降低首次启动的速度，代价是对后续运行会产生轻微的影响。同时也要考虑兼容性问题，暂时不建议在 ART 平台使用。</p>
-<h3 id="更优秀的延迟加载方案"><a href="#更优秀的延迟加载方案" class="headerlink" title="更优秀的延迟加载方案"></a>更优秀的延迟加载方案</h3><p>利用 <code>IdleHandler</code> 特性，空闲时执行初始化。</p>
+<h3 id="3-5-延迟加载方案-IdleHandler"><a href="#3-5-延迟加载方案-IdleHandler" class="headerlink" title="3.5 延迟加载方案 IdleHandler"></a>3.5 延迟加载方案 IdleHandler</h3><hr>
+<p>利用 <code>IdleHandler</code> 特性，空闲时执行初始化。</p>
 <p><strong><code>IdleHandler</code> 可以用来提升性能，主要用在我们希望能够在当前线程消息队列空闲时做些事情</strong> </p>
-<h3 id="其他优化思路"><a href="#其他优化思路" class="headerlink" title="其他优化思路"></a>其他优化思路</h3><h4 id="5-0-以下机型-MultiDex-优化"><a href="#5-0-以下机型-MultiDex-优化" class="headerlink" title="5.0 以下机型 MultiDex 优化"></a><code>5.0</code> 以下机型 <code>MultiDex</code> 优化</h4><p><a href="https://juejin.im/post/5d95f4a4f265da5b8f10714b?utm_source=gold_browser_extension#comment" target="_blank" rel="noopener">面试官：今日头条启动很快，你觉得可能是做了哪些优化？</a></p>
-<h4 id="GC-优化"><a href="#GC-优化" class="headerlink" title="GC 优化"></a>GC 优化</h4><p>支付宝提出一种 <a href="https://mp.weixin.qq.com/s/ePjxcyF3N1vLYvD5dPIjUw" target="_blank" rel="noopener">GC 抑制</a> 的方案</p>
+<h3 id="3-6-其他优化思路"><a href="#3-6-其他优化思路" class="headerlink" title="3.6 其他优化思路"></a>3.6 其他优化思路</h3><hr>
+<h4 id="5-0-以下机型-MultiDex-优化"><a href="#5-0-以下机型-MultiDex-优化" class="headerlink" title="5.0 以下机型 MultiDex 优化"></a><code>5.0</code> 以下机型 <code>MultiDex</code> 优化</h4><p><a href="https://juejin.im/post/5d95f4a4f265da5b8f10714b?utm_source=gold_browser_extension#comment" target="_blank" rel="noopener">面试官：今日头条启动很快，你觉得可能是做了哪些优化？</a></p>
+<h4 id="GC-优化"><a href="#GC-优化" class="headerlink" title="GC 优化"></a>GC 优化</h4><hr>
+<p>支付宝提出一种 <a href="https://mp.weixin.qq.com/s/ePjxcyF3N1vLYvD5dPIjUw" target="_blank" rel="noopener">GC 抑制</a> 的方案</p>
 <p>在启动过程，要尽量减少 GC 的次数，避免造成主线程长时间的卡顿。</p>
 <p>特别是对 Dalvik 来说，我们可以通过 systrace 单独查看整个启动过程 GC 的时间。</p>
 <pre><code>python systrace.py dalvik -b 90960 -a com.sample.gc</code></pre><pre><code>// GC使用的总耗时，单位是毫秒
 Debug.getRuntimeStat(&quot;art.gc.gc-time&quot;);
 // 阻塞式GC的总耗时
 Debug.getRuntimeStat(&quot;art.gc.blocking-gc-time&quot;);</code></pre><p>启动过程避免进行大量的字符串操作，特别是序列化跟反序列化过程。一些频繁创建的对象，例如网络库和图片库中的 Byte 数组、Buffer 可以复用。</p>
-<h4 id="系统调用优化"><a href="#系统调用优化" class="headerlink" title="系统调用优化"></a>系统调用优化</h4><p>通过 systrace 的 System Service 类型，我们可以看到启动过程 System Server 的 CPU 工作情况。在启动过程，我们尽量不要做系统调用，例如 PackageManagerService 操作、Binder 调用等待。</p>
+<h4 id="系统调用优化"><a href="#系统调用优化" class="headerlink" title="系统调用优化"></a>系统调用优化</h4><hr>
+<p>通过 systrace 的 System Service 类型，我们可以看到启动过程 System Server 的 CPU 工作情况。在启动过程，我们尽量不要做系统调用，例如 PackageManagerService 操作、Binder 调用等待。</p>
 <p>在启动过程也不要过早地拉起应用的其他进程，System Server 和新的进程都会竞争 CPU 资源。</p>
-<h4 id="线程优化"><a href="#线程优化" class="headerlink" title="线程优化"></a>线程优化</h4><p>线程优化就像做填空题和解锁题，我们希望能把所有的时间片都利用上，因此主线程和各个线程都是一直满载的。当然我们也希望每个线程都开足马力向前跑，而不是作为接力棒。所以线程的优化主要在于减少 CPU 调度带来的波动，让应用的启动时间更加稳定。</p>
+<h4 id="线程优化"><a href="#线程优化" class="headerlink" title="线程优化"></a>线程优化</h4><hr>
+<p>线程优化就像做填空题和解锁题，我们希望能把所有的时间片都利用上，因此主线程和各个线程都是一直满载的。当然我们也希望每个线程都开足马力向前跑，而不是作为接力棒。所以线程的优化主要在于减少 CPU 调度带来的波动，让应用的启动时间更加稳定。</p>
 <p>从具体的做法来看，线程的优化一方面是控制线程数量，线程数量太多会相互竞争 CPU 资源，因此要有统一的线程池，并且根据机器性能来控制数量。</p>
 <p>3.2.1 启动器 提到，合理分配线程数量。</p>
 <p>另一方面是检查线程间的锁。</p>
-<h4 id="业务优化"><a href="#业务优化" class="headerlink" title="业务优化"></a>业务优化</h4><p>我们首先需要梳理清楚当前启动过程正在运行的每一个模块，哪些是一定需要的、哪些可以砍掉、哪些可以懒加载。</p>
+<h4 id="业务优化"><a href="#业务优化" class="headerlink" title="业务优化"></a>业务优化</h4><hr>
+<p>我们首先需要梳理清楚当前启动过程正在运行的每一个模块，哪些是一定需要的、哪些可以砍掉、哪些可以懒加载。</p>
 <p>通过梳理之后，剩下的都是启动过程一定要用的模块。</p>
 <p>这个时候，我们只能硬着头皮去做进一步的优化。优化前期需要“抓大放小”，先看看主线程究竟慢在哪里。</p>
 <p>退而求其次，我们要考虑这些任务是不是可以通过异步线程预加载实现（上面有讲到），但需要注意的是过多的线程预加载会让我们的逻辑变得更加复杂。</p>
-<h4 id="I-O-优化"><a href="#I-O-优化" class="headerlink" title="I/O 优化"></a>I/O 优化</h4><p>启动过程不建议出现网络 I/O</p>
+<h4 id="I-O-优化"><a href="#I-O-优化" class="headerlink" title="I/O 优化"></a>I/O 优化</h4><hr>
+<p>启动过程不建议出现网络 I/O</p>
 <p>磁盘 I/O 是启动优化一定要抠的点（敬请期待）</p>
 <p>还有一个是数据结构的选择问题，我们在启动过程只需要读取 Setting.sp 的几项数据，不过 SharedPreference 在初始化的时候还是要全部数据一起解析。如果它的数据量超过 1000 条，启动过程解析时间可能就超过 100 毫秒。如果只解析启动过程用到的数据项则会很大程度减少解析时间，启动过程适合使用随机读写的数据结构。（敬请期待）</p>
-<h4 id="3-4-7-保活"><a href="#3-4-7-保活" class="headerlink" title="3.4.7 保活"></a>3.4.7 保活</h4><p>保活可以减少 Application 创建跟初始化的时间，让冷启动变成温启动。不过在 Target 26 之后，保活的确变得越来越难。</p>
+<h4 id="保活"><a href="#保活" class="headerlink" title="保活"></a>保活</h4><hr>
+<p>保活可以减少 Application 创建跟初始化的时间，让冷启动变成温启动。不过在 Target 26 之后，保活的确变得越来越难。</p>
 <p>对于大厂来说，可能需要寻求厂商合作的机会，例如微信的 <a href="https://www.geekpark.net/news/233791" target="_blank" rel="noopener">Hardcoder</a> 方案和 OPPO 推出的Hyper Boost方案。根据 OPPO 的数据，对于手机 QQ、淘宝、微信启动场景会直接有 20% 以上的优化。</p>
 <p>有的时候你问为什么微信可以保活？为什么它可以运行的那么流畅？这里可能不仅仅是技术上的问题，当应用体量足够大，就可以倒逼厂商去专门为它们做优化。</p>
-<h4 id="3-4-8-插件化和热修复"><a href="#3-4-8-插件化和热修复" class="headerlink" title="3.4.8 插件化和热修复"></a>3.4.8 插件化和热修复</h4><p>大部分的框架在设计上都存在大量的 Hook 和私有 API 调用，带来的缺点主要有两个：</p>
+<h4 id="插件化和热修复"><a href="#插件化和热修复" class="headerlink" title="插件化和热修复"></a>插件化和热修复</h4><hr>
+<p>大部分的框架在设计上都存在大量的 Hook 和私有 API 调用，带来的缺点主要有两个：</p>
 <ul>
 <li>稳定性差。虽然大家都号称兼容 100% 的机型，由于厂商的兼容性、安装失败、dex2oat 失败等原因，还是会有那么一些代码和资源的异常。Android P 推出的 non-sdk-interface 调用限制，以后适配只会越来越难，成本越来越高。</li>
 <li>性能差。Android Runtime 每个版本都有很多的优化，因为插件化和热修复用到的一些黑科技，导致底层 Runtime 的优化我们是享受不到的。Tinker 框架在加载补丁后，应用启动速度会降低 5%～10%。</li>
 </ul>
 <p>应用加固对启动速度来说简直是灾难，有时候我们需要做一些权衡和选择。</p>
-<h2 id="四、启动监控"><a href="#四、启动监控" class="headerlink" title="四、启动监控"></a>四、启动监控</h2><p><a href="https://developer.android.google.cn/topic/performance/vitals/launch-time" target="_blank" rel="noopener">Android Vitals</a> </p>
+<h2 id="4-启动监控"><a href="#4-启动监控" class="headerlink" title="4 启动监控"></a>4 启动监控</h2><hr>
+<p><a href="https://developer.android.google.cn/topic/performance/vitals/launch-time#av" target="_blank" rel="noopener">Android Vitals</a> </p>
 
             </div>
             <hr/>
@@ -1286,19 +1334,19 @@ Debug.getRuntimeStat(&quot;art.gc.blocking-gc-time&quot;);</code></pre><p>启动
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/dalvikbase.html">
+                <a href="/2019/viewpage-indicator-bezierindicator.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Dalvik 寄存器">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="ViewPage滑动动画差值器">
                         
-                        <span class="card-title">Dalvik 寄存器</span>
+                        <span class="card-title">ViewPage滑动动画差值器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            dalvik
+                            Android
                         
                     </div>
                     <div class="publish-info">
@@ -1309,8 +1357,8 @@ Debug.getRuntimeStat(&quot;art.gc.blocking-gc-time&quot;);</code></pre><p>启动
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Hexo/" class="post-category">
-                                    Hexo
+                            <a href="/categories/Android/" class="post-category">
+                                    Android
                                 </a>
                             
                             
@@ -1320,8 +1368,20 @@ Debug.getRuntimeStat(&quot;art.gc.blocking-gc-time&quot;);</code></pre><p>启动
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/delvik/">
-                        <span class="chip bg-color">delvik</span>
+                    <a href="/tags/Android/">
+                        <span class="chip bg-color">Android</span>
+                    </a>
+                    
+                    <a href="/tags/ui/">
+                        <span class="chip bg-color">ui</span>
+                    </a>
+                    
+                    <a href="/tags/viewpage/">
+                        <span class="chip bg-color">viewpage</span>
+                    </a>
+                    
+                    <a href="/tags/ViewPageIndicator/">
+                        <span class="chip bg-color">ViewPageIndicator</span>
                     </a>
                     
                 </div>
@@ -1490,7 +1550,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">52.4k</span>&nbsp;字
+                class="white-color">53.2k</span>&nbsp;字
             
             
             

@@ -430,21 +430,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-03-30
+                    2020-04-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    228
+                    934
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -462,16 +462,34 @@
             <div id="articleContent">
                 <p>随着项目版本的迭代，<strong>App</strong> 的性能问题会逐渐暴露出来，而好的用户体验与性能表现紧密相关。 最近项目核心功能收尾，准备开启优化之路，打造一个高用户体验的 <strong>APP</strong></p>
 <h2 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h2><ul>
-<li><strong>App</strong> 初体验-启动优化</li>
-<li>其他</li>
+<li>App 启动优化💦</li>
+<li>App 内存优化💦</li>
 </ul>
 <p>技术不断更新，我将在边学习边实践的过程中进行分享，并将实践结果与大家分享，希望大家看到文章中有不足的地方及时给我留言，我将与大家积极讨论。</p>
-<hr>
-<h2 id="App-初体验-启动优化-more"><a href="#App-初体验-启动优化-more" class="headerlink" title="App 初体验-启动优化 more  "></a><a href="https://calmcenter.club/2019/Start_Optimization.html"><strong>App</strong> 初体验-启动优化 more  </a></h2><ul>
-<li>认识启动过程</li>
-<li>检测启动消耗<code>(敲黑板)</code></li>
-<li>启动优化<code>(干货)</code></li>
-</ul>
+<h2 id="App-启动优化💦"><a href="#App-启动优化💦" class="headerlink" title="App 启动优化💦"></a>App 启动优化💦</h2><hr>
+<table>
+<thead>
+<tr>
+<th><a href="https://calmcenter.club/2019/start-optimization.html">App 初体验-启动优化 more  </a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1 启动</strong> <br /><strong>2 检测启动消耗<code>(敲黑板)</code></strong>  <br />&nbsp;&nbsp;&nbsp;2.1 启动时间测量方式  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1.1 adb 命令启动时间测量方式 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1.2 手动打点 <br />&nbsp;&nbsp;&nbsp;2.2 启动耗时检测方式  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2.1 TraceView <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2.2 systrace <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2.3 systrace + 函数插桩 AOP <br /><strong>3 启动优化<code>(干货)</code></strong>  <br />&nbsp;&nbsp;&nbsp;3.1 闪屏页展示 <br />&nbsp;&nbsp;&nbsp;3.2 异步启动实践 <br />&nbsp;&nbsp;&nbsp;3.3 数据重排 <br />&nbsp;&nbsp;&nbsp;3.4 类的加载 <br />&nbsp;&nbsp;&nbsp;3.5 延迟加载方案 IdleHandler <br />&nbsp;&nbsp;&nbsp;3.6 其他优化思路 <br /><strong>4 启动监控</strong></td>
+</tr>
+</tbody></table>
+<h2 id="App-内存优化💦"><a href="#App-内存优化💦" class="headerlink" title="App 内存优化💦"></a>App 内存优化💦</h2><hr>
+<table>
+<thead>
+<tr>
+<th><a href="https://calmcenter.club/2020/memory-optimization.html">App 内存知识介绍 more  </a></th>
+<th><a href="http://localhost:4000/2020/memory-optimization2.html" target="_blank" rel="noopener">App 内存检测优化 more</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1 什么是内存？<br /></strong> <strong>2 JVM 如何分配内存？</strong>  <br />&nbsp;&nbsp;&nbsp;2.1 所有线程共享的数据区域 <br />&nbsp;&nbsp;&nbsp;2.2 线程私有的数据区域 <br /><strong>3 JVM 如何管理内存？</strong>  <br />&nbsp;&nbsp;&nbsp;3.1 引用计数算法 <br />&nbsp;&nbsp;&nbsp;3.2 可达性算法 <br />&nbsp;&nbsp;&nbsp;3.3 引用介绍 <br />&nbsp;&nbsp;&nbsp;3.4 垃圾回收器  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.4.1 标记-清除算法（Mark-Sweep） <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.4.2 复制算法（Copying） <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.4.3 标记-整理算法（Mark-Compact） <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.4.4 分代收集算法（Generational Collection） <br /><strong>4 什么是 Dalvik?</strong>  <br />&nbsp;&nbsp;&nbsp;4.1 Dalvik 与 JVM 的区别 <br />&nbsp;&nbsp;&nbsp;4.2 Dalvik 堆大小 <br /><strong>5 什么是 ART?</strong>  <br />&nbsp;&nbsp;&nbsp;5.1 ART 与 Dalvik 的区别 <br /><strong>6 内存引发的问题</strong> <br />&nbsp;&nbsp;&nbsp;6.1 内存泄漏  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.1.1 常见的内存泄漏 <br />&nbsp;&nbsp;&nbsp;6.2 低杀 <br />&nbsp;&nbsp;&nbsp;6.3 内存抖动 <br /><strong>7 Android Bitmap 内存分配的变化</strong> <br /><strong>8 内存优化的两个误区</strong>  <br />&nbsp;&nbsp;&nbsp;8.1 内存占用越少越好 <br />&nbsp;&nbsp;&nbsp;8.2 Native 内存不用管</td>
+<td><strong>1 什么是 Memory Profiler？</strong>  <br />&nbsp;&nbsp;&nbsp;1.1 使用介绍  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.1 启用高级分析 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.2 计算内存(每个内存类别当前使用多少内存) <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.3 查看内存分配(分配的对象数) <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.4 在分析时提高应用性能 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.5 捕获堆转储 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.6 将堆转储另存为 HPROF 文件 <br /><strong>2 什么是 MAT？</strong>  <br />&nbsp;&nbsp;&nbsp;2.1 使用前提 <br />&nbsp;&nbsp;&nbsp;2.2 使用介绍 <br /><strong>3 什么是 LeakCanary？</strong>  <br />&nbsp;&nbsp;&nbsp;3.1 LeakCanary 原理 <br />&nbsp;&nbsp;&nbsp;3.2 LeakCanary 使用 <br /><strong>4 自定义实现 Demo</strong>  <br />&nbsp;&nbsp;&nbsp;4.1 自动化监测 Demo <br />&nbsp;&nbsp;&nbsp;4.2 重复图片监测 Demo <br /><strong>5 优化思路</strong>  <br />&nbsp;&nbsp;&nbsp;5.1 设备分级 <br />&nbsp;&nbsp;&nbsp;5.2 Bitmap 优化 <br /><strong>6 更多</strong></td>
+</tr>
+</tbody></table>
 <p><a href="https://time.geekbang.org/column/article/74044" target="_blank" rel="noopener">极客时间 Android开发高手课</a>  </p>
 <p><a href="https://coding.imooc.com/learn/list/308.html" target="_blank" rel="noopener">慕课 Top团队大牛带你玩转Android性能分析与优化</a></p>
 <p><strong>注意：如果出现图片不显示问题请移步</strong> <a href="https://calmcenter.club/2019/PicNotShow.html">图片不显示问题</a></p>
@@ -973,43 +991,6 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/zhi-chang-de-zhen-xiang.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="职场的真相">
-                        
-                        <span class="card-title">职场的真相</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            原作者公众号 [caoz的梦呓]
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-15
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            CalmCenter
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/2019/complete-works-of-hexo.html">
                     <div class="card-image">
                         
@@ -1026,9 +1007,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-01
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-01
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1044,10 +1025,6 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/github/">
-                        <span class="chip bg-color">github</span>
-                    </a>
-                    
                     <a href="/tags/Hexo/">
                         <span class="chip bg-color">Hexo</span>
                     </a>
@@ -1060,12 +1037,69 @@
                         <span class="chip bg-color">git</span>
                     </a>
                     
+                    <a href="/tags/github/">
+                        <span class="chip bg-color">github</span>
+                    </a>
+                    
                     <a href="/tags/libe2d/">
                         <span class="chip bg-color">libe2d</span>
                     </a>
                     
                     <a href="/tags/%E5%8D%9A%E5%AE%A2/">
                         <span class="chip bg-color">博客</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/complete-works-of-android-performance.html">
+                    <div class="card-image">
+                        
+                        <img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200228233120.jpg" class="responsive-img" alt="Android 性能优化篇">
+                        
+                        <span class="card-title">Android 性能优化篇</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Android 性能优化大全
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android/" class="post-category">
+                                    Android
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android/">
+                        <span class="chip bg-color">Android</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+                        <span class="chip bg-color">性能优化</span>
                     </a>
                     
                 </div>
@@ -1234,7 +1268,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">52.4k</span>&nbsp;字
+                class="white-color">53.2k</span>&nbsp;字
             
             
             

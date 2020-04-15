@@ -462,7 +462,7 @@
             <div id="articleContent">
                 <h1 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h1><hr>
 <ul>
-<li>1 什么是 Memory Profiler？<ul>
+<li><strong>1 什么是 Memory Profiler？</strong><ul>
 <li>1.1 使用介绍<ul>
 <li>1.1.1 启用高级分析</li>
 <li>1.1.2 计算内存(每个内存类别当前使用多少内存)</li>
@@ -474,27 +474,27 @@
 </li>
 </ul>
 </li>
-<li>2 什么是 MAT？<ul>
+<li><strong>2 什么是 MAT？</strong><ul>
 <li>2.1 使用前提</li>
 <li>2.2 使用介绍</li>
 </ul>
 </li>
-<li>3 什么是 LeakCanary？<ul>
+<li><strong>3 什么是 LeakCanary？</strong><ul>
 <li>3.1 LeakCanary 原理</li>
 <li>3.2 LeakCanary 使用</li>
 </ul>
 </li>
-<li>4 自定义实现 Demo<ul>
+<li><strong>4 自定义实现 Demo</strong><ul>
 <li>4.1 自动化监测 Demo</li>
 <li>4.2 重复图片监测 Demo</li>
 </ul>
 </li>
-<li>5 优化思路<ul>
+<li><strong>5 优化思路</strong><ul>
 <li>5.1 设备分级</li>
 <li>5.2 Bitmap 优化</li>
 </ul>
 </li>
-<li>6 更多</li>
+<li><strong>6 更多</strong></li>
 </ul>
 <blockquote>
 <p>一个好的架构可以减少甚至避免我们犯错，而一个好的监控可以帮助我们及时发现问题。</p>
@@ -540,13 +540,15 @@
 <li>垃圾回收事件</li>
 </ul>
 <p>在 Android 8.0 及更高版本上，始终为可调试应用启用高级分析。</p>
-<h4 id="1-1-1-启用高级分析"><a href="#1-1-1-启用高级分析" class="headerlink" title="1.1.1  启用高级分析"></a>1.1.1  启用高级分析</h4><ol>
+<h4 id="1-1-1-启用高级分析"><a href="#1-1-1-启用高级分析" class="headerlink" title="1.1.1  启用高级分析"></a>1.1.1  启用高级分析</h4><hr>
+<ol>
 <li>依次选择 <strong>Run &gt; Edit Configurations</strong>。</li>
 <li>在左侧窗格中选择本应用模块。</li>
 <li>点击 <strong>Profiling</strong> 标签，然后勾选 <strong>Enable advanced profiling</strong>。</li>
 <li>重新编译并运行应用。</li>
 </ol>
-<h4 id="1-1-2-计算内存-每个内存类别当前使用多少内存"><a href="#1-1-2-计算内存-每个内存类别当前使用多少内存" class="headerlink" title="1.1.2 计算内存(每个内存类别当前使用多少内存)"></a>1.1.2 计算内存(每个内存类别当前使用多少内存)</h4><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200414112438.png" style="zoom:90%">
+<h4 id="1-1-2-计算内存-每个内存类别当前使用多少内存"><a href="#1-1-2-计算内存-每个内存类别当前使用多少内存" class="headerlink" title="1.1.2 计算内存(每个内存类别当前使用多少内存)"></a>1.1.2 计算内存(每个内存类别当前使用多少内存)</h4><hr>
+<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200414112438.png" style="zoom:90%">
 
 <p>内存计数中的类别如下：</p>
 <ul>
@@ -568,7 +570,8 @@
 </li>
 </ul>
 <p><strong>注意：</strong>高级分析配置会使编译过程变慢，所以仅在想要开始分析应用时，才应启用该配置。</p>
-<h4 id="1-1-3-查看内存分配-分配的对象数"><a href="#1-1-3-查看内存分配-分配的对象数" class="headerlink" title="1.1.3 查看内存分配(分配的对象数)"></a>1.1.3 查看内存分配(分配的对象数)</h4><p>对于 <code>Android 8.0</code> 及更高版本，选择一个现有时间轴区域以查看对象分配</p>
+<h4 id="1-1-3-查看内存分配-分配的对象数"><a href="#1-1-3-查看内存分配-分配的对象数" class="headerlink" title="1.1.3 查看内存分配(分配的对象数)"></a>1.1.3 查看内存分配(分配的对象数)</h4><hr>
+<p>对于 <code>Android 8.0</code> 及更高版本，选择一个现有时间轴区域以查看对象分配</p>
 <p>对于 <code>Android 7.1</code> 及更低版本，必须明确记录内存分配，点击 <code>Memory Profiler</code> 工具栏中的 <code>Record memory allocations</code> 图标或者 一个 <code>Record</code> 的按钮。记录时，<code>Memory Profiler</code> 会跟踪应用中发生的所有分配。完成后，请点击 <code>Stop recording</code> 图标或者一个 <code>Stop</code> 的按钮，查看分配。</p>
 <p><strong>注意</strong>：在 <code>Android 7.1</code> 及更低版本上，最多可以记录 <code>65535</code> 个分配。 如果记录会话超出此限制，则记录中仅保存最新的 <code>65535</code> 个分配。（在 <code>Android 8.0</code> 及更高版本上，则没有实际的限制。）</p>
 <img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200414135710.png" style="zoom:70%">
@@ -592,13 +595,15 @@
 <li><strong>Arrange by package</strong>：根据软件包名称对所有分配进行分组。</li>
 <li><strong>Arrange by callstack</strong>：将所有分配分组到其对应的调用堆栈。只有在记录分配期间 <code>捕获堆转储</code> 时，此选项才有效。即便如此，堆中也很可能有在开始记录之前分配的对象，所以会先显示这些分配，直接按类名称列出它们。</li>
 </ul>
-<h4 id="1-1-4-在分析时提高应用性能"><a href="#1-1-4-在分析时提高应用性能" class="headerlink" title="1.1.4 在分析时提高应用性能"></a>1.1.4 在分析时提高应用性能</h4><p>为了在分析时提高应用性能，<code>Memory Profiler</code> 在默认情况下会定期对内存分配进行采样。在运行 <code>API</code> 级别 <code>26</code> 或更高级别的设备上进行测试时，可以使用 <code>Allocation Tracking</code> 下拉菜单来更改此行为。可用选项如下：</p>
+<h4 id="1-1-4-在分析时提高应用性能"><a href="#1-1-4-在分析时提高应用性能" class="headerlink" title="1.1.4 在分析时提高应用性能"></a>1.1.4 在分析时提高应用性能</h4><hr>
+<p>为了在分析时提高应用性能，<code>Memory Profiler</code> 在默认情况下会定期对内存分配进行采样。在运行 <code>API</code> 级别 <code>26</code> 或更高级别的设备上进行测试时，可以使用 <code>Allocation Tracking</code> 下拉菜单来更改此行为。可用选项如下：</p>
 <ul>
 <li><strong>Full</strong>：捕获内存中的所有对象分配。这是 <code>Android Studio 3.2</code> 及更低版本中的默认行为。如果您有一个分配了大量对象的应用，则可能会在分析时观察到应用的运行速度明显减慢。</li>
 <li><strong>Sampled</strong>：定期对内存中的对象分配进行采样。这是默认选项，在分析时对应用性能的影响较小。在短时间内分配大量对象的应用仍可能会表现出明显的速度减慢。</li>
 <li><strong>Off</strong>：停止跟踪应用的内存分配。</li>
 </ul>
-<h4 id="1-1-5-捕获堆转储"><a href="#1-1-5-捕获堆转储" class="headerlink" title="1.1.5 捕获堆转储"></a>1.1.5 捕获堆转储</h4><p>堆转储显示在捕获堆转储时应用中哪些对象正在使用内存。特别是在长时间的用户会话后，堆转储会显示认为不应再位于内存中却仍在内存中的对象，从而帮助识别内存泄露。</p>
+<h4 id="1-1-5-捕获堆转储"><a href="#1-1-5-捕获堆转储" class="headerlink" title="1.1.5 捕获堆转储"></a>1.1.5 捕获堆转储</h4><hr>
+<p>堆转储显示在捕获堆转储时应用中哪些对象正在使用内存。特别是在长时间的用户会话后，堆转储会显示认为不应再位于内存中却仍在内存中的对象，从而帮助识别内存泄露。</p>
 <img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200414161957.png" style="zoom:40%">
 
 <p>要捕获堆转储，请点击 Memory Profiler 工具栏中的 <strong>Dump Java heap</strong> 图标 <img src="https://developer.android.google.cn/studio/images/buttons/profiler-heap-dump.png" style="zoom:70%">  在转储堆期间，Java 内存量可能会暂时增加。 这很正常，因为堆转储与您的应用发生在同一进程中，并需要一些内存来收集数据。</p>
@@ -622,7 +627,8 @@
 </ul>
 <p>如果你 <code>ClassName</code> 选中的是 <code>Bitmap</code> ,在 <code>7.1</code> 及以下版本的设备中 <code>Call Sack</code>位置会出现 <code>Bitmap Preview</code> 功能，来预览是哪张图片</p>
 <p><code>References</code> 标签页，显示对该对象的每个引用，如果发现某个引用可能在泄露内存，右键点击它并选择 <code>Go to Instance</code>。这样会从堆转储中选择相应的实例，从而显示它自己的实例数据。</p>
-<h4 id="1-1-5-将堆转储另存为-HPROF-文件"><a href="#1-1-5-将堆转储另存为-HPROF-文件" class="headerlink" title="1.1.5 将堆转储另存为 HPROF 文件"></a>1.1.5 将堆转储另存为 HPROF 文件</h4><p>在 Android Studio 3.1 及更低版本中，<code>Export capture to file</code> 按钮 <img src="https://developer.android.google.cn/studio/images/buttons/profiler-export-hprof.png" alt="img"> 位于时间轴下方工具栏的左侧</p>
+<h4 id="1-1-6-将堆转储另存为-HPROF-文件"><a href="#1-1-6-将堆转储另存为-HPROF-文件" class="headerlink" title="1.1.6 将堆转储另存为 HPROF 文件"></a>1.1.6 将堆转储另存为 HPROF 文件</h4><hr>
+<p>在 Android Studio 3.1 及更低版本中，<code>Export capture to file</code> 按钮 <img src="https://developer.android.google.cn/studio/images/buttons/profiler-export-hprof.png" alt="img"> 位于时间轴下方工具栏的左侧</p>
 <p>在 Android Studio 3.2 及更高版本中，<code>Sessions</code> 窗格中每个 <code>Heap Dump</code>条目的右侧都有一个 <code>Export Heap Dump</code> 按钮。在随即显示的 <code>Export As</code> 对话框中，使用 <code>.hprof</code>  文件扩展名保存文件。</p>
 <h2 id="2-什么是-MAT"><a href="#2-什么是-MAT" class="headerlink" title="2 什么是 MAT?"></a>2 什么是 MAT?</h2><hr>
 <p>对于内存泄漏问题，Memory Profiler 只能给我们提供一个简单的分析，不能够帮我们确认具体发生问题的地方。</p>
@@ -642,7 +648,8 @@
 <li>打开 MAT</li>
 </ol>
 <p><code>File &gt; open Heap dump</code> ，选择我们转换后的文件</p>
-<h3 id="2-2-使用介绍"><a href="#2-2-使用介绍" class="headerlink" title="2.2 使用介绍"></a>2.2 使用介绍</h3><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200414173426.png" style="zoom:60%">
+<h3 id="2-2-使用介绍"><a href="#2-2-使用介绍" class="headerlink" title="2.2 使用介绍"></a>2.2 使用介绍</h3><hr>
+<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200414173426.png" style="zoom:60%">
 
 <ul>
 <li><p><strong>Overview</strong>：概览信息</p>
@@ -692,7 +699,8 @@
 <p>如果使用 MAT 来分析内存问题，会有一些难度，而且效率也不是很高。</p>
 <p>为了能迅速发现内存泄漏，Square 公司基于 MAT 开源了 <a href="https://square.github.io/leakcanary" target="_blank" rel="noopener">LeakCanary</a>。</p>
 <p><code>LeakCanary</code> 是一个内存泄漏检测框架。</p>
-<h3 id="3-1-LeakCanary-原理"><a href="#3-1-LeakCanary-原理" class="headerlink" title="3.1 LeakCanary 原理"></a>3.1 LeakCanary 原理</h3><ol>
+<h3 id="3-1-LeakCanary-原理"><a href="#3-1-LeakCanary-原理" class="headerlink" title="3.1 LeakCanary 原理"></a>3.1 LeakCanary 原理</h3><hr>
+<ol>
 <li><p><strong>检测保留的实例</strong></p>
 <p><code>LeakCanary</code> 是基于 <code>LeakSentry</code> 开发的，<code>LeakSentry</code> 会 <code>hook Android</code> 生命周期，自动检测当 <code>Activity</code> 或 <code>Fragment</code> 被销毁时，它们的实例是否被回收了。</p>
 <p>销毁的实例会传给 <code>RefWatcher</code>，<code>RefWatcher</code> 会持有它们的弱引用。</p>
@@ -711,7 +719,8 @@
 <p>当有两个泄漏分析结果相同时，<code>LeakCanary</code> <strong>为每个泄漏跟踪</strong>创建一个<strong>签名</strong>，并将具有相同签名的泄漏（即，由同一 <code>bug</code> 引起的泄漏）组合在一起，以免重复显示同样的泄漏信息。</p>
 </li>
 </ol>
-<h3 id="3-2-LeakCanary-使用"><a href="#3-2-LeakCanary-使用" class="headerlink" title="3.2 LeakCanary 使用"></a>3.2 LeakCanary 使用</h3><pre class=" language-groovy"><code class="language-groovy">dependencies <span class="token punctuation">{</span>
+<h3 id="3-2-LeakCanary-使用"><a href="#3-2-LeakCanary-使用" class="headerlink" title="3.2 LeakCanary 使用"></a>3.2 LeakCanary 使用</h3><hr>
+<pre class=" language-groovy"><code class="language-groovy">dependencies <span class="token punctuation">{</span>
   debugImplementation <span class="token string">'com.squareup.leakcanary:leakcanary-android:2.2'</span>
 <span class="token punctuation">}</span></code></pre>
 <p><code>2.2</code> 不需要初始化，如果你添加了</p>
@@ -722,7 +731,8 @@
     exclude <span class="token string">'leakcanary'</span>
 <span class="token punctuation">}</span></code></pre>
 <p>否则会报 <code>Unable to get provider leakcanary.internal.LeakCanaryFileProvider: java.lang.ClassNotFoundException: Didn&#39;t find class &quot;leakcanary.internal.LeakCanaryFileProvider&quot;</code></p>
-<h2 id="4-自定义实现-Demo"><a href="#4-自定义实现-Demo" class="headerlink" title="4 自定义实现 Demo"></a>4 自定义实现 Demo</h2><p><code>Profiler</code> 中使用了 <code>Allocation Tracker</code> 技术，<a href="https://mp.weixin.qq.com/s/b_lFfL1mDrNVKj_VAcA2ZA?" target="_blank" rel="noopener">Android内存申请分析</a> 这篇文章讲述了 <code>Allocation Tracker</code> 的使用方式，并且讲解了 <code>Android Studio</code> 是如何使用 <code>Allocation Tracker</code> 的。可以让我们更加熟悉 <code>Android Studio</code> 中 <code>Profiler</code> 各种工具的实现原理后。</p>
+<h2 id="4-自定义实现-Demo"><a href="#4-自定义实现-Demo" class="headerlink" title="4 自定义实现 Demo"></a>4 自定义实现 Demo</h2><hr>
+<p><code>Profiler</code> 中使用了 <code>Allocation Tracker</code> 技术，<a href="https://mp.weixin.qq.com/s/b_lFfL1mDrNVKj_VAcA2ZA?" target="_blank" rel="noopener">Android内存申请分析</a> 这篇文章讲述了 <code>Allocation Tracker</code> 的使用方式，并且讲解了 <code>Android Studio</code> 是如何使用 <code>Allocation Tracker</code> 的。可以让我们更加熟悉 <code>Android Studio</code> 中 <code>Profiler</code> 各种工具的实现原理后。</p>
 <p>文中提到了 <code>Allocation Tracker</code> 的三个缺点。</p>
 <ul>
 <li>获取的信息过于分散，中间夹杂着不少其他的信息，很多信息不是应用申请的，可能需要进行不少查找才能定位到具体的问题。</li>
@@ -731,7 +741,8 @@
 </ul>
 <p>因此我们希望可以做到脱离 <code>Android Studio</code>，实现一个自定义的 <code>Allocation Tracker</code>，实现对象内存的自动化分析。通过这个工具可以获取所有对象的申请信息（大小、类型、堆栈等），可以找到一段时间内哪些对象占用了大量的内存。</p>
 <p>我们可以用自定义的 <code>Allocation Tracker</code> 来监控 Java 内存的监控，也可以拓展成实时监控 <code>Java</code> 内存泄漏。不过任何一个工具如果只需要做到线下自动化测试，实现起来会相对简单，但想要移植到线上使用，那就要更加关注兼容性、稳定性和性能。</p>
-<h3 id="4-1-自动化检测Demo"><a href="#4-1-自动化检测Demo" class="headerlink" title="4.1 自动化检测Demo"></a>4.1 自动化检测Demo</h3><p>这是一个自定义 <code>Allocation Tracker</code> 的 <code>Demo</code> <a href="https://github.com/AndroidAdvanceWithGeektime/Chapter03" target="_blank" rel="noopener">极客时间 Android 高手课 Chapter03</a></p>
+<h3 id="4-1-自动化检测Demo"><a href="#4-1-自动化检测Demo" class="headerlink" title="4.1 自动化检测Demo"></a>4.1 自动化检测Demo</h3><hr>
+<p>这是一个自定义 <code>Allocation Tracker</code> 的 <code>Demo</code> <a href="https://github.com/AndroidAdvanceWithGeektime/Chapter03" target="_blank" rel="noopener">极客时间 Android 高手课 Chapter03</a></p>
 <blockquote>
 <p>项目使用了 inline hook 来拦截内存对象分配时候的 RecordAllocation 函数，通过拦截该接口可以快速获取到当时分配对象的类名和分配的内存大小。<br>在初始化的时候我们设置了一个分配对象数量的最大值，如果从 start 开始对象分配数量超过最大值就会触发内存 dump，然后清空 alloc 对象列表，重新计算。该功能和 Android Studio 里的 Allocation Tracker 类似，只不过可以在代码级别更细粒度的进行控制。可以精确到方法级别。</p>
 </blockquote>
@@ -761,7 +772,8 @@
 <p>这个 <code>Demo</code>  主要学习了 <code>Substrate</code> <a href="https://github.com/facebookincubator/profilo/tree/master/deps/fbjni" target="_blank" rel="noopener">fbjni</a> <code>ndk_dlopen</code> 这几个库的简单使用，<code>CmakeList</code>  的很多写法，以及 <code>native</code> 函数简写</p>
 <pre><code>#define JNI_METHOD_DECL(ret_type, method_name) \
      extern &quot;C&quot; JNIEXPORT ret_type JNICALL Java_##com_dodola_alloctrack##_##AllocTracker##_##method_name</code></pre><p>还了解了一些 <code>hook</code> 点以及 <code>hook</code> 方法。</p>
-<h3 id="4-2-重复图片检测Demo"><a href="#4-2-重复图片检测Demo" class="headerlink" title="4.2 重复图片检测Demo"></a>4.2 重复图片检测Demo</h3><p><a href="https://github.com/simplezhli/Chapter04" target="_blank" rel="noopener">极客时间 Android 高手课 Chapter04</a> 已完成的 <code>Demo</code> </p>
+<h3 id="4-2-重复图片检测Demo"><a href="#4-2-重复图片检测Demo" class="headerlink" title="4.2 重复图片检测Demo"></a>4.2 重复图片检测Demo</h3><hr>
+<p><a href="https://github.com/simplezhli/Chapter04" target="_blank" rel="noopener">极客时间 Android 高手课 Chapter04</a> 已完成的 <code>Demo</code> </p>
 <blockquote>
 <p>通过分析内存文件 hprof 快速判断内存中是否存在重复的图片，并且将这些重复图片的 PNG 、堆栈等信息输出。</p>
 <p><strong>需要注意的是需要使用8.0以下的机器，因为8.0以后Bitmap中的buffer已经放到native内存中了</strong></p>
@@ -782,7 +794,9 @@ Debug.dumpHprofData(file.getAbsolutePath());</code></pre><p>接下来在<code>Du
 <p>这个 <code>Demo</code> 主要学到了如何主动生成 <code>hprof</code> 文件，以及如何用 <a href="https://github.com/square/haha" target="_blank" rel="noopener">HAHA</a> 这个库解析 <code>hprof</code> 文件。</p>
 <p>联想：可以在特定场合去 <code>dump</code> 文件，比如内存大于最大内存 80%，因为 <code>hprof</code> 文件可能会很大，所以在用户 <code>wifi</code> 情况下回传。</p>
 <p><a href="https://github.com/Tencent/matrix#matrix_android_cn" target="_blank" rel="noopener">Tencent/matrix</a> 这个框架拥有更丰富的检测方式。</p>
-<h2 id="5-优化思路"><a href="#5-优化思路" class="headerlink" title="5 优化思路"></a>5 优化思路</h2><h3 id="5-1-设备分级"><a href="#5-1-设备分级" class="headerlink" title="5.1 设备分级"></a>5.1 设备分级</h3><p>内存优化首先需要根据设备环境来综合考虑</p>
+<h2 id="5-优化思路"><a href="#5-优化思路" class="headerlink" title="5 优化思路"></a>5 优化思路</h2><hr>
+<h3 id="5-1-设备分级"><a href="#5-1-设备分级" class="headerlink" title="5.1 设备分级"></a>5.1 设备分级</h3><hr>
+<p>内存优化首先需要根据设备环境来综合考虑</p>
 <ul>
 <li><strong>设备分级</strong>。使用类似 <a href="http://github.com/facebook/device-year-class" target="_blank" rel="noopener">device-year-class</a> 的策略对设备分级，对于低端机用户可以关闭复杂的动画，或者是某些功能；使用 565 格式的图片，使用更小的缓存内存等。<ul>
 <li><code>device-year-class</code> 会根据手机的内存、CPU 核心数和频率等信息决定设备属于哪一个年份，这个示例表示对于 2013 年之后的设备可以使用复杂的动画，对于 2010 年之前的低端设备则不添加任何动画。</li>
@@ -799,7 +813,8 @@ Debug.dumpHprofData(file.getAbsolutePath());</code></pre><p>接下来在<code>Du
 <li><strong>进程模型</strong>。一个空的进程也会占用 10MB 的内存，而有些应用启动就有十几个进程，甚至有些应用已经从双进程保活升级到四进程保活，所以减少应用启动的进程数、减少常驻进程、有节操的保活，对低端机内存优化非常重要。</li>
 <li><strong>安装包大小</strong>。安装包中的代码、资源、图片以及 so 库的体积，跟它们占用的内存有很大的关系。一个 80MB 的应用很难在 512MB 内存的手机上流畅运行。这种情况我们需要考虑针对低端机用户推出 4MB 的轻量版本，例如 <code>Facebook Lite</code>、今日头条极速版都是这个思路。</li>
 </ul>
-<h3 id="5-2-Bitmap-优化"><a href="#5-2-Bitmap-优化" class="headerlink" title="5.2 Bitmap 优化"></a>5.2 Bitmap 优化</h3><p><code>Bitmap</code> 内存一般占应用总内存很大一部分，所以做内存优化永远无法避开图片内存这个“永恒主题”。</p>
+<h3 id="5-2-Bitmap-优化"><a href="#5-2-Bitmap-优化" class="headerlink" title="5.2 Bitmap 优化"></a>5.2 Bitmap 优化</h3><hr>
+<p><code>Bitmap</code> 内存一般占应用总内存很大一部分，所以做内存优化永远无法避开图片内存这个“永恒主题”。</p>
 <ol>
 <li>统一图片库</li>
 </ol>
@@ -816,8 +831,11 @@ Debug.dumpHprofData(file.getAbsolutePath());</code></pre><p>接下来在<code>Du
 </ul>
 </li>
 </ol>
-<h2 id="6-更多"><a href="#6-更多" class="headerlink" title="6 更多"></a>6 更多</h2><h3 id="6-1-监听系统内存状态"><a href="#6-1-监听系统内存状态" class="headerlink" title="6.1 监听系统内存状态"></a>6.1 监听系统内存状态</h3><p>Android 提供了两种方式让我们可以监听系统内存状态</p>
-<h4 id="6-1-1-ComponentCallback2"><a href="#6-1-1-ComponentCallback2" class="headerlink" title="6.1.1 ComponentCallback2"></a>6.1.1 ComponentCallback2</h4><p>在 <code>Android 4.0</code> 后，<code>Android</code> 应用可以通过在 <code>Activity</code> 中实现 <code>ComponentCallback2</code> 接口获取系统内存的相关事件，这样就能在系统内存不足时提前知道这件事，提前做出释放内存的操作，避免我们自己的应用被系统干掉。</p>
+<h2 id="6-更多"><a href="#6-更多" class="headerlink" title="6 更多"></a>6 更多</h2><hr>
+<h3 id="6-1-监听系统内存状态"><a href="#6-1-监听系统内存状态" class="headerlink" title="6.1 监听系统内存状态"></a>6.1 监听系统内存状态</h3><hr>
+<p>Android 提供了两种方式让我们可以监听系统内存状态</p>
+<h4 id="6-1-1-ComponentCallback2"><a href="#6-1-1-ComponentCallback2" class="headerlink" title="6.1.1 ComponentCallback2"></a>6.1.1 ComponentCallback2</h4><hr>
+<p>在 <code>Android 4.0</code> 后，<code>Android</code> 应用可以通过在 <code>Activity</code> 中实现 <code>ComponentCallback2</code> 接口获取系统内存的相关事件，这样就能在系统内存不足时提前知道这件事，提前做出释放内存的操作，避免我们自己的应用被系统干掉。</p>
 <p><code>ComponentCallnback2</code> 提供了 <code>onTrimMemory(level)</code> 回调方法，在这个方法里我们可以针对不同的警告等级做出不同的释放内存操作。</p>
 <p>原文是 <code>kotlin</code> 版，这里给出一个 <code>java</code> 版</p>
 <pre><code>public class MainActivity2 extends AppCompatActivity implements ComponentCallbacks2 {
@@ -862,7 +880,8 @@ Debug.dumpHprofData(file.getAbsolutePath());</code></pre><p>接下来在<code>Du
                 break;
         }
     }
-}</code></pre><h4 id="6-1-2-ActivityManager-getMemoryInfo"><a href="#6-1-2-ActivityManager-getMemoryInfo" class="headerlink" title="6.1.2 ActivityManager.getMemoryInfo()"></a>6.1.2 ActivityManager.getMemoryInfo()</h4><p>Android 提供了一个 <code>ActivityManager.getMemoryInfo()</code> 方法给我们查询内存信息，这个方法会返回一个 <code>ActivityManager.MemoryInfo</code> 对象，这个对象包含了系统当前内存状态，这些状态信息包括可用内存、总内存以及低杀内存阈值。</p>
+}</code></pre><h4 id="6-1-2-ActivityManager-getMemoryInfo"><a href="#6-1-2-ActivityManager-getMemoryInfo" class="headerlink" title="6.1.2 ActivityManager.getMemoryInfo()"></a>6.1.2 ActivityManager.getMemoryInfo()</h4><hr>
+<p>Android 提供了一个 <code>ActivityManager.getMemoryInfo()</code> 方法给我们查询内存信息，这个方法会返回一个 <code>ActivityManager.MemoryInfo</code> 对象，这个对象包含了系统当前内存状态，这些状态信息包括可用内存、总内存以及低杀内存阈值。</p>
 <p><code>MemoryInfo</code> 中包含了一个 <code>lowMemory</code> 布尔值，这个布尔值用于表明系统是否处于低内存状态。</p>
 <p>原文是 <code>kotlin</code> 版，这里给出一个 <code>java</code> 版</p>
 <pre><code>public void doSomethingMemoryIntensive() {
@@ -878,32 +897,41 @@ Debug.dumpHprofData(file.getAbsolutePath());</code></pre><p>接下来在<code>Du
         ActivityManager.MemoryInfo MemoryInfo = new ActivityManager.MemoryInfo();
         activityManager.getMemoryInfo(MemoryInfo);
         return MemoryInfo;
-    }</code></pre><h3 id="6-2-内存优化技巧"><a href="#6-2-内存优化技巧" class="headerlink" title="6.2 内存优化技巧"></a>6.2 内存优化技巧</h3><h4 id="6-2-1-谨慎使用-Service"><a href="#6-2-1-谨慎使用-Service" class="headerlink" title="6.2.1 谨慎使用 Service"></a>6.2.1 谨慎使用 Service</h4><p>让一个没用的 <code>Service</code> 在后台运行对于一个应用的内存管理来说是一件最糟糕的事情。</p>
+    }</code></pre><h3 id="6-2-内存优化技巧"><a href="#6-2-内存优化技巧" class="headerlink" title="6.2 内存优化技巧"></a>6.2 内存优化技巧</h3><hr>
+<h4 id="6-2-1-谨慎使用-Service"><a href="#6-2-1-谨慎使用-Service" class="headerlink" title="6.2.1 谨慎使用 Service"></a>6.2.1 谨慎使用 Service</h4><hr>
+<p>让一个没用的 <code>Service</code> 在后台运行对于一个应用的内存管理来说是一件最糟糕的事情。</p>
 <p>要在 <code>Service</code> 的任务完成后停止它，不然 <code>Service</code> 占用的这块内存会泄漏。</p>
 <p>当你的应用中运行着一个 <code>Service</code>，除非系统内存不足，否则它不会被干掉。</p>
 <p>这就导致对于系统来说 <code>Service</code> 的运行成本很高，因为 <code>Service</code> 占用的内存其他的进程是不能使用的。</p>
 <p><code>Android</code> 有一个缓存进程列表，当可用内存减少时，这个列表也会随之缩小，这就会导致应用间的切换变得很慢。</p>
 <p>如果我们是用 <code>Service</code> 监听一些系统广播，希望在特定情况下再启动事务，可以考虑使用 <code>JobScheduler</code>。</p>
 <p>如果你真的要用 <code>Service</code>，可以考虑使用 <code>IntentService</code>，<code>IntentService</code> 是 <code>Service</code> 的一个子类，在它的内部有一个工作线程来处理耗时任务，当任务执行完后，<code>IntentService</code> 就会自动停止。</p>
-<h4 id="6-2-2-选择优化后的数据容器"><a href="#6-2-2-选择优化后的数据容器" class="headerlink" title="6.2.2 选择优化后的数据容器"></a>6.2.2 选择优化后的数据容器</h4><p><code>Java</code> 提供的部分数据容器并不适合 <code>Android</code>，比如 <code>HashMap</code>，<code>HashMap</code> 需要中存储每一个键值对都需要一个额外的 <code>Entry</code> 对象。</p>
+<h4 id="6-2-2-选择优化后的数据容器"><a href="#6-2-2-选择优化后的数据容器" class="headerlink" title="6.2.2 选择优化后的数据容器"></a>6.2.2 选择优化后的数据容器</h4><hr>
+<p><code>Java</code> 提供的部分数据容器并不适合 <code>Android</code>，比如 <code>HashMap</code>，<code>HashMap</code> 需要中存储每一个键值对都需要一个额外的 <code>Entry</code> 对象。</p>
 <p>Android 提供了几个优化后的数据容器，包括 <code>SparseArray</code>、<code>SparseBooleanArray</code> 以及 <code>LongSparseArray</code>。</p>
 <p><code>SparseArray</code> 之所以更高效，是因为它的设计是只能使用整型作为 <code>key</code>，这样就避免了自动装箱的开销。</p>
-<h4 id="6-2-3-小心代码抽象"><a href="#6-2-3-小心代码抽象" class="headerlink" title="6.2.3 小心代码抽象"></a>6.2.3 小心代码抽象</h4><p>抽象可以优化代码的灵活性和可维护性，但是抽象也会带来其他成本。</p>
+<h4 id="6-2-3-小心代码抽象"><a href="#6-2-3-小心代码抽象" class="headerlink" title="6.2.3 小心代码抽象"></a>6.2.3 小心代码抽象</h4><hr>
+<p>抽象可以优化代码的灵活性和可维护性，但是抽象也会带来其他成本。</p>
 <p>抽象会导致更多的代码需要被执行，也就是需要更多的时间和把更多的代码映射到内存中。</p>
 <p>如果某段抽象代码带来的好处不大，比如一个地方可以直接实现而不需要用到接口的，那就不用接口。</p>
-<h4 id="6-2-4-使用-protobuf-作为序列化数据"><a href="#6-2-4-使用-protobuf-作为序列化数据" class="headerlink" title="6.2.4 使用 protobuf 作为序列化数据"></a>6.2.4 使用 protobuf 作为序列化数据</h4><p><code>Protocol buffers</code> 是 <code>Google</code> 设计的，它可以对结构化的数据序列化，与<code>XML</code> 类似，不过比<code>XML</code> 更小，更快，而且更简单。</p>
+<h4 id="6-2-4-使用-protobuf-作为序列化数据"><a href="#6-2-4-使用-protobuf-作为序列化数据" class="headerlink" title="6.2.4 使用 protobuf 作为序列化数据"></a>6.2.4 使用 protobuf 作为序列化数据</h4><hr>
+<p><code>Protocol buffers</code> 是 <code>Google</code> 设计的，它可以对结构化的数据序列化，与<code>XML</code> 类似，不过比<code>XML</code> 更小，更快，而且更简单。</p>
 <p>如果你决定使用 <code>protobuf</code> 作为序列化数据格式，那在客户端代码中应该使用轻量级的 <code>protobuf</code>。</p>
 <p>因为一般的 <code>protobuf</code> 会生成冗长的代码，这样会导致内存增加、<code>APK</code> 大小增加，执行速度变慢等问题。</p>
 <p>更多关于 <code>protobuf</code> 的信息可以查看 <a href="https://android.googlesource.com/platform/external/protobuf/+/master/java/README.md#installation-lite-version-with-maven" target="_blank" rel="noopener">protobuf readme</a> 中的 “轻量级版本”  。</p>
-<h4 id="6-2-5-Apk-瘦身"><a href="#6-2-5-Apk-瘦身" class="headerlink" title="6.2.5 Apk 瘦身"></a>6.2.5 Apk 瘦身</h4><p>有些资源和第三方库会在我们不知情的情况下大量消耗内存。</p>
+<h4 id="6-2-5-Apk-瘦身"><a href="#6-2-5-Apk-瘦身" class="headerlink" title="6.2.5 Apk 瘦身"></a>6.2.5 Apk 瘦身</h4><hr>
+<p>有些资源和第三方库会在我们不知情的情况下大量消耗内存。</p>
 <p><code>Bitmap</code> 大小、资源、动画以及第三方库会影响到 <code>APK</code> 的大小，<code>Android Studio</code> 提供了 <code>R8</code> 和 <code>ProGuard</code> 帮助我们缩小 <code>Apk</code>，去掉不必要的资源。</p>
 <p>如果你使用的 <code>Android Studio</code> 版本是 3.3 以下的，可以使用 <code>ProGuard</code>，3.3 及以上版本的可以使用 <code>R8</code>。</p>
-<h4 id="6-2-6-使用-Dagger2-进行依赖注入"><a href="#6-2-6-使用-Dagger2-进行依赖注入" class="headerlink" title="6.2.6 使用 Dagger2 进行依赖注入"></a>6.2.6 使用 Dagger2 进行依赖注入</h4><p>依赖注入框架不仅可以简化我们的代码，而且能让我们在测试代码的时候更方便。</p>
+<h4 id="6-2-6-使用-Dagger2-进行依赖注入"><a href="#6-2-6-使用-Dagger2-进行依赖注入" class="headerlink" title="6.2.6 使用 Dagger2 进行依赖注入"></a>6.2.6 使用 Dagger2 进行依赖注入</h4><hr>
+<p>依赖注入框架不仅可以简化我们的代码，而且能让我们在测试代码的时候更方便。</p>
 <p>如果我们想在应用中使用依赖注入，可以考虑使用 <code>Dagger2</code>。</p>
 <p><code>Dagger2</code> 是在编译期生成代码，而不是用反射实现的，这样就避免了反射带来的内存开销，而是在编译期生成代码，</p>
-<h4 id="6-2-7-谨慎使用第三方库"><a href="#6-2-7-谨慎使用第三方库" class="headerlink" title="6.2.7 谨慎使用第三方库"></a>6.2.7 谨慎使用第三方库</h4><p>当你决定使用一个不是为移动平台设计的第三方库时，你需要对它进行优化，让它能更好地在移动设备上运行。</p>
+<h4 id="6-2-7-谨慎使用第三方库"><a href="#6-2-7-谨慎使用第三方库" class="headerlink" title="6.2.7 谨慎使用第三方库"></a>6.2.7 谨慎使用第三方库</h4><hr>
+<p>当你决定使用一个不是为移动平台设计的第三方库时，你需要对它进行优化，让它能更好地在移动设备上运行。</p>
 <p>这些第三方库包括日志、分析、图片加载、缓存以及其他框架，都有可能带来性能问题。</p>
-<h4 id="6-2-8-使用-IntDef-和-StringDef-替代枚举类型"><a href="#6-2-8-使用-IntDef-和-StringDef-替代枚举类型" class="headerlink" title="6.2.8 使用  IntDef 和 StringDef 替代枚举类型"></a>6.2.8 使用  IntDef 和 StringDef 替代枚举类型</h4><p>使用枚举类型的 <code>dex size</code> 是普通常量定义的 <code>dex size</code> 的 13 倍以上，同时，运行时的内存分配，一个 <code>enum</code> 值的声明会消耗至少 <code>20 bytes</code> 。</p>
+<h4 id="6-2-8-使用-IntDef-和-StringDef-替代枚举类型"><a href="#6-2-8-使用-IntDef-和-StringDef-替代枚举类型" class="headerlink" title="6.2.8 使用  IntDef 和 StringDef 替代枚举类型"></a>6.2.8 使用  IntDef 和 StringDef 替代枚举类型</h4><hr>
+<p>使用枚举类型的 <code>dex size</code> 是普通常量定义的 <code>dex size</code> 的 13 倍以上，同时，运行时的内存分配，一个 <code>enum</code> 值的声明会消耗至少 <code>20 bytes</code> 。</p>
 <p>枚举最大的优点是类型安全，但在Android平台上，枚举的内存开销是直接定义常量的三倍以上。所以Android提供了注解的方式检查类型安全。目前提供了int型和String型两种注解方式：<code>IntDef</code> 和 <code>StringDef</code> ，用来提供编译期的类型检查。</p>
 <p>使用 <code>IntDef</code>和 <code>StringDef</code> 需要在 <code>Gradle</code> 配置中引入相应的依赖包：</p>
 <pre><code>compile &#39;com.android.support:support-annotations:22.0.0&#39;</code></pre><h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a><strong>感谢</strong></h2><hr>
@@ -1411,6 +1439,55 @@ Debug.dumpHprofData(file.getAbsolutePath());</code></pre><p>接下来在<code>Du
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/2020/picnotshow.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="博客图片不显示问题">
+                        
+                        <span class="card-title">博客图片不显示问题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            博客图片不显示问题
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/github/" class="post-category">
+                                    github
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/github/">
+                        <span class="chip bg-color">github</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2020/memory-optimization.html">
                     <div class="card-image">
                         
@@ -1426,9 +1503,9 @@ Debug.dumpHprofData(file.getAbsolutePath());</code></pre><p>接下来在<code>Du
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-29
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1452,43 +1529,6 @@ Debug.dumpHprofData(file.getAbsolutePath());</code></pre><p>接下来在<code>Du
                         <span class="chip bg-color">性能优化</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/sheng-cai-you-zhu-ri-li.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="生财有术日历">
-                        
-                        <span class="card-title">生财有术日历</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            每日一句
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-01
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            CalmCenter
-                            
-                        </span>
-                    </div>
                 </div>
                 
             </div>
@@ -1655,7 +1695,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">52.4k</span>&nbsp;字
+                class="white-color">53.2k</span>&nbsp;字
             
             
             
