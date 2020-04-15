@@ -1,0 +1,1692 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Android">
+    <meta name="description" content="Android_优化系列开门篇">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>App 初体验-启动优化 | CalmCenter</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">CalmCenter</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">CalmCenter</div>
+        <div class="logo-desc">
+            
+            目标设置到月球，即使陨落也是在群星之间！
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/CalmCenter" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #F062A7;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/CalmCenter" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200405151318.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">App 初体验-启动优化</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Android/">
+                                <span class="chip bg-color">Android</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+                                <span class="chip bg-color">性能优化</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Android/" class="post-category">
+                                Android
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-12-24
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-04-13
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.1k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    15 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>Android 性能第一篇，随着项目功能的迭（zeng）代（jia），启动速度也会受到影响，性能优化之路的第一步，也就是启动优化，个人认为非常重要，它可以直接影响 <strong>APP</strong> 的留存率，没有人希望自己应用半天打不开。这篇文章就开启 <em>启动优化</em>  之路。</p>
+<p><strong>注意：如果出现图片不显示问题请移步</strong> <a href="https://calmcenter.club/2019/PicNotShow.html">图片不显示问题</a></p>
+<h1 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h1><ul>
+<li>启动</li>
+<li>检测启动消耗<code>(敲黑板)</code></li>
+<li>启动优化<code>(干货)</code></li>
+<li>启动监控</li>
+</ul>
+<hr>
+<h2 id="一、-启动"><a href="#一、-启动" class="headerlink" title="一、 启动"></a>一、 启动</h2><p>Google官方文档 <a href="https://developer.android.com/topic/performance/launch-time.html" target="_blank" rel="noopener">《Launch-Time Performance》</a> 对应用启动优化的概述</p>
+<p>应用的启动分为冷启动、热启动、温启动，而启动最慢、挑战最大的就是冷启动：系统和App本身都有更多的工作要从头开始！我们只要知道我们处理的是冷启动的情况。</p>
+<h2 id="二、-检测启动消耗-敲黑板"><a href="#二、-检测启动消耗-敲黑板" class="headerlink" title="二、 检测启动消耗(敲黑板)"></a>二、 检测启动消耗<code>(敲黑板)</code></h2><p>“工欲善其事必先利其器”，我们需要先找到一款适合做启动优化分析的工具。</p>
+<h3 id="2-1-启动时间测量方式"><a href="#2-1-启动时间测量方式" class="headerlink" title="2.1 启动时间测量方式"></a>2.1 启动时间测量方式</h3><h4 id="2-1-1-adb-命令启动时间测量方式"><a href="#2-1-1-adb-命令启动时间测量方式" class="headerlink" title="2.1.1 adb 命令启动时间测量方式"></a>2.1.1 adb 命令启动时间测量方式</h4><pre><code>adb shell am start -W packagename/packagename.Activity</code></pre><p><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190829115742.png" alt=""></p>
+<p>划掉的红色部分都是包名</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ThisTime</td>
+<td>最后一个 Activity 启动耗时</td>
+</tr>
+<tr>
+<td>TotalTIme</td>
+<td>所有 Activity 启动耗时，比如添加启动页</td>
+</tr>
+<tr>
+<td>WaitTime</td>
+<td>AMS 启动 Activity 的总耗时</td>
+</tr>
+<tr>
+<td>ThisTime ≤ TotalToime &lt; WaitTime</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>线下方便使用、可以测量竞品、不能带到线上</p>
+<h4 id="2-1-2-手动打点"><a href="#2-1-2-手动打点" class="headerlink" title="2.1.2 手动打点"></a>2.1.2 手动打点</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LaunchTimer</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">long</span> sTime<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">startRecord</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        sTime <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">endRecord</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">endRecord</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">endRecord</span><span class="token punctuation">(</span>String msg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">long</span> cost <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> sTime<span class="token punctuation">;</span>
+        LogUtils<span class="token punctuation">.</span><span class="token function">e</span><span class="token punctuation">(</span><span class="token string">"LaunchTimer"</span><span class="token punctuation">,</span> msg <span class="token operator">+</span> <span class="token string">" cost "</span> <span class="token operator">+</span> cost<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>在应用启动中，我们所能接收到最早的回调是 <code>Application</code> 中 <code>attachBaseContext(Context context)</code> ，所以只能将 <code>startRecord()</code> 写到这个回调中</p>
+<p>应用启动的结束时间，是用户可操作的时间，先了解两个误区</p>
+<p><code>onAttachedToWindow()</code> 这个方法是在 <code>onResume</code> 之后，只调用一次</p>
+<p><code>onWindowFocusChanged(boolean hasFocus)</code> 这个方法是在获取焦点和失去焦点是调用，在 <code>onAttachedToWindow()</code> 之后调用</p>
+<p>这两个方法，回调时，用户并不可以操作，计算启动耗时的最好的时机应该是某个数据被加载出来后，当然会掺杂一些网络因素，但这里不是为了数据，只是为了用户体验，可以使用一些监听方法</p>
+<pre class=" language-java"><code class="language-java">mView<span class="token punctuation">.</span><span class="token function">getViewTreeObserver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addOnPreDrawListener</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ViewTreeObserver<span class="token punctuation">.</span>OnPreDrawListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">onPreDraw</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mView<span class="token punctuation">.</span><span class="token function">getViewTreeObserver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeOnPreDrawListener</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+mView<span class="token punctuation">.</span><span class="token function">getViewTreeObserver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addOnDrawListener</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ViewTreeObserver<span class="token punctuation">.</span>OnDrawListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onDraw</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mView<span class="token punctuation">.</span><span class="token function">getViewTreeObserver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">removeOnDrawListener</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>在 View 将要绘制的时候去进行耗时的统计，<code>addOnDrawListener()</code> 需要 <code>API 16</code></p>
+<h3 id="2-2-启动耗时检测方式"><a href="#2-2-启动耗时检测方式" class="headerlink" title="2.2 启动耗时检测方式"></a>2.2 启动耗时检测方式</h3><h4 id="2-2-1-TraceView"><a href="#2-2-1-TraceView" class="headerlink" title="2.2.1 TraceView"></a>2.2.1 TraceView</h4><p>图形化界面的形式展示出执行时间、调用栈，包含所有线程，信息全面</p>
+<p>但是加入 <code>TraceView</code> 的代码后，运行时开销严重，整体都会变慢，可能会带骗优化方向</p>
+<ul>
+<li><h5 id="通过代码跟踪💦"><a href="#通过代码跟踪💦" class="headerlink" title="通过代码跟踪💦"></a>通过代码跟踪💦</h5></li>
+</ul>
+<p>只能用于某一个方法的检测</p>
+<pre><code>Debug.startMethodTracing(&quot;xxx&quot;);
+...
+Debug.stopMethodTracing();</code></pre><p>默认生成文件在 <code>mnt/sdcard/Android/data/packagename/fils</code>  </p>
+<pre><code>adb pull /sdcard/Android/data/packagename/fils/my.trace</code></pre><p>这样可以将 <code>trace</code> 文件拷贝到项目根目录</p>
+<p>也可以通过 <code>Device File Explorer</code>(AS 右下角) 找到文件，右键点击 <code>Sava as…</code></p>
+<ul>
+<li><h5 id="通过命令跟踪💦"><a href="#通过命令跟踪💦" class="headerlink" title="通过命令跟踪💦"></a>通过命令跟踪💦</h5></li>
+</ul>
+<p>可用于整个开始结束的过程(内容会比较多~)</p>
+<p>开始跟踪</p>
+<pre><code>adb shell am start -n packagename/packagename.Activity --start-profiler /data/local/tmp/my.trace --sampling 1000</code></pre><p>终止跟踪</p>
+<pre><code>adb shell am profile stop</code></pre><p>拉取文件</p>
+<pre><code>adb pull /data/local/tmp/my.trace</code></pre><p>这种方法可以检测启动到调用终止期间的全部内容，但是有些手机出来的 <code>trace</code> 文件时 <code>0B</code>，这就需要在需要停止的地方写上</p>
+<pre class=" language-java"><code class="language-java">Debug<span class="token punctuation">.</span><span class="token function">stopMethodTracing</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>然后调用开始追踪，会自动停止。文件会放在 <code>data/local/tmp</code> 下。</p>
+<ul>
+<li><h5 id="查看-Trace-文件💦"><a href="#查看-Trace-文件💦" class="headerlink" title="查看 Trace 文件💦"></a>查看 Trace 文件💦</h5></li>
+</ul>
+<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20191126115732.png" style="zoom:50%">
+
+<p>这就是用 <code>AndroidStudio</code> 查看生成的 <code>TraceView</code> 文件</p>
+<ol>
+<li>范围选择</li>
+</ol>
+<p>标有 <code>Cpu usage details unavailable</code> 的地方可以选择时间范围；标有 ·THREADS· 的地方可以选择某条线程，括号中的 <code>67</code> 表示检测全称有 <code>67</code> 条线程。选择时间或线程底部的 <code>Call Chart</code> 都会有相应的变化。</p>
+<ol start="2">
+<li>执行选择</li>
+</ol>
+<p>在线程选择下有一个 <code>Wall Clock Time</code> 这个表示真正执行的时间，可以切换为 <code>Thread Time</code> 表示 <code>CPU</code> 执行的时间，<code>Thread Time</code> 始终小于 <code>Wall Clock Time</code>。</p>
+<ol start="3">
+<li>CallChart</li>
+</ol>
+<p>从上到下，调用者在上方，被调用者在下方；<code>系统 API</code> 是橙色、<code>应用自身调用</code> 是绿色、<code>第三方 API</code> 是蓝色，看绿色的部分很直观的可以看出我们自己代码在哪里耗时了~</p>
+<ol start="4">
+<li>TopDown</li>
+</ol>
+<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20191126121637.png" style="zoom:50%">
+
+
+
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Total</strong></td>
+<td>整个函数执行时间</td>
+</tr>
+<tr>
+<td><strong>Self</strong></td>
+<td>函数代码内执行时间</td>
+</tr>
+<tr>
+<td><strong>Children</strong></td>
+<td>子函数耗时</td>
+</tr>
+</tbody></table>
+<p>🌞举个栗子🌞：调用 <code>A</code> 函数整体时间是 <code>Total</code> ，在函数中执行了一行代码耗时 <code>Self</code> ，然后调用 <code>B</code> 函数耗时 <code>Children</code></p>
+<p>这两个方式是比较常用的方式，如果是应用自身方法都可以点击右键进入源码所在位置。</p>
+<ul>
+<li><h5 id="总结💦"><a href="#总结💦" class="headerlink" title="总结💦"></a>总结💦</h5></li>
+</ul>
+<ol>
+<li>运行时开销严重，整体都会变慢(因为 <code>TraceView</code> 要抓取所有线程的所有执行函数以及顺序)</li>
+<li>可能会带偏优化方向(本来不好时间的函数可能加入 <code>TraceView</code> 后，变的非常耗时)</li>
+</ol>
+<h4 id="2-2-2-systrace"><a href="#2-2-2-systrace" class="headerlink" title="2.2.2 systrace"></a>2.2.2 systrace</h4><p>结合 Android 内核的数据，生成 HTML 报告，<code>API 18</code> 以上，推荐 <code>TraceCompat</code></p>
+<ul>
+<li><h5 id="首先清空后台💦"><a href="#首先清空后台💦" class="headerlink" title="首先清空后台💦"></a>首先清空后台💦</h5></li>
+</ul>
+<p>杀掉所有应用，防止出现莫名莫名方法。</p>
+<ul>
+<li><h5 id="在需要检测的地方写入代码-可以不写，但是会少一些-tag-提示-💦"><a href="#在需要检测的地方写入代码-可以不写，但是会少一些-tag-提示-💦" class="headerlink" title="在需要检测的地方写入代码(可以不写，但是会少一些 tag 提示)💦"></a>在需要检测的地方写入代码(可以不写，但是会少一些 tag 提示)💦</h5></li>
+</ul>
+<pre><code>TraceCompat.beginSection(&quot;AppOnCreate&quot;);
+...
+TraceCompat.endSection();</code></pre><ul>
+<li><h5 id="执行检测💦"><a href="#执行检测💦" class="headerlink" title="执行检测💦"></a>执行检测💦</h5></li>
+</ul>
+<p>首先进入 <code>SDK</code> 目录，<code>Sdk\platform-tools\systrace\</code> 目录下有一个 <code>systrace.py</code> 文件，打开 <code>cmd</code> 输入</p>
+<pre><code>python systrace.py -b 90960 -t 5 -a packagename -o test.log.html sched gfx view wm am app</code></pre><p>这种方式是 <code>5</code> 秒后自动输出</p>
+<pre><code>python systrace.py gfx view wm am pm ss dalvik app sched -b 90960 -a packagename -o test.log.html</code></pre><p>这种方式可以在自己收集完后，点击 <code>Enter</code> 键停止收集</p>
+<p>两种内容是不太一样的， <code>-t</code> 表示时间，<code>-a</code> 表示包名，<code>-o</code> 输出文件名，最终在当前目录打开文件即可看到，文件只能使用 <code>Chrome</code> 来打开，如果打开 <code>HTML</code> 出现 </p>
+<p><code>Unable to select a master clock domain because no path can be found from &quot;SYSTRACE&quot; to &quot;LINUX_FTRACE_GLOBAL&quot;.</code></p>
+<p>那就是命令出错了，命令我也是收集了好久，最终找到可用的，想了解更多的请查看 <a href="http://gityuan.com/2016/01/17/systrace/" target="_blank" rel="noopener">Gityuan</a> 或 <a href="https://source.android.com/devices/tech/debug/systrace" target="_blank" rel="noopener">官方文档</a> </p>
+<ol start="4">
+<li>分析文件</li>
+</ol>
+<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20191212120416.png" style="zoom:50%">
+
+<p>这里可以看到 <code>CPU</code> 核心数以及运行状态，还有各个线程。</p>
+<p>在 <code>UI Thread</code> 中的 <code>AppOnCreate</code> 正是我们在之前的代码埋 <code>tag</code> 点，点击条目并按 <code>M</code> 键可以查看具体信息。右上角是可以搜索 <code>tag</code> 的。</p>
+<p>具体信息中有 <code>Wall Duration</code> （代码执行时间） <code>CPU Duration</code> （代码消耗 CPU 的时间）两者出现差值的原因是同步锁冲突。 </p>
+<p>这种方式不仅可以帮助监控启动过程中性能问题，卡顿优化的时候也可以用这种方式。因为它会把 <code>UI</code> 的渲染也检测到。</p>
+<ul>
+<li><h5 id="总结💦-1"><a href="#总结💦-1" class="headerlink" title="总结💦"></a>总结💦</h5></li>
+</ul>
+<ol>
+<li>轻量级，开销小</li>
+<li>直观的反应 CPU 利用率</li>
+</ol>
+<h4 id="2-2-3-systrace-函数插桩-AOP-Aspect-Oriented-Programming"><a href="#2-2-3-systrace-函数插桩-AOP-Aspect-Oriented-Programming" class="headerlink" title="2.2.3 systrace + 函数插桩 AOP(Aspect Oriented Programming)"></a>2.2.3 systrace + 函数插桩 AOP(Aspect Oriented Programming)</h4><p> 面向切面编程，针对同一类问题的统一处理，无侵入添加代码。</p>
+<p>在根目录的 <code>build.gradle</code> 下，最新版本请查看 <a href="https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx" target="_blank" rel="noopener">AspectJX 开源地址</a></p>
+<pre class=" language-groovy"><code class="language-groovy">classpath <span class="token string">'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.8'</span></code></pre>
+<p>在 <code>app</code> 模块下添加如下，通过我的测试这些引用只能添加在 <code>app</code> 模块下，添加在其他子模块下不生效。最新版本请查看 <a href="http://www.eclipse.org/aspectj/downloads.php#stable_release" target="_blank" rel="noopener">AspectJ官网</a></p>
+<p>顶部</p>
+<pre class=" language-groovy"><code class="language-groovy">apply plugin<span class="token punctuation">:</span> <span class="token string">'android-aspectjx'</span></code></pre>
+<p><code>dependencies</code> 内</p>
+<pre class=" language-groovy"><code class="language-groovy">api <span class="token string">'org.aspectj:aspectjrt:1.9.5'</span></code></pre>
+<p>下面是通过注解的方式结合 <code>Systrace</code> 进行埋点。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token comment" spellcheck="true">/**
+ * AnnotationRetention.SOURCE：不存储在编译后的 Class 文件。
+ * AnnotationRetention.BINARY：存储在编译后的 Class 文件，但是反射不可见。
+ * AnnotationRetention.RUNTIME：存储在编译后的 Class 文件，反射可见。
+ */</span>
+<span class="token annotation builtin">@Retention</span><span class="token punctuation">(</span>AnnotationRetention<span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">/**
+ * AnnotationTarget.CLASS：类，接口或对象，注解类也包括在内。
+ * AnnotationTarget.ANNOTATION_CLASS：只有注解类。
+ * AnnotationTarget.TYPE_PARAMETER：Generic type parameter (unsupported yet)通用类型参数（还不支持）。
+ * AnnotationTarget.PROPERTY：属性。
+ * AnnotationTarget.FIELD：字段，包括属性的支持字段。
+ * AnnotationTarget.LOCAL_VARIABLE：局部变量。
+ * AnnotationTarget.VALUE_PARAMETER：函数或构造函数的值参数。
+ * AnnotationTarget.CONSTRUCTOR：仅构造函数（主函数或者第二函数）。
+ * AnnotationTarget.FUNCTION：方法（不包括构造函数）。
+ * AnnotationTarget.PROPERTY_GETTER：只有属性的 getter。
+ * AnnotationTarget.PROPERTY_SETTER：只有属性的 setter。
+ * AnnotationTarget.TYPE：类型使用。
+ * AnnotationTarget.EXPRESSION：任何表达式。
+ * AnnotationTarget.FILE：文件。
+ * AnnotationTarget.TYPEALIAS：@SinceKotlin("1.1") 类型别名，Kotlin1.1已可用。
+ */</span>
+<span class="token annotation builtin">@Target</span><span class="token punctuation">(</span>AnnotationTarget<span class="token punctuation">.</span>FUNCTION<span class="token punctuation">)</span>
+<span class="token keyword">annotation</span> <span class="token keyword">class</span> TraceCompat</code></pre>
+<p>具体的切入代码，需要将 <code>packagename</code> 换成自己的路径名字</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token annotation builtin">@Aspect</span>
+<span class="token keyword">class</span> TraceCompatAspect <span class="token punctuation">{</span>
+    <span class="token annotation builtin">@Pointcut</span><span class="token punctuation">(</span><span class="token string">"execution(@packagename.TraceCompat * *(..))"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//方法切入点</span>
+    <span class="token keyword">fun</span> <span class="token function">methodAnnotated</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation builtin">@Around</span><span class="token punctuation">(</span><span class="token string">"methodAnnotated()"</span><span class="token punctuation">)</span>
+    <span class="token keyword">fun</span> <span class="token function">aroundJoinPoint</span><span class="token punctuation">(</span>joinPoint<span class="token operator">:</span> ProceedingJoinPoint<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        TraceCompat<span class="token punctuation">.</span><span class="token function">beginSection</span><span class="token punctuation">(</span><span class="token string">"TraceCompat"</span><span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true">//执行原方法</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            joinPoint<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            TraceCompat<span class="token punctuation">.</span><span class="token function">endSection</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>在需要埋点的加入注解</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@TraceCompat</span>
+<span class="token annotation punctuation">@Override</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onCreate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这样就完成了 <code>AOP</code> 埋点辅助<code>systrace</code> 监控的方式。<code>AOP</code> 还有很多更强大更方便的用法，这里只是一种注解切入的方式。更多用法请查看其它文章。</p>
+<p>由于我现在使用 <code>AOP</code> 还存在很多问题，还在研究中。。。(上面的例子是可以使用的)</p>
+<h2 id="三、-启动优化-干货"><a href="#三、-启动优化-干货" class="headerlink" title="三、 启动优化(干货)"></a>三、 启动优化<code>(干货)</code></h2><h3 id="3-1-闪屏页展示"><a href="#3-1-闪屏页展示" class="headerlink" title="3.1 闪屏页展示"></a>3.1 闪屏页展示</h3><p>闪屏页是优化启动速度的一个小技巧，虽然对实际的启动速度没有任何帮助，但是能让用户感觉应用到应用在第一时间已经被打开。</p>
+<p>合并闪屏和主页面的 Activity，减少一个 Activity 会给线上带来 100 毫秒左右的优化。但是如果这样做的话，管理时会非常复杂。</p>
+<p>闪屏如果存在网络请求，一般都是提前准备好闪屏页的，在下一次生效。</p>
+<p>具体操作文末参考中会有 ~ 这里不再说明。</p>
+<h3 id="3-2-异步启动实践"><a href="#3-2-异步启动实践" class="headerlink" title="3.2 异步启动实践"></a>3.2 异步启动实践</h3><h4 id="3-2-1-启动器"><a href="#3-2-1-启动器" class="headerlink" title="3.2.1 启动器"></a>3.2.1 启动器</h4><p>微信内部使用的 <a href="https://mp.weixin.qq.com/s/6Q818XA5FaHd7jJMFBG60w?" target="_blank" rel="noopener">mmkernel</a></p>
+<p>阿里最近开源的 <a href="https://github.com/alibaba/alpha" target="_blank" rel="noopener">Alpha</a> 启动框架</p>
+<p>慕课网中学习到的 启动器 <code>Task</code> </p>
+<p>它们为各个任务建立依赖关系，最终构成一个有向无环图。对于可以并发的任务，会通过线程池最大程度提升启动速度。</p>
+<h4 id="3-2-1-异步Layout子线程预加载"><a href="#3-2-1-异步Layout子线程预加载" class="headerlink" title="3.2.1 异步Layout子线程预加载"></a>3.2.1 异步Layout子线程预加载</h4><p>参考文章 <a href="https://juejin.im/post/5d63cdf7f265da03ed195f68?utm_source=gold_browser_extension#comment" target="_blank" rel="noopener">Android - 一种新奇的冷启动速度优化思路(Fragment极度懒加载 + Layout子线程预加载)</a> </p>
+<h3 id="3-3-数据重排"><a href="#3-3-数据重排" class="headerlink" title="3.3 数据重排"></a>3.3 数据重排</h3><h4 id="3-3-1-类重排"><a href="#3-3-1-类重排" class="headerlink" title="3.3.1 类重排"></a>3.3.1 类重排</h4><p>Facebook 开源的 Dex 优化工具 <a href="https://github.com/facebook/redex/blob/master/docs/Interdex.md" target="_blank" rel="noopener">ReDex</a></p>
+<p><a href="https://mp.weixin.qq.com/s/Hquq8iJvZuN-gynVFxCCNA" target="_blank" rel="noopener">都9102年了，Android 冷启动优化除了老三样还有哪些新招？</a></p>
+<h4 id="3-3-2-资源文件重排"><a href="#3-3-2-资源文件重排" class="headerlink" title="3.3.2 资源文件重排"></a>3.3.2 资源文件重排</h4><p>支付宝 <a href="https://mp.weixin.qq.com/s/79tAFx6zi3JRG-ewoapIVQ" target="_blank" rel="noopener">《通过安装包重排布优化 Android 端启动性能》</a></p>
+<h3 id="3-4-类的加载"><a href="#3-4-类的加载" class="headerlink" title="3.4 类的加载"></a>3.4 类的加载</h3><p>加载类的过程有一个 verify class 的步骤，它需要校验方法的每一个指令，是一个比较耗时的操作。我们可以通过 Hook 来去掉 verify 这个步骤，这对启动速度有几十毫秒的优化。最大的优化场景在于首次和覆盖安装时。</p>
+<p>这个黑科技可以大大降低首次启动的速度，代价是对后续运行会产生轻微的影响。同时也要考虑兼容性问题，暂时不建议在 ART 平台使用。</p>
+<h3 id="更优秀的延迟加载方案"><a href="#更优秀的延迟加载方案" class="headerlink" title="更优秀的延迟加载方案"></a>更优秀的延迟加载方案</h3><p>利用 <code>IdleHandler</code> 特性，空闲时执行初始化。</p>
+<p><strong><code>IdleHandler</code> 可以用来提升性能，主要用在我们希望能够在当前线程消息队列空闲时做些事情</strong> </p>
+<h3 id="其他优化思路"><a href="#其他优化思路" class="headerlink" title="其他优化思路"></a>其他优化思路</h3><h4 id="5-0-以下机型-MultiDex-优化"><a href="#5-0-以下机型-MultiDex-优化" class="headerlink" title="5.0 以下机型 MultiDex 优化"></a><code>5.0</code> 以下机型 <code>MultiDex</code> 优化</h4><p><a href="https://juejin.im/post/5d95f4a4f265da5b8f10714b?utm_source=gold_browser_extension#comment" target="_blank" rel="noopener">面试官：今日头条启动很快，你觉得可能是做了哪些优化？</a></p>
+<h4 id="GC-优化"><a href="#GC-优化" class="headerlink" title="GC 优化"></a>GC 优化</h4><p>支付宝提出一种 <a href="https://mp.weixin.qq.com/s/ePjxcyF3N1vLYvD5dPIjUw" target="_blank" rel="noopener">GC 抑制</a> 的方案</p>
+<p>在启动过程，要尽量减少 GC 的次数，避免造成主线程长时间的卡顿。</p>
+<p>特别是对 Dalvik 来说，我们可以通过 systrace 单独查看整个启动过程 GC 的时间。</p>
+<pre><code>python systrace.py dalvik -b 90960 -a com.sample.gc</code></pre><pre><code>// GC使用的总耗时，单位是毫秒
+Debug.getRuntimeStat(&quot;art.gc.gc-time&quot;);
+// 阻塞式GC的总耗时
+Debug.getRuntimeStat(&quot;art.gc.blocking-gc-time&quot;);</code></pre><p>启动过程避免进行大量的字符串操作，特别是序列化跟反序列化过程。一些频繁创建的对象，例如网络库和图片库中的 Byte 数组、Buffer 可以复用。</p>
+<h4 id="系统调用优化"><a href="#系统调用优化" class="headerlink" title="系统调用优化"></a>系统调用优化</h4><p>通过 systrace 的 System Service 类型，我们可以看到启动过程 System Server 的 CPU 工作情况。在启动过程，我们尽量不要做系统调用，例如 PackageManagerService 操作、Binder 调用等待。</p>
+<p>在启动过程也不要过早地拉起应用的其他进程，System Server 和新的进程都会竞争 CPU 资源。</p>
+<h4 id="线程优化"><a href="#线程优化" class="headerlink" title="线程优化"></a>线程优化</h4><p>线程优化就像做填空题和解锁题，我们希望能把所有的时间片都利用上，因此主线程和各个线程都是一直满载的。当然我们也希望每个线程都开足马力向前跑，而不是作为接力棒。所以线程的优化主要在于减少 CPU 调度带来的波动，让应用的启动时间更加稳定。</p>
+<p>从具体的做法来看，线程的优化一方面是控制线程数量，线程数量太多会相互竞争 CPU 资源，因此要有统一的线程池，并且根据机器性能来控制数量。</p>
+<p>3.2.1 启动器 提到，合理分配线程数量。</p>
+<p>另一方面是检查线程间的锁。</p>
+<h4 id="业务优化"><a href="#业务优化" class="headerlink" title="业务优化"></a>业务优化</h4><p>我们首先需要梳理清楚当前启动过程正在运行的每一个模块，哪些是一定需要的、哪些可以砍掉、哪些可以懒加载。</p>
+<p>通过梳理之后，剩下的都是启动过程一定要用的模块。</p>
+<p>这个时候，我们只能硬着头皮去做进一步的优化。优化前期需要“抓大放小”，先看看主线程究竟慢在哪里。</p>
+<p>退而求其次，我们要考虑这些任务是不是可以通过异步线程预加载实现（上面有讲到），但需要注意的是过多的线程预加载会让我们的逻辑变得更加复杂。</p>
+<h4 id="I-O-优化"><a href="#I-O-优化" class="headerlink" title="I/O 优化"></a>I/O 优化</h4><p>启动过程不建议出现网络 I/O</p>
+<p>磁盘 I/O 是启动优化一定要抠的点（敬请期待）</p>
+<p>还有一个是数据结构的选择问题，我们在启动过程只需要读取 Setting.sp 的几项数据，不过 SharedPreference 在初始化的时候还是要全部数据一起解析。如果它的数据量超过 1000 条，启动过程解析时间可能就超过 100 毫秒。如果只解析启动过程用到的数据项则会很大程度减少解析时间，启动过程适合使用随机读写的数据结构。（敬请期待）</p>
+<h4 id="3-4-7-保活"><a href="#3-4-7-保活" class="headerlink" title="3.4.7 保活"></a>3.4.7 保活</h4><p>保活可以减少 Application 创建跟初始化的时间，让冷启动变成温启动。不过在 Target 26 之后，保活的确变得越来越难。</p>
+<p>对于大厂来说，可能需要寻求厂商合作的机会，例如微信的 <a href="https://www.geekpark.net/news/233791" target="_blank" rel="noopener">Hardcoder</a> 方案和 OPPO 推出的Hyper Boost方案。根据 OPPO 的数据，对于手机 QQ、淘宝、微信启动场景会直接有 20% 以上的优化。</p>
+<p>有的时候你问为什么微信可以保活？为什么它可以运行的那么流畅？这里可能不仅仅是技术上的问题，当应用体量足够大，就可以倒逼厂商去专门为它们做优化。</p>
+<h4 id="3-4-8-插件化和热修复"><a href="#3-4-8-插件化和热修复" class="headerlink" title="3.4.8 插件化和热修复"></a>3.4.8 插件化和热修复</h4><p>大部分的框架在设计上都存在大量的 Hook 和私有 API 调用，带来的缺点主要有两个：</p>
+<ul>
+<li>稳定性差。虽然大家都号称兼容 100% 的机型，由于厂商的兼容性、安装失败、dex2oat 失败等原因，还是会有那么一些代码和资源的异常。Android P 推出的 non-sdk-interface 调用限制，以后适配只会越来越难，成本越来越高。</li>
+<li>性能差。Android Runtime 每个版本都有很多的优化，因为插件化和热修复用到的一些黑科技，导致底层 Runtime 的优化我们是享受不到的。Tinker 框架在加载补丁后，应用启动速度会降低 5%～10%。</li>
+</ul>
+<p>应用加固对启动速度来说简直是灾难，有时候我们需要做一些权衡和选择。</p>
+<h2 id="四、启动监控"><a href="#四、启动监控" class="headerlink" title="四、启动监控"></a>四、启动监控</h2><p><a href="https://developer.android.google.cn/topic/performance/vitals/launch-time" target="_blank" rel="noopener">Android Vitals</a> </p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://calmcenter.club" rel="external nofollow noreferrer">CalmCenter</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://calmcenter.club/2019/start-optimization.html">https://calmcenter.club/2019/start-optimization.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://calmcenter.club" target="_blank">CalmCenter</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Android/">
+                                    <span class="chip bg-color">Android</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+                                    <span class="chip bg-color">性能优化</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'KiQHU70TUHYrumpFuuhC3UEg-gzGzoHsz',
+        appKey: 'wX1m2ATu8q4CyeRhOQ3FUucn',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '💦💦既然来了何不留下你的足迹(支持 Markdown 哦~)'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/sheng-cai-you-zhu-ri-li.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="生财有术日历">
+                        
+                        <span class="card-title">生财有术日历</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            每日一句
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-01-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            CalmCenter
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/dalvikbase.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Dalvik 寄存器">
+                        
+                        <span class="card-title">Dalvik 寄存器</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            dalvik
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Hexo/" class="post-category">
+                                    Hexo
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/delvik/">
+                        <span class="chip bg-color">delvik</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+
+<link rel="stylesheet" href="/live2d/css/live2d.css" />
+<div id="landlord">
+  <div class="message" style="opacity:0"></div>
+  <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
+  <div class="hide-button">隐藏</div>
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+  var message_Path = '/live2d/'
+  var home_Path = 'https://calmcenter.club/'
+</script>
+<script type="text/javascript" src="/live2d/js/live2d.js"></script>
+<script type="text/javascript" src="/live2d/js/message.js"></script>
+<script type="text/javascript">
+  loadlive2d("live2d", "/live2d/model/xxb2/model.json");
+</script>
+
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="https://calmcenter.club" target="_blank">CalmCenter</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">52.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "1";
+                    var startDate = "16";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/CalmCenter" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+
+ <script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/b6dbddb6.js","daovoice")
+ daovoice('init', {
+  app_id: "c1f73bd5"
+});
+daovoice('update');
+ </script>
+
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i["DaoVoiceObject"] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            a.charset = "utf-8";
+            m.parentNode.insertBefore(a, m)
+        })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+            "//widget.daovoice.io/widget/6984b559.js", "daovoice")
+        daovoice('init', {
+            app_id: "c1f73bd5"
+        });
+        daovoice('update');
+    </script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
