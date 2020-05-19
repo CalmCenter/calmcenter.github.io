@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>App 存储优化💦 | CalmCenter</title><meta name="description" content="Android 存储优化总结,带你分析「SharedPreferences」、「SQLite」、「Serializable」、「Parcelable」、「Serial」、「JSON」、「Protocol Buffers」的使用，到底用哪一个？？？🐳🐳"><meta name="keywords" content="Android"><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '2'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="canonical" href="https://calmcenter.club/2020/storage-optimization.html"><link rel="prev" title="App 电量优化" href="https://calmcenter.club/2020/power-optimization.html"><link rel="next" title="App 网络优化" href="https://calmcenter.club/2020/network-optimization.html"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"top-right"},
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">21</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">16</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本文主要记载"><span class="toc-text">本文主要记载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-如何选择持久化存储方案？"><span class="toc-text">1 如何选择持久化存储方案？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-考察存储关键要素"><span class="toc-text">1.1 考察存储关键要素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-SharedPreferences"><span class="toc-text">1.2 SharedPreferences</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-ContentProvider"><span class="toc-text">1.3 ContentProvider</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-SQLite-优化那些事儿"><span class="toc-text">1.4 SQLite 优化那些事儿</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-1-OCR"><span class="toc-text">1.4.1 OCR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-2-并发"><span class="toc-text">1.4.2 并发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-3-索引查询优化"><span class="toc-text">1.4.3 索引查询优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-4-页大小与缓存大小"><span class="toc-text">1.4.4 页大小与缓存大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-5-其他优化"><span class="toc-text">1.4.5 其他优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-SQLite-的其他特征"><span class="toc-text">1.5 SQLite 的其他特征</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-1-损坏与恢复"><span class="toc-text">1.5.1 损坏与恢复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-2-加密与安全"><span class="toc-text">1.5.2 加密与安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-3-全文搜索"><span class="toc-text">1.5.3 全文搜索</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-如何优化数据存储？"><span class="toc-text">2 如何优化数据存储？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-对象的序列化"><span class="toc-text">2.1 对象的序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-Serializable"><span class="toc-text">2.1.1 Serializable</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Serializable-的原理"><span class="toc-text">Serializable 的原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Serializable-的进阶"><span class="toc-text">Serializable 的进阶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Serializable-的注意事项"><span class="toc-text">Serializable 的注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-Parcelable"><span class="toc-text">2.1.2 Parcelable</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Parcelable-的永久存储"><span class="toc-text">Parcelable 的永久存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Parcelable-的注意事项"><span class="toc-text">Parcelable 的注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-3-Serial"><span class="toc-text">2.1.3 Serial</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-数据的序列化"><span class="toc-text">2.2 数据的序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-Json"><span class="toc-text">2.2.1 Json</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-Protocol-Buffers"><span class="toc-text">2.2.2 Protocol Buffers</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Demo-相关练习"><span class="toc-text">3 Demo 相关练习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-重写-SharedPreferencesImpl"><span class="toc-text">3.1 重写 SharedPreferencesImpl</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover5.webp)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">CalmCenter</a></span><span class="pull_right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">App 存储优化💦</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2020-05-14 17:32:22"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2020-05-14</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-19 14:12:37"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-19</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Android/">Android</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>本文记录开发过程中常见存储方法的优缺点，希望可以在日常工作中如何做出更好的选择。</p>
+<p><strong>注意：如果出现图片不显示问题请移步</strong> <a href="https://calmcenter.club/2019/PicNotShow.html">图片不显示问题</a></p>
+<h1 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h1><hr>
+<h1 id="1-如何选择持久化存储方案？"><a href="#1-如何选择持久化存储方案？" class="headerlink" title="1 如何选择持久化存储方案？"></a>1 如何选择持久化存储方案？</h1><h2 id="1-1-考察存储关键要素"><a href="#1-1-考察存储关键要素" class="headerlink" title="1.1 考察存储关键要素"></a>1.1 考察存储关键要素</h2><ol>
+<li><p><strong>正确性：</strong> 选择存储方案的时候，第一个需要判断它<strong>是否靠谱</strong>。这套存储方案<strong>设计是否完备</strong>，有没有支持<strong>多线程</strong>或者<strong>多进程</strong>操作。内部<strong>是否健壮</strong>，有没有考虑<strong>异常情况下数据的校验和恢复</strong>，比如采取双写或者备份文件策略，即使主文件因为系统底层导致损坏，也可以一定程度恢复大部分数据。</p>
+</li>
+<li><p><strong>时间开销：</strong>这里说的时间开销包括了 <code>CPU</code> 时间和 <code>I/O</code> 时间，在 <code>I/O</code> 优化中我就多次提到相比 <code>CPU</code> 和内存，<code>I/O</code> 存储的速度是非常慢的。但是如果存储方法中比如编解码或者加密/解密等设计的比较复杂，整个数据存储过程也会出现 <code>CPU</code> 时间变的更长的情况。</p>
+</li>
+<li><p><strong>控件开销：</strong>即使相同的数据如果使用不同的编码方式，最后占用的存储空间也会有所不同。举一个简单的例子，相同的数据所占的空间大小是 <code>XML&gt;JSON&gt;Protocol Buffer</code>。除了编码方式的差异，在一些场景我们可能还需要引入压缩策略来进一步减少存储空间，例如<code>zip</code>、<code>Izma</code> 等。数据存储的空间开销还需要考虑内存空间的占用量，整个存储过程会不会导致应用出现大量 <code>GC</code> 、<code>OOM</code> 等</p>
+</li>
+<li><p><strong>安全：</strong>应用中可能会有一些非常敏感的数据，即使它们存储在 <code>/data/data</code> 中，我们依然必须将它们加密。例如微信的聊天数据是存储在加密的数据库中，一些账号相关的数据我们也要单独做加密落地。根据加密强度的不同，可以选择 <code>RSA</code> 、<code>AES</code>、<code>chacha20</code>、<code>TEA</code>这些常用的加密算法</p>
+</li>
+<li><p><strong>开发成本：</strong>有些存储方案看起来非常高大上，但是需要业务做很大改造才能接入。这里我们当然希望能无缝的接入到业务中，在整个开发过程越简单越好</p>
+</li>
+<li><p><strong>兼容性：</strong>业务不停地向前演进，我们的存储字段或者格式有时候也会不得不有所变化。兼容性首先要考虑的是向前、向后的兼容性，老的数据在升级时能否迁移过来，新的数据在老版本能否降级使用。兼容性另外一个需要考虑的可能是多语言的问题，不同的语言是否支持转换</p>
+</li>
+</ol>
+<p>数据存储方法不能脱离场景来考虑，我们不可能把这六个要素都做成最完美。如果首要考虑的是<strong>正确性</strong>，那我们可能需要采用冗余、双写等方案，那就要容忍对<strong>时间开销</strong>产生的额外影响。同样如果非常在意<strong>安全</strong>，加解密环节的<strong>开销</strong>也必不可小。如果想针对启动场景，我们希望选择在初始化时间和读取时间更有优势的方案。</p>
+<hr>
+<h2 id="1-2-SharedPreferences"><a href="#1-2-SharedPreferences" class="headerlink" title="1.2 SharedPreferences"></a>1.2 SharedPreferences</h2><p><code>SharedPreferences</code> 使用非常简便，但也是诟病比较多的存储方法。</p>
+<ol>
+<li><strong>跨进程不安全：</strong>由于没有使用跨进程的锁，就算使用 <code>MODE_MULTI_PROCESS</code>，<code>SharedPreferences</code> 在跨进程频繁读写有可能导致数据全部丢失。根据线上统计，<code>SP</code> 大约会有万分之一的损坏率。</li>
+<li><strong>加载缓慢：</strong><code>SharedPreferences</code> 文件的加载使用了异步线程，而且加载线程并没有设置线程优先级，如果这个时候主线程读取数据就需要等待文件加载线程的结束。这就导致出现主线程等待低优先级线程锁的问题，比如一个 <code>100KB</code> 的 <code>SP</code> 文件读取等待时间大约需要 <code>50~100ms</code>，我建议提前用异步线程预加载启动过程用到的 SP 文件。</li>
+<li><strong>全量写入：</strong>无论是调用 <code>commit()</code> 还是 <code>apply()</code>，即使我们只改动其中的一个条目，都会把整个内容全部写到文件。而且即使我们多次写入同一个文件，<code>SP</code> 也没有将多次修改合并为一次，这也是性能差的重要原因之一。</li>
+<li><strong>卡顿：</strong>由于提供了异步落盘的 <code>apply</code> 机制，在崩溃或者其他一些异常情况可能会导致数据丢失。所以当应用收到系统广播，或者被调用 <code>onPause</code> 等一些时机，系统会强制把所有的 <code>SharedPreferences</code> 对象数据落地到磁盘。如果没有落地完成，这时候主线程会被一直阻塞。这样非常容易造成卡顿，甚至是 <code>ANR</code>，从线上数据来看 <code>SP</code> 卡顿占比一般会超过 <code>5%</code>。</li>
+</ol>
+<p>更多机制 <a href="https://juejin.im/entry/597446ed6fb9a06bac5bc630" target="_blank" rel="noopener">彻底搞懂 SharedPreferences</a></p>
+<p>更好的替代 <code>SharedPreferences</code> 的存储方案微信的 <a href="https://github.com/Tencent/MMKV" target="_blank" rel="noopener">MMKV</a></p>
+<hr>
+<h2 id="1-3-ContentProvider"><a href="#1-3-ContentProvider" class="headerlink" title="1.3 ContentProvider"></a>1.3 ContentProvider</h2><p><code>ContentProvider</code> 作为 <code>Android</code> 四大组件中的一种，为我们提供了不同进程甚至是不同应用程序之间共享数据的机制。</p>
+<p>为什么 <code>Android</code> 系统不把 <code>SharedPreferences</code> 设计成跨进程安全的呢？那是因为 <code>Android</code> 系统更希望我们在这个场景选择使用 <code>ContentProvider</code> 作为存储方式。</p>
+<p><code>Android</code> 系统中比如相册、日历、音频、视频、通讯录等模块都提供了 <code>ContentProvider</code> 的访问支持。具体使用你可以参考其他文章。</p>
+<p><code>ContentProvider</code> 的一些注意事项：</p>
+<ol>
+<li><p><strong>启动性能：</strong><code>ContentProvider</code> 的生命周期默认在 <code>Application onCreate()</code> 之前，而且都是在主线程创建的。我们自定义的 <code>ContentProvider</code> 类的构造函数、静态代码块、<code>onCreate</code> 函数都尽量不要做耗时的操作，会拖慢启动速度。</p>
+</li>
+<li><p><strong>稳定性：</strong><code>ContentProvider</code> 在进行跨进程数据传递时，利用了 <code>Android</code> 的 <code>Binder</code> 和匿名共享内存机制。就是通过 <code>Binder</code> 传递 <code>CursorWindow</code> 对象内部的匿名共享内存的文件描述符。这样在跨进程传输中，结果数据并不需要跨进程传输，而是在不同进程中通过传输的匿名共享内存文件描述符来操作同一块匿名内存，这样来实现不同进程访问相同数据的目的。</p>
+<p>基于 <code>mmap</code> 的匿名共享内存机制也是有代价的。当传输的数据量非常小的时候，可能不一定划算。所以 <code>ContentProvider</code> 提供了一种 <code>call</code> 函数，它会直接通过 <code>Binder</code> 来传输数据。<code>Android</code> 的 <code>Binder</code> 传输是有大小限制的，一般来说限制是 <code>1~2MB</code>。<code>ContentProvider</code> 的接口调用参数和 call 函数调用并没有使用匿名共享机制，比如要批量插入很多数据，那么就会出现一个插入数据的数组，如果这个数组太大了，那么这个操作就可能会出现数据超大异常。</p>
+</li>
+<li><p><strong>安全性：</strong>虽然 <code>ContentProvider</code> 为应用程序之间的数据共享提供了很好的安全机制，但是如果 <code>ContentProvider</code> 是 <code>exported（是否可以被其他应用调用）</code>，当支持执行 <code>SQL</code> 语句时就需要注意 <code>SQL 注入</code> 的问题。另外如果我们传入的参数是一个文件路径，然后返回文件的内容，这个时候也要校验合法性，不然整个应用的私有数据都有可能被别人拿到，在 <code>intent</code>传递参数的时候可能经常会犯这个错误。</p>
+</li>
+</ol>
+<p>总的来说，<code>ContentProvider</code> 这套方案实现相对比较笨重，适合传输大的数据。</p>
+<hr>
+<h2 id="1-4-SQLite-优化那些事儿"><a href="#1-4-SQLite-优化那些事儿" class="headerlink" title="1.4 SQLite 优化那些事儿"></a>1.4 SQLite 优化那些事儿</h2><h3 id="1-4-1-OCR"><a href="#1-4-1-OCR" class="headerlink" title="1.4.1 OCR"></a>1.4.1 OCR</h3><p>说到 <code>SQLite</code> Android 中最常用的开源库有 <a href="https://github.com/greenrobot/greenDAO" target="_blank" rel="noopener">greenDAO</a> 和 Google 官方的 <a href="https://developer.android.google.cn/topic/libraries/architecture/room" target="_blank" rel="noopener">Room</a> ，它们都是 <code>ORM 框架</code></p>
+<p><code>ORM（Object Relational Mapping）</code>也就是对象关系映射，用面向对象的概念把数据库中表和对象关联起来，可以让我们不用关心数据库底层的实现。</p>
+<p><code>ORM</code> 框架会带来什么问题?</p>
+<p>使用 <code>ORM</code> 框架真的非常简单，但是简易性是需要牺牲部分执行效率为代价的，具体的损耗跟 <code>ORM</code> 框架写得好不好很有关系。但可能更大的问题是思维固化，最后可能连简单的 <code>SQL</code> 语句都不会写了。</p>
+<p>这里推荐微信的 <a href="https://github.com/Tencent/wcdb/wiki" target="_blank" rel="noopener">WCDB</a> </p>
+<p><code>SQLite</code> 优化：</p>
+<h3 id="1-4-2-并发"><a href="#1-4-2-并发" class="headerlink" title="1.4.2 并发"></a>1.4.2 并发</h3><p><a href="http://huili.github.io/lockandimplement/machining.html" target="_blank" rel="noopener">SQLite 锁机制简介</a> <a href="https://www.cnblogs.com/cchust/p/4761814.html" target="_blank" rel="noopener">SQLite 封锁机制</a></p>
+<p>为了进一步提高并发性能，我们还可以打开 <a href="https://www.sqlite.org/wal.html" target="_blank" rel="noopener">WAL</a>（Write-Ahead Logging）模式。<code>WAL</code> 模式会将修改的数据单独写到一个 <code>WAL</code> 文件中，同时也会引入了 <code>WAL</code> 日志文件锁。通过 <code>WAL</code> 模式读和写可以完全地并发执行，不会互相阻塞。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mSQLiteDataBase.rawExecSQL(&quot;PRAGMA schema.journal_mode &#x3D; WAL;&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>连接池</code> 与 <code>WAL</code> 模式，我们可以很大程度上增加 <code>SQLite</code> 的读写并发，大大减少由于并发导致的等待耗时。</p>
+<h3 id="1-4-3-索引查询优化"><a href="#1-4-3-索引查询优化" class="headerlink" title="1.4.3 索引查询优化"></a>1.4.3 索引查询优化</h3><p><a href="https://www.cnblogs.com/huahuahu/p/sqlite-suo-yin-de-yuan-li-ji-ying-yong.html" target="_blank" rel="noopener">SQLite 索引的原理</a> <a href="http://blog.codinglabs.org/articles/theory-of-mysql-index.html" target="_blank" rel="noopener">MySQL 索引背后的数据结构及算法原理</a> <a href="https://www.sqlite.org/queryplanner.html#searching" target="_blank" rel="noopener">官方文档 Query Planning</a></p>
+<p>这里的关键在于如何正确的建立索引，很多时候我们以为已经建立了索引，但事实上并没有真正生效。例如使用了 <code>BETWEEN</code>、<code>LIKE</code>、<code>OR</code> 这些操作符、使用表达式或者 <code>case when</code> 等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BETWEEN：myfiedl索引无法生效</span><br><span class="line">SELECT * FROM mytable WHERE myfield BETWEEN 10 and 20;</span><br><span class="line">转换成：myfiedl索引可以生效</span><br><span class="line">SELECT * FROM mytable WHERE myfield &gt;&#x3D; 10 AND myfield &lt;&#x3D; 20;</span><br></pre></td></tr></table></figure>
+
+<p>建立索引是有代价的，需要一直维护索引表的更新。比如对于一个很小的表来说就没必要建索引；如果一个表经常是执行插入更新操作，那么也需要节制的建立索引。总的来说有几个原则：</p>
+<ul>
+<li>建立正确的索引。这里不仅需要确保索引在查询中真正生效，我们还希望可以选择最高效的索引。如果一个表建立太多的索引，那么在查询的时候 <code>SQLite</code> 可能不会选择最好的来执行。</li>
+<li>单列索引、多列索引与复合索引的选择。索引要综合数据表中不同的查询与排序语句一起考虑，如果查询结果集过大，还是希望可以通过复合索引直接在索引表返回查询结果。</li>
+<li>索引字段的选择。整型类型索引效率会远高于字符串索引，而对于主键 <code>SQLite</code> 会默认帮我们建立索引，所以主键尽量不要用复杂字段。</li>
+</ul>
+<p>总的来说索引优化是 <code>SQLite</code> 优化中最简单同时也是最有效的，但是它并不是简单的建一个索引就可以了，有的时候我们需要进一步调整查询语句甚至是表的结构，这样才能达到最好的效果。</p>
+<h3 id="1-4-4-页大小与缓存大小"><a href="#1-4-4-页大小与缓存大小" class="headerlink" title="1.4.4 页大小与缓存大小"></a>1.4.4 页大小与缓存大小</h3><p>在 <code>I/O</code> 文件系统中，数据库就像一个小文件系统一样，事实上它内部也有页和缓存的概念。</p>
+<p>跟文件系统的页缓存（Page Cache）一样，<code>SQLite</code> 会将读过的页缓存起来，用来加快下一次读取速度。页大小默认是 <code>1024Byte</code>，缓存大小默认是 <code>1000</code> 页。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mSQLiteDataBase.rawExecSQL(&quot;PRAGMA page_size &#x3D; 1024;&quot;)</span><br><span class="line">mSQLiteDataBase.rawExecSQL(&quot;PRAGMA cache_size &#x3D; 1000;&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://static001.geekbang.org/resource/image/f2/1c/f232cbaff34236a1933182a02c685a1c.png" alt="图片来源于 Android 开发高手课"></p>
+<p><strong>注意：</strong>在微信的内部测试中，如果使用 <code>4KB</code> 的 <code>page size</code> 性能提升可以在 <code>5%～10%</code>。但是考虑到历史数据的迁移成本，最终还是使用 <code>1024Byte</code>。所以这里建议大家在新建数据库的时候，就提前选择 <code>4KB</code> 作为默认的 <code>page size</code> 以获得更好的性能。</p>
+<h3 id="1-4-5-其他优化"><a href="#1-4-5-其他优化" class="headerlink" title="1.4.5 其他优化"></a>1.4.5 其他优化</h3><ul>
+<li>慎用 <code>select*</code>，需要使用多少列，就选取多少列。</li>
+<li>正确地使用事务。</li>
+<li>预编译与参数绑定，缓存被编译后的 <code>SQL</code> 语句。</li>
+<li>定期整理或者清理无用或可删除的数据，例如朋友圈数据库会删除比较久远的数据，如果用户访问到这部分数据，重新从网络拉取即可。</li>
+</ul>
+<p><strong>总结：通过引进 <code>ORM</code>，可以大大的提升我们的开发效率。通过正确的建立索引，可以提升 <code>SQLite</code> 的查询速度。通过 <code>WAL</code> 模式和连接池，可以提高 <code>SQLite</code> 的并发性能。通过调整默认的页大小和缓存大小，可以提升 <code>SQLite</code> 的整体性能。</strong></p>
+<hr>
+<h2 id="1-5-SQLite-的其他特征"><a href="#1-5-SQLite-的其他特征" class="headerlink" title="1.5 SQLite 的其他特征"></a>1.5 SQLite 的其他特征</h2><p>除了 <code>SQLite</code> 的优化经验，还有一些其他的</p>
+<h3 id="1-5-1-损坏与恢复"><a href="#1-5-1-损坏与恢复" class="headerlink" title="1.5.1 损坏与恢复"></a>1.5.1 损坏与恢复</h3><p><a href="https://mp.weixin.qq.com/s/N1tuHTyg3xVfbaSd4du-tw" target="_blank" rel="noopener">微信 SQLite 数据库修复实践</a></p>
+<p><a href="https://mp.weixin.qq.com/s/Ln7kNOn3zx589ACmn5ESQA" target="_blank" rel="noopener">微信移动端数据库组件WCDB系列（二） — 数据库修复三板斧</a></p>
+<p><a href="https://github.com/Tencent/wcdb/wiki/Android数据库修复" target="_blank" rel="noopener">WCDB Android 数据库修复</a></p>
+<h3 id="1-5-2-加密与安全"><a href="#1-5-2-加密与安全" class="headerlink" title="1.5.2 加密与安全"></a>1.5.2 加密与安全</h3><p>数据库的安全主要有两个方面，一个是防注入，一个是加密。防注入可以通过静态安全扫描的方式，而加密一般会使用 <code>SQLCipher</code> 支持。</p>
+<p><code>SQLite</code> 的加解密都是以页为单位，默认会使用 <code>AES</code> 算法加密，加 / 解密的耗时跟选用的密钥长度有关。</p>
+<p><a href="https://mp.weixin.qq.com/s/NFnYEXSxAaHBqpi7WofSPQ" target="_blank" rel="noopener">WCDB 加解密的使用</a></p>
+<h3 id="1-5-3-全文搜索"><a href="#1-5-3-全文搜索" class="headerlink" title="1.5.3 全文搜索"></a>1.5.3 全文搜索</h3><p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://static001.geekbang.org/resource/image/d2/d9/d2a09d040d0d915e78d7598457d6d1d9.png" alt="图片来源于 Android 开发高手课"></p>
+<p><a href="https://mp.weixin.qq.com/s/AhYECT3HVyn1ikB0YQ-UVg" target="_blank" rel="noopener">微信全文搜索优化之路</a></p>
+<p><a href="https://mp.weixin.qq.com/s/GCznwCtjJ2XUszyMcbNz8Q" target="_blank" rel="noopener">移动客户端多音字搜索</a> </p>
+<p><strong>总结：</strong>关于 <code>SQLite</code>的这些特性，我们需要根据自己的项目情况综合考虑。假如某个数据库存储的数据并不重要，这个时候万分之一的数据损坏率我们并不会关心。同样是否需要使用数据库加密，也要根据存储的数据是不是敏感内容。</p>
+<p><a href="http://huili.github.io/sqlite/sqliteintro.html" target="_blank" rel="noopener">SQLite 源码分析</a></p>
+<p><a href="https://github.com/AndroidAdvanceWithGeektime/Chapter14/blob/master/全面解析SQLite.pdf" target="_blank" rel="noopener">全面解析 SQLite</a></p>
+<hr>
+<h1 id="2-如何优化数据存储？"><a href="#2-如何优化数据存储？" class="headerlink" title="2 如何优化数据存储？"></a>2 如何优化数据存储？</h1><h2 id="2-1-对象的序列化"><a href="#2-1-对象的序列化" class="headerlink" title="2.1 对象的序列化"></a>2.1 对象的序列化</h2><p>应用程序中的对象存储在内存中，如果我们想把对象存储下来或者在网络上传输，这个时候就需要用到对象的序列化和反序列化。</p>
+<p>对象序列化就是把一个 <code>Object</code> 对象所有的信息表示成一个字节序列，这包括 <code>Class</code> 信息、继承关系信息、访问权限、变量类型以及数值信息等。</p>
+<h3 id="2-1-1-Serializable"><a href="#2-1-1-Serializable" class="headerlink" title="2.1.1 Serializable"></a>2.1.1 Serializable</h3><p><code>Serializable</code> 是 <code>Java</code> 原生的序列化机制，在 <code>Android</code> 中也有被广泛使用。我们可以通过 <code>Serializable</code> 将对象持久化存储，也可以通过 <code>Bundle</code> 传递 <code>Serializable</code> 的序列化数据。</p>
+<h4 id="Serializable-的原理"><a href="#Serializable-的原理" class="headerlink" title="Serializable 的原理"></a><strong>Serializable 的原理</strong></h4><p><code>Serializable</code> 的原理是通过 <code>ObjectInputStream</code> 和 <code>ObjectOutputStream</code> 来实现的，以 Android 6.0 的源码为例，可以看到 <a href="http://androidxref.com/6.0.0_r1/xref/libcore/luni/src/main/java/java/io/ObjectOutputStream.java#927" target="_blank" rel="noopener">ObjectOutputStream</a> 的部分源码实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private void writeFieldValues(Object obj, ObjectStreamClass classDesc)  &#123;</span><br><span class="line">    for (ObjectStreamField fieldDesc : classDesc.fields()) &#123;</span><br><span class="line">        ...</span><br><span class="line">        Field field &#x3D; classDesc.checkAndGetReflectionField(fieldDesc);</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<p>整个序列化过程使用了大量的反射和临时变量，而且在序列化对象的时候，不仅会序列化当前对象本身，还需要递归序列化对象引用的其他对象。</p>
+<p>整个过程计算非常复杂，而且因为存在大量反射和 <code>GC</code> 的影响，序列化的性能会比较差。另外一方面因为序列化文件需要包含的信息非常多，导致它的大小比 Class 文件本身还要大很多，这样又会导致 I/O 读写上的性能问题。</p>
+<h4 id="Serializable-的进阶"><a href="#Serializable-的进阶" class="headerlink" title="Serializable 的进阶"></a><strong>Serializable 的进阶</strong></h4><p>既然 <code>Serializable</code> 性能那么差，那它有哪些优势呢？可能很多同学都不知道它还有一些进阶的用法，你可以参考<a href="https://www.ibm.com/developerworks/cn/java/j-5things1/index.html" target="_blank" rel="noopener">《Java 对象序列化，您不知道的 5 件事》</a> 这篇文章。</p>
+<p>自定义序列化：</p>
+<ul>
+<li><code>writeObject</code> 和 <code>readObject</code> 方法。<code>Serializable</code> 序列化支持替代默认流程，它会先反射判断是否存在我们自己实现的序列化方法 <code>writeObject</code> 或反序列化方法 <code>readObject</code> 。<strong>通过这两个方法，我们可以对某些字段做一些特殊修改，也可以实现序列化的加密功能。</strong></li>
+<li><code>writeReplace</code> 和 <code>readResolve</code> 方法。这两个方法代理序列化的对象，可以实现自定义返回的序列化实例。那它有什么用呢？我们可以通过它们实现对象序列化的版本兼容，例如通过 <code>readResolve</code> 方法可以把老版本的序列化对象转换成新版本的对象类型。</li>
+</ul>
+<p><code>Serializable</code> 的序列化与反序列化的调用流程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 序列化</span><br><span class="line">E&#x2F;test:SerializableTestData writeReplace</span><br><span class="line">E&#x2F;test:SerializableTestData writeObject</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 反序列化</span><br><span class="line">E&#x2F;test:SerializableTestData readObject</span><br><span class="line">E&#x2F;test:SerializableTestData readResolve</span><br></pre></td></tr></table></figure>
+
+<h4 id="Serializable-的注意事项"><a href="#Serializable-的注意事项" class="headerlink" title="Serializable 的注意事项"></a><strong>Serializable 的注意事项</strong></h4><p><code>Serializable</code> 虽然使用非常简单，但是也有一些需要注意的事项字段。</p>
+<ul>
+<li><p><strong>不被序列化的字段。</strong>类的 <code>static</code> 变量以及被声明为 <code>transient</code> 的字段，默认的序列化机制都会忽略该字段，不会进行序列化存储。当然我们也可以使用进阶的 <code>writeReplace</code> 和 <code>readResolve</code> 方法做自定义的序列化存储。</p>
+</li>
+<li><p><strong>serialVersionUID。</strong>在类实现了 <code>Serializable</code> 接口后，我们需要添加一个 <code>Serial Version ID</code>，它相当于类的版本号。这个 <code>ID</code> 我们可以显式声明也可以让编译器自己计算。通常我建议显式声明会更加稳妥，因为隐式声明假如类发生了一点点变化，进行反序列化都会由于 <code>serialVersionUID</code> 改变而导致 <code>InvalidClassException</code> 异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1234567890L</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>构造方法。</strong><code>Serializable</code> 的反序列默认是不会执行构造函数的，它是根据数据流中对 <code>Object</code> 的描述信息创建对象的。如果一些逻辑依赖构造函数，就可能会出现问题，例如一个静态变量只在构造函数中赋值，当然我们也可以通过进阶方法做自定义的反序列化修改。</p>
+</li>
+</ul>
+<h3 id="2-1-2-Parcelable"><a href="#2-1-2-Parcelable" class="headerlink" title="2.1.2 Parcelable"></a>2.1.2 Parcelable</h3><p>由于 <code>Java</code> 的<code>Serializable</code> 的性能较低，<code>Android</code> 需要重新设计一套更加轻量且高效的对象序列化和反序列化机制。<code>Parcelable</code> 正是在这个背景下产生的，它核心的作用就是为了解决 <code>Android</code> 中大量跨进程通信的性能问题。</p>
+<h4 id="Parcelable-的永久存储"><a href="#Parcelable-的永久存储" class="headerlink" title="Parcelable 的永久存储"></a>Parcelable 的永久存储</h4><p>Parcelable 的原理十分简单，它的核心实现都在 <a href="http://androidxref.com/6.0.0_r1/xref/frameworks/native/libs/binder/Parcel.cpp" target="_blank" rel="noopener">Parcel.cpp</a> 。 </p>
+<p>你可以发现 <code>Parcel</code> 序列化和 <code>Java</code> 的 <code>Serializable</code> 序列化差别还是比较大的，<code>Parcelable</code> 只会在内存中进行序列化操作，并不会将数据存储到磁盘里。</p>
+<p>当然我们也可以通过 <a href="http://androidxref.com/6.0.0_r1/xref/frameworks/base/core/java/android/os/Parcel.java" target="_blank" rel="noopener">Parcel.java</a> 的 <code>marshall</code> 方法获取 <code>byte</code> 数组，然后存在文件中从而实现 <code>Parcelable</code> 的永久存储。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Returns the raw bytes of the parcel.</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">byte</span>[] marshall() &#123;</span><br><span class="line">    <span class="keyword">return</span> nativeMarshall(mNativePtr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Set the bytes in data to be the raw bytes of this Parcel.</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">unmarshall</span><span class="params">(<span class="keyword">byte</span>[] data, <span class="keyword">int</span> offset, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">    nativeUnmarshall(mNativePtr, data, offset, length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ProcessCpuTracker pct=<span class="keyword">new</span> ProcessCpuTracker();</span><br><span class="line">Parcel parcel = Parcel.obtain();</span><br><span class="line">parcel.writeValue(pct);</span><br><span class="line"><span class="keyword">byte</span>[] bytes = parcel.marshall();</span><br><span class="line">parcel.recycle();</span><br><span class="line"></span><br><span class="line">Parcel thatParcel = Parcel.obtain();</span><br><span class="line">thatParcel.unmarshall(bytes, <span class="number">0</span>, bytes.length);</span><br><span class="line">thatParcel.setDataPosition(<span class="number">0</span>);</span><br><span class="line">ProcessCpuTracker that = (ProcessCpuTracker)thatParcel.readValue(ProcessCpuTracker<span class="class">.<span class="keyword">class</span>.<span class="title">getClassLoader</span>())</span>;</span><br><span class="line">thatParcel.recycle();</span><br></pre></td></tr></table></figure>
+
+<h4 id="Parcelable-的注意事项"><a href="#Parcelable-的注意事项" class="headerlink" title="Parcelable 的注意事项"></a>Parcelable 的注意事项</h4><p>在时间开销和使用成本的权衡上，<code>Parcelable</code> 机制选择的是性能优先。</p>
+<p>所以它在写入和读取的时候都需要手动添加自定义代码，使用起来相比 <code>Serializable</code> 会复杂很多。但是正因为这样，<code>Parcelable</code> 才不需要采用反射的方式去实现序列化和反序列化。</p>
+<p>虽然通过取巧的方法可以实现 <code>Parcelable</code> 的永久存储，但是它也存在两个问题。</p>
+<ul>
+<li>系统版本的兼容性。由于 <code>Parcelable</code> 设计本意是在内存中使用的，我们无法保证所有 <code>Android</code> 版本的 Parcel.cpp 实现都完全一致。如果不同系统版本实现有所差异，或者有厂商修改了实现，可能会存在问题。</li>
+<li>数据前后兼容性。<code>Parcelable</code> 并没有版本管理的设计，如果我们类的版本出现升级，写入的顺序及字段类型的兼容都需要格外注意，这也带来了很大的维护成本。</li>
+</ul>
+<p>一般来说，如果需要持久化存储的话，一般还是不得不选择性能更差的 Serializable 方案。</p>
+<h3 id="2-1-3-Serial"><a href="#2-1-3-Serial" class="headerlink" title="2.1.3 Serial"></a>2.1.3 Serial</h3><p>直击痛点的方案，<code>Twitter</code> 开源的 <a href="https://github.com/twitter/Serial/blob/master/README-CHINESE.rst/" target="_blank" rel="noopener">Serial</a> </p>
+<p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://static001.geekbang.org/resource/image/71/df/71e3e58ed10ecc09646101ec22e360df.png" alt="图片来源于 Android 开发高手课"></p>
+<p>从图中数据上看来，<code>Serial</code> 在序列化与反序列化耗时，以及落地的文件大小都有很大的优势。从实现原理上看，<code>Serial</code> 就像是把 <code>Parcelable</code> 和 <code>Serializable</code> 的优点集合在一起的方案。</p>
+<ul>
+<li>由于没有使用反射，相比起传统的反射序列化方案更加高效，具体你可以参考上面的测试数据。</li>
+<li>开发者对于序列化过程的控制较强，可定义哪些 <code>Object</code>、<code>Field</code> 需要被序列化。</li>
+<li>有很强的 <code>debug</code> 能力，可以调试序列化的过程。</li>
+<li>有很强的版本管理能力，可以通过版本号和 <code>OptionalFieldException</code> 做兼容。</li>
+</ul>
+<h2 id="2-2-数据的序列化"><a href="#2-2-数据的序列化" class="headerlink" title="2.2 数据的序列化"></a>2.2 数据的序列化</h2><p><code>Serial</code> 性能看起来还不错，但是对象的序列化要记录的信息还是比较多，在操作比较频繁的时候，对应用的影响还是不少的，这个时候我们可以选择使用数据的序列化。</p>
+<h3 id="2-2-1-Json"><a href="#2-2-1-Json" class="headerlink" title="2.2.1 Json"></a>2.2.1 Json</h3><p><code>JSON</code> 是一种轻量级的数据交互格式，它被广泛使用在网络传输中，很多应用与服务端的通信都是使用 <code>JSON</code> 格式进行交互。</p>
+<p>JSON 的确有很多得天独厚的优势，主要有：</p>
+<ul>
+<li>相比对象序列化方案，速度更快，体积更小。</li>
+<li>相比二进制的序列化方案，结果可读，易于排查问题。</li>
+<li>使用方便，支持跨平台、跨语言，支持嵌套引用。</li>
+</ul>
+<p>因为每个应用基本都会用到 <code>JSON</code>，所以每个大厂也基本都有自己的 “ 轮子 ” 。例如 <code>Android</code> 自带的 <code>JSON</code> 库、<code>Google</code> 的 <code>Gson</code> 、阿里巴巴的 <code>Fastjson</code> 、美团的 <code>MSON</code> 。</p>
+<p>各个自研的 JSON 方案主要在下面两个方面进行优化：</p>
+<ul>
+<li><strong>便利性。</strong>例如支持 JSON 转换成 JavaBean 对象，支持注解，支持更多的数据类型等。</li>
+<li><strong>性能。</strong>减少反射，减少序列化过程内存与 CPU 的使用，特别是在数据量比较大或者嵌套层级比较深的时候效果会比较明显。</li>
+</ul>
+<p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://static001.geekbang.org/resource/image/98/78/984bb5dc6300f25ba142c208bdca3178.png" alt="图片来源于 Android 开发高手课"></p>
+<p>在数据量比较少的时候，系统自带的 <code>JSON</code> 库还稍微有一些优势。但在数据量大了之后，差距逐渐被拉开。总的来说，<code>Gson</code> 的兼容性最好，一般情况下它的性能与 <code>Fastjson</code> 相当。但是在数据量极大的时候，<code>Fastjson</code> 的性能更好。</p>
+<h3 id="2-2-2-Protocol-Buffers"><a href="#2-2-2-Protocol-Buffers" class="headerlink" title="2.2.2 Protocol Buffers"></a>2.2.2 Protocol Buffers</h3><p>相比对象序列化方案，<code>JSON</code> 的确速度更快、体积更小。不过为了保证 <code>JSON</code> 的中间结果是可读的，它并没有做二进制的压缩，也因此 <code>JSON</code> 的性能还没有达到极致。</p>
+<p>如果应用的数据量非常大，又或者对性能有更高的要求，此时 <a href="https://developers.google.com/protocol-buffers/docs/overview" target="_blank" rel="noopener">Protocol Buffers</a> 是一个非常好的选择。它是 <code>Google</code> 开源的跨语言编码协议，<code>Google</code> 内部的几乎所有 <code>RPC</code> 都在使用这个协议。</p>
+<p>下面我来总结一下它的优缺点。</p>
+<ul>
+<li><strong>性能。</strong>使用了二进制编码压缩，相比 JSON 体积更小，编解码速度也更快，感兴趣的同学可以参考protocol-buffers 编码规则。</li>
+<li><strong>兼容性。</strong>跨语言和前后兼容性都不错，也支持基本类型的自动转换，但是不支持继承与引用类型。</li>
+<li><strong>使用成本。</strong><code>Protocol Buffers</code> 的开发成本很高，需要定义 <code>.proto</code> 文件，并用工具生成对应的辅助类。辅助类特有一些序列化的辅助方法，所有要序列化的对象，都需要先转化为辅助类的对象，这让序列化代码跟业务代码大量耦合，是侵入性较强的一种方式。</li>
+</ul>
+<p>对于 <code>Android</code> 来说，官方的 <code>Protocol Buffers</code> 会导致生成的方法数很多。我们可以修改它的自动代码生成工具，例如在微信中，每个 <code>.proto</code> 生成的类文件只会包含一个方法即 <code>op</code> 方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestProtocal</span> <span class="keyword">extends</span>  <span class="title">com</span>.<span class="title">tencent</span>.<span class="title">mm</span>.<span class="title">protocal</span>.<span class="title">protobuf</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">op</span><span class="params">(<span class="keyword">int</span> opCode, Object ...objs)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (opCode == OPCODE_WRITEFIELDS) &#123;</span><br><span class="line">           ... </span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (opCode == OPCODE_COMPUTESIZE) &#123;</span><br><span class="line">           ...</span><br></pre></td></tr></table></figure>
+
+<p><code>Google</code> 后面还推出了压缩率更高的 <code>FlatBuffers</code>，对于它的使用你可以参考<a href="https://www.race604.com/flatbuffers-intro/" target="_blank" rel="noopener">《FlatBuffers 体验》</a>。最后，我再结合 “六要素”，综合对比一下 <code>Serial</code>、<code>JSON</code>、<code>Protocol Buffers</code> 这三种序列化方案。</p>
+<p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://static001.geekbang.org/resource/image/1a/28/1afba11681441b6a8ab8f0d86337ea28.png" alt="图片来源于 Android 开发高手课"></p>
+<h1 id="3-Demo-相关练习"><a href="#3-Demo-相关练习" class="headerlink" title="3 Demo 相关练习"></a>3 Demo 相关练习</h1><h2 id="3-1-重写-SharedPreferencesImpl"><a href="#3-1-重写-SharedPreferencesImpl" class="headerlink" title="3.1 重写 SharedPreferencesImpl"></a>3.1 重写 <code>SharedPreferencesImpl</code></h2><p><a href="https://github.com/AndroidAdvanceWithGeektime/Chapter12" target="_blank" rel="noopener">Chapter12 SharedPreferencesImpl</a> 这是一个简单的示例。</p>
+<p>通过继承 <code>SharedPreferences</code> 重写 <code>SharedPreferencesImpl</code> ，并通过 <code>Application</code> 的 <code>getSharedPreferences</code> 方法，替换系统 <code>SharedPreferences</code> 的具体实现。还可以替换它的存储结构、增加加密等其他自定义功能。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">CalmCenter</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://calmcenter.club/2020/storage-optimization.html">https://calmcenter.club/2020/storage-optimization.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://calmcenter.club" target="_blank">CalmCenter</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></div><div class="post_share"></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.png" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.png" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2020/power-optimization.html"><img class="prev_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover13.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">App 电量优化</div></div></a></div><div class="next-post pull_right"><a href="/2020/network-optimization.html"><img class="next_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover19.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">App 网络优化</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2019/complete-works-of-android-performance.html" title="Android 性能优化篇"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200228233120.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-01</div><div class="relatedPosts_title">Android 性能优化篇</div></div></a></div><div class="relatedPosts_item"><a href="/2020/network-optimization.html" title="App 网络优化"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover19.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-14</div><div class="relatedPosts_title">App 网络优化</div></div></a></div><div class="relatedPosts_item"><a href="/2020/package-optimization.html" title="App 包体积优化"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover10.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-18</div><div class="relatedPosts_title">App 包体积优化</div></div></a></div><div class="relatedPosts_item"><a href="/2020/power-optimization.html" title="App 电量优化"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover13.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-18</div><div class="relatedPosts_title">App 电量优化</div></div></a></div><div class="relatedPosts_item"><a href="/2020/ui-optimization.html" title="App UI优化💦"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover32.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-15</div><div class="relatedPosts_title">App UI优化💦</div></div></a></div><div class="relatedPosts_item"><a href="/2019/start-optimization.html" title="App 初体验-启动优化💦"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover16.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-24</div><div class="relatedPosts_title">App 初体验-启动优化💦</div></div></a></div></div><div class="clear_both"></div></div><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var requestSetting = function (from,set) {
+  var from = from
+  var setting = set.split(',').filter(function(item){
+  return from.indexOf(item) > -1
+  });
+  setting = setting.length == 0 ? from :setting;
+  return setting
+}
+
+var guestInfo = requestSetting(['nick','mail','link'],'nick,mail,link')
+var requiredFields = requestSetting(['nick','mail','link'],'nick,mail')
+
+window.valine = new Valine({
+  el:'#vcomment',
+  appId: 'KiQHU70TUHYrumpFuuhC3UEg-gzGzoHsz',
+  appKey: 'wX1m2ATu8q4CyeRhOQ3FUucn',
+  notify: true,
+  verify: true,
+  placeholder: '💦💦既然来了何不留下你的足迹(支持 Markdown 哦~)',
+  avatar: 'robohash',
+  meta: guestInfo,
+  pageSize: '10',
+  lang: 'zh-CN',
+  recordIP: false,
+  serverURLs: '',
+  emojiCDN: '',
+  emojiMaps: "",
+  enableQQ: false,
+  requiredFields: requiredFields
+});</script></div></article></main><footer id="footer" style="background-image: url(https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover5.webp)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div><link rel="stylesheet" href="/live2d/css/live2d.css"/></div><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="240" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
+var home_Path = 'https://calmcenter.club/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/xxb2/model.json");</script></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><a id="to_comment" href="#post-comment" title="直达评论"><i class="scroll_to_comment fa fa-comments">  </i></a><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script id="ribbon_piao" mobile="true" src="/js/third-party/piao.js"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script><script src="/js/search/local-search.js"></script></body></html>

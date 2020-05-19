@@ -1,472 +1,91 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hexo 功能样式配置 | CalmCenter</title><meta name="description" content="Next 样式总结，持续更新"><meta name="keywords" content="HEXO"><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '2'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
 
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
 
-<head>
-    <meta charset="utf-8">
-    <meta name="keywords" content="HEXO">
-    <meta name="description" content="Next 样式总结，持续更新">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Hexo 功能样式配置 | CalmCenter</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
 
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
-    
-    <script src="/libs/jquery/jquery.min.js"></script>
-    
-<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
-
-
-<body>
-    <header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper head-container">
-            <div class="brand-logo">
-                <a href="/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">CalmCenter</span>
-                </a>
-            </div>
-            
-
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="canonical" href="https://calmcenter.club/2019/hexo-functional-style.html"><link rel="prev" title="Hexo 网站管理" href="https://calmcenter.club/2019/hexo-website-management.html"><link rel="next" title="Live2D 看板娘" href="https://calmcenter.club/2019/hexo-live2d.html"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"top-right"},
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false
   
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/" class="waves-effect waves-light">
-      
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
-
-<div id="mobile-nav" class="side-nav sidenav">
-
-    <div class="mobile-head bg-color">
-        
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">CalmCenter</div>
-        <div class="logo-desc">
-            
-            目标设置到月球，即使陨落也是在群星之间！
-            
-        </div>
-    </div>
-
-    
-
-    <ul class="menu-list mobile-menu-list">
-        
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
-          
-        </li>
-        
-        
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/CalmCenter" class="waves-effect waves-light" target="_blank">
-                <i class="fab fa-github-square fa-fw"></i>Fork Me
-            </a>
-        </li>
-        
-    </ul>
-</div>
-
-        </div>
-
-        
-            <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #F062A7;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/CalmCenter" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewBox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
-        
-    </nav>
-
-</header>
-
-    
-<script src="/libs/cryptojs/crypto-js.min.js"></script>
-<script>
-    (function() {
-        let pwd = '';
-        if (pwd && pwd.length > 0) {
-            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
-                alert('密码错误，将返回主页！');
-                location.href = '/';
-            }
-        }
-    })();
-</script>
-
-
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">Hexo 功能样式配置</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-<main class="post-container content">
-
-    
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        height: calc(100vh - 250px);
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/tags/Hexo/">
-                                <span class="chip bg-color">Hexo</span>
-                            </a>
-                        
-                            <a href="/tags/git/">
-                                <span class="chip bg-color">git</span>
-                            </a>
-                        
-                            <a href="/tags/github/">
-                                <span class="chip bg-color">github</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/Hexo/" class="post-category">
-                                Hexo
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-12-21
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-03-30
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-
-        </div>
-        <hr class="clearfix">
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <p>目录请看  <a href="https://calmcenter.club/2019/Complete_works_of_hexo.html">Hexo 搭建博客大全</a></p>
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">21</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">16</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本文主要记载"><span class="toc-text">本文主要记载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#功能样式配置"><span class="toc-text">功能样式配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NexT-主题设置"><span class="toc-text">NexT 主题设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置语言、标题等"><span class="toc-text">设置语言、标题等</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NexT-样式"><span class="toc-text">NexT 样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片上传-PicGo-GitHub-图床"><span class="toc-text">图片上传 PicGo + GitHub 图床</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片全屏查看"><span class="toc-text">图片全屏查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打赏功能"><span class="toc-text">打赏功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#评论功能"><span class="toc-text">评论功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码块复制功能"><span class="toc-text">代码块复制功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DaoVoice-实现在线联系"><span class="toc-text">DaoVoice 实现在线联系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文章置顶"><span class="toc-text">文章置顶</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索功能"><span class="toc-text">搜索功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#隐藏特定文章"><span class="toc-text">隐藏特定文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#细节美化"><span class="toc-text">细节美化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#头像"><span class="toc-text">头像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回到顶部"><span class="toc-text">回到顶部</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面底部优化"><span class="toc-text">页面底部优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#圆角布局"><span class="toc-text">圆角布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文章标签、分类"><span class="toc-text">文章标签、分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#强调颜色"><span class="toc-text">强调颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置网站图标"><span class="toc-text">设置网站图标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主页文章添加边框阴影效果"><span class="toc-text">主页文章添加边框阴影效果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#更多样式修改-💦💦"><span class="toc-text">更多样式修改 💦💦</span></a></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover25.webp)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">CalmCenter</a></span><span class="pull_right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">Hexo 功能样式配置</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-12-21 17:32:22"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-12-21</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-18 11:05:48"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-18</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Hexo/">Hexo</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>目录请看  <a href="https://calmcenter.club/2019/Complete_works_of_hexo.html">Hexo 搭建博客大全</a></p>
 <p><strong>注意：如果出现图片不显示问题请移步</strong> <a href="https://calmcenter.club/2019/PicNotShow.html">图片不显示问题</a></p>
-<h2 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h2><ul>
+<h1 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h1><ul>
 <li><code>NexT</code> 主题设置</li>
 <li>基础样式设置</li>
 <li>图片相关</li>
@@ -476,17 +95,20 @@
 <li>搜索功能</li>
 <li>细节美化</li>
 </ul>
-<pre><code>本文环境是 win10 或 win 7。mac 再执行 npm 时需要在前面添加 sudo
-本文整理于各大佬文章，文中会给出相应链接，如有侵权，请联系我修改或删除。</code></pre><hr>
-<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">本文环境是 win10 或 win 7。mac 再执行 npm 时需要在前面添加 sudo</span><br><span class="line">本文整理于各大佬文章，文中会给出相应链接，如有侵权，请联系我修改或删除。</span><br></pre></td></tr></table></figure>
 
-<h2 id="功能样式配置"><a href="#功能样式配置" class="headerlink" title="功能样式配置"></a>功能样式配置</h2><h3 id="NexT-主题设置"><a href="#NexT-主题设置" class="headerlink" title="NexT 主题设置"></a><code>NexT</code> 主题设置</h3><p>*<em>重点标注：<code>hexo</code> 根目录配置文件 <code>hexo/_config.yml</code>  下文用 <code>Hexo 配置文件</code> 表示，<code>NexT</code> 样式配置文件 <code>hexo/theme/next/_config.yml</code> 下文用 <code>NexT 配置文件</code> 表示一定要分清，它们都叫 <code>_cpmfig.yml</code> *</em></p>
+<hr>
+<h1 id="功能样式配置"><a href="#功能样式配置" class="headerlink" title="功能样式配置"></a>功能样式配置</h1><h2 id="NexT-主题设置"><a href="#NexT-主题设置" class="headerlink" title="NexT 主题设置"></a><code>NexT</code> 主题设置</h2><p>*<em>重点标注：<code>hexo</code> 根目录配置文件 <code>hexo/_config.yml</code>  下文用 <code>Hexo 配置文件</code> 表示，<code>NexT</code> 样式配置文件 <code>hexo/theme/next/_config.yml</code> 下文用 <code>NexT 配置文件</code> 表示一定要分清，它们都叫 <code>_cpmfig.yml</code> *</em></p>
 <p><a href="https://hexo.io/themes/" target="_blank" rel="noopener">这里有很多主题</a> 这里主要说 <a href="https://github.com/theme-next/hexo-theme-next" target="_blank" rel="noopener">NexT</a> </p>
 <p>进入 <code>hexo</code> 文件目录 ，执行</p>
-<pre><code>git clone https://github.com/theme-next/hexo-theme-next themes/next</code></pre><p>成功后，在 <code>Hexo 配置文件</code> 找到 <code>theme</code> 字段</p>
-<pre><code>theme: next</code></pre><p>这样 <code>next</code> 样式就设置好了，快打开看看吧  <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;hexo-theme-next themes&#x2F;next</span><br></pre></td></tr></table></figure>
+
+<p>成功后，在 <code>Hexo 配置文件</code> 找到 <code>theme</code> 字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure>
+
+<p>这样 <code>next</code> 样式就设置好了，快打开看看吧  <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a></p>
 <p><strong>注意:如果你是 <code>git</code> 直接 <code>clone</code> 的，会自带 <code>.git</code> 和 <code>.github</code> 文件，需要删掉 <code>.git</code> 和 <code>.github</code> 文件，如果不删在 <a href="https://calmcenter.club/2019/Hexo_code_management.html">Hexo 管理代码</a> 一文中会出现 <code>them/next</code> 里的文件提交不上去的问题</strong></p>
-<h3 id="设置语言、标题等"><a href="#设置语言、标题等" class="headerlink" title="设置语言、标题等"></a>设置语言、标题等</h3><p>在  <code>Hexo 配置文件</code> 找到 <code>Site</code> 字段 </p>
+<h2 id="设置语言、标题等"><a href="#设置语言、标题等" class="headerlink" title="设置语言、标题等"></a>设置语言、标题等</h2><p>在  <code>Hexo 配置文件</code> 找到 <code>Site</code> 字段 </p>
 <table>
 <thead>
 <tr>
@@ -519,35 +141,28 @@
 <td align="left">网站时区，默认使用您电脑的时区</td>
 </tr>
 </tbody></table>
-<h3 id="NexT-样式"><a href="#NexT-样式" class="headerlink" title="NexT 样式"></a><code>NexT</code> 样式</h3><p>在 <code>Hexo 配置文件</code> 找到 <code>Schemes</code> 字段，这里有四种样式</p>
-<pre><code># Schemes
-#scheme: Muse
-#scheme: Mist
-#scheme: Pisces
-scheme: Gemini</code></pre><h3 id="图片上传-PicGo-GitHub-图床"><a href="#图片上传-PicGo-GitHub-图床" class="headerlink" title="图片上传 PicGo + GitHub 图床"></a>图片上传 <code>PicGo</code> + <code>GitHub</code> 图床</h3><p>参考自作者 <a href="https://blog.enjoytoshare.club/article/hexo-do-optimization-picture.html" target="_blank" rel="noopener">EnjoyToShare 《PicGo+GitHub图床，让Markdown飞起》</a>  </p>
+<h2 id="NexT-样式"><a href="#NexT-样式" class="headerlink" title="NexT 样式"></a><code>NexT</code> 样式</h2><p>在 <code>Hexo 配置文件</code> 找到 <code>Schemes</code> 字段，这里有四种样式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Schemes</span><br><span class="line">#scheme: Muse</span><br><span class="line">#scheme: Mist</span><br><span class="line">#scheme: Pisces</span><br><span class="line">scheme: Gemini</span><br></pre></td></tr></table></figure>
+
+<h2 id="图片上传-PicGo-GitHub-图床"><a href="#图片上传-PicGo-GitHub-图床" class="headerlink" title="图片上传 PicGo + GitHub 图床"></a>图片上传 <code>PicGo</code> + <code>GitHub</code> 图床</h2><p>参考自作者 <a href="https://blog.enjoytoshare.club/article/hexo-do-optimization-picture.html" target="_blank" rel="noopener">EnjoyToShare 《PicGo+GitHub图床，让Markdown飞起》</a>  </p>
 <ol>
-<li>首先下载工具</li>
-</ol>
-<p>下载地址 : <a href="https://github.com/Molunerfinn/PicGo/releases" target="_blank" rel="noopener">PicGo</a> </p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturespicgo_down.png" style="zoom:50%">
-
-<ol start="2">
-<li>登录 <code>GitHub</code> </li>
-</ol>
+<li><p>首先下载工具<br>下载地址 : <a href="https://github.com/Molunerfinn/PicGo/releases" target="_blank" rel="noopener">PicGo</a> </p>
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturespicgo_down.png" style="zoom:50%">
+</li>
+<li><p>登录 <code>GitHub</code> </p>
 <p>创建 <code>Repository</code> 之前都讲过怎么创建，名字可以取成 <code>PicGo</code> 类似的名字，主要用于存放图片。</p>
-<ol start="3">
-<li>生成 Token  </li>
-</ol>
+</li>
+<li><p>生成 Token  </p>
 <p>点击头像 <code>Settings -&gt; Developer settings -&gt; Personal access tokens</code> 点击  <code>Generate new token</code>  </p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesnew_token.png" style="zoom:80%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesnew_token.png" style="zoom:80%">
 
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesaccess_tokens.png" style="zoom:30%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesaccess_tokens.png" style="zoom:30%">
 
 <p>点击最下面的  <code>Generate token</code> ，会出现 <code>token</code> ，这个 <code>token</code> 只出现一次，所以要保存一下</p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesaccess_token.png" style="zoom:50%">
-
-<ol start="4">
-<li>配置 <code>PicGo</code> 客户端</li>
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesaccess_token.png" style="zoom:50%">
+</li>
+<li><p>配置 <code>PicGo</code> 客户端</p>
+</li>
 </ol>
 <p>打开 <code>PicGo</code> ，输入相关信息</p>
 <ul>
@@ -557,26 +172,25 @@ scheme: Gemini</code></pre><h3 id="图片上传-PicGo-GitHub-图床"><a href="#�
 <li>存储路径 这个可以填也可以不填，填了的话图片就上传到这个文件夹，比如 <code>picture/</code> 图中少一个 <code>/</code></li>
 <li>自定义域名 这个要改一下 格式： <code>https://raw.githubusercontent.com/[仓库名]/master</code> </li>
 </ul>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturespic_go_token.png" style="zoom:50%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturespic_go_token.png" style="zoom:50%">
 
 <p>然后点确定就OK了，不妨试试。</p>
 <p>还有一个方便的操作就是 修改上传快捷键 ，快捷键直接上传，跳过拖入上传区</p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190426111300.png" style="zoom:50%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190426111300.png" style="zoom:50%">
 
-<h3 id="图片全屏查看"><a href="#图片全屏查看" class="headerlink" title="图片全屏查看"></a>图片全屏查看</h3><p>首先进入 <code>hexo/themes/next/source/lib</code> 目录，下载插件</p>
-<pre><code>git clone https://github.com/theme-next/theme-next-fancybox3 fancybox</code></pre><p>然后更改 <code>NexT 配置文件</code> </p>
-<pre><code>fancybox: true</code></pre><p>完成 ~ </p>
+<h2 id="图片全屏查看"><a href="#图片全屏查看" class="headerlink" title="图片全屏查看"></a>图片全屏查看</h2><p>首先进入 <code>hexo/themes/next/source/lib</code> 目录，下载插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;theme-next-fancybox3 fancybox</span><br></pre></td></tr></table></figure>
+
+<p>然后更改 <code>NexT 配置文件</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fancybox: true</span><br></pre></td></tr></table></figure>
+
+<p>完成 ~ </p>
 <p><strong>注意:如果你是 <code>git</code> 直接 <code>clone</code> 的，会自带 <code>.git</code> 和 <code>.github</code> 文件，需要删掉 <code>.git</code> 和 <code>.github</code> 文件，如果不删在 <a href="https://calmcenter.club/2019/Hexo_code_management.html">Hexo 管理代码</a> 一文中会出现 <code>them/next/source/lib/fancybox</code> 里的文件提交不上去的问题</strong></p>
-<h3 id="打赏功能"><a href="#打赏功能" class="headerlink" title="打赏功能"></a>打赏功能</h3><p>参考自作者 <a href="https://blog.enjoytoshare.club/article/hexo-do-donate.html" target="_blank" rel="noopener">EnjoyToShare 《Hexo的NexT主题打赏功能》</a>  </p>
+<h2 id="打赏功能"><a href="#打赏功能" class="headerlink" title="打赏功能"></a>打赏功能</h2><p>参考自作者 <a href="https://blog.enjoytoshare.club/article/hexo-do-donate.html" target="_blank" rel="noopener">EnjoyToShare 《Hexo的NexT主题打赏功能》</a>  </p>
 <p>准备好收款二维码，放入 <code>hexo/themes/next/source/images</code> ，打开 <code>NexT 配置文件</code> </p>
-<pre><code>reward_settings:
-  enable: true
-  animation: false
-  comment: 分享不易，可否赏杯咖啡钱
-reward:
-  wechatpay: /images/wechatpay.png
-  alipay: /images/alipay.png
-  #bitcoin: /images/bitcoin.png</code></pre><h3 id="评论功能"><a href="#评论功能" class="headerlink" title="评论功能"></a>评论功能</h3><p>参考自作者 <a href="https://blog.enjoytoshare.club/article/hexo-do-gitalk.html" target="_blank" rel="noopener">EnjoyToShare 《Hexo NexT 加入评论功能gitalk》</a>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">reward_settings:</span><br><span class="line">  enable: true</span><br><span class="line">  animation: false</span><br><span class="line">  comment: 分享不易，可否赏杯咖啡钱</span><br><span class="line">reward:</span><br><span class="line">  wechatpay: &#x2F;images&#x2F;wechatpay.png</span><br><span class="line">  alipay: &#x2F;images&#x2F;alipay.png</span><br><span class="line">  #bitcoin: &#x2F;images&#x2F;bitcoin.png</span><br></pre></td></tr></table></figure>
+
+<h2 id="评论功能"><a href="#评论功能" class="headerlink" title="评论功能"></a>评论功能</h2><p>参考自作者 <a href="https://blog.enjoytoshare.club/article/hexo-do-gitalk.html" target="_blank" rel="noopener">EnjoyToShare 《Hexo NexT 加入评论功能gitalk》</a>  </p>
 <p><code>Gitalk</code> :</p>
 <ul>
 <li>一个基于 <code>Github Issue</code> 和 <code>Preact</code> 开发的评论插件</li>
@@ -613,147 +227,97 @@ reward:
 </tbody></table>
 <p>注册后记录 <code>Client ID</code> 和 <code>Client Secret</code> , 后续要使用到。</p>
 <p>打开 <code>NexT 配置文件</code> ， <strong>根据自己信息</strong> 进行一下修改，</p>
-<pre><code>gitalk:
-  enable: true
-  github_id: CalmCenter
-  repo: calmcenter.github.io
-  client_id: ****
-  client_secret: ****
-  admin_user: CalmCenter  
-  distraction_free_mode: true 
-  language:</code></pre><p> 集成过程中出现的错误 <a href="https://liujunzhou.top/2018/8/10/gitalk-error/#%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B" target="_blank" rel="noopener">Junzhou Liu</a> 这里给出了很多，但是在我集成是发现有的 <code>NexT</code> 已经修正，所以这里说几点需要注意的地方。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gitalk:</span><br><span class="line">  enable: true</span><br><span class="line">  github_id: CalmCenter</span><br><span class="line">  repo: calmcenter.github.io</span><br><span class="line">  client_id: ****</span><br><span class="line">  client_secret: ****</span><br><span class="line">  admin_user: CalmCenter  </span><br><span class="line">  distraction_free_mode: true </span><br><span class="line">  language:</span><br></pre></td></tr></table></figure>
+
+<p> 集成过程中出现的错误 <a href="https://liujunzhou.top/2018/8/10/gitalk-error/#%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B" target="_blank" rel="noopener">Junzhou Liu</a> 这里给出了很多，但是在我集成是发现有的 <code>NexT</code> 已经修正，所以这里说几点需要注意的地方。</p>
 <ul>
 <li>你的评论仓库或者 <code>GitHub Page</code> 仓库必须是 <code>public</code> ， <code>NexT 配置文件</code> 的 <code>reop</code> 指定的仓库名称也必须是 <code>public</code> ，否者可能出现 <code>404</code> 的错误</li>
 <li><code>NexT</code> 中的字段配置 和 <code>Gitalk</code> 有两个不一样，需要用 <code>NexT</code> 指定的，否者会出现 <code>Erroe Not Found</code> </li>
 </ul>
 <p>如果错误修改后没反应，试一下</p>
-<pre><code>hexo clean</code></pre><p>重新编译运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+
+<p>重新编译运行。</p>
 <p>成功后会提示你未找到相关 <code>issues</code>  ，需要你登录</p>
-<p><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190426155441.png" alt=""></p>
+<p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190426155441.png" alt=""></p>
 <p><strong>如果有自己的域名记得把 Authorization callback URL 设置成自己的 域名地址</strong> <code>Authorization callback URL</code> 在 <a href="https://github.com/settings/developers" target="_blank" rel="noopener">github setting</a> 点击自己绑定的进去修改</p>
 <p><strong>2019/5/10 踩坑记录，文章的文件名，中文会有问题，导致一直跳转首页并登陆不上，title  可以是中文</strong></p>
-<h3 id="代码块复制功能"><a href="#代码块复制功能" class="headerlink" title="代码块复制功能"></a>代码块复制功能</h3><p>在 <code>NexT 配置文件</code> 中</p>
-<pre><code>codeblock:
-  border_radius:
-  copy_button:
-    enable: true
-    show_result: true
-    style:</code></pre><p><code>NexT</code> 随着版本的升级，省去了很多操作，基本都剩开关的设置了</p>
-<h3 id="DaoVoice-实现在线联系"><a href="#DaoVoice-实现在线联系" class="headerlink" title="DaoVoice 实现在线联系"></a><code>DaoVoice</code> 实现在线联系</h3><ol>
-<li>注册登录 <code>DaoVoice</code></li>
-</ol>
+<h2 id="代码块复制功能"><a href="#代码块复制功能" class="headerlink" title="代码块复制功能"></a>代码块复制功能</h2><p>在 <code>NexT 配置文件</code> 中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">codeblock:</span><br><span class="line">  border_radius:</span><br><span class="line">  copy_button:</span><br><span class="line">    enable: true</span><br><span class="line">    show_result: true</span><br><span class="line">    style:</span><br></pre></td></tr></table></figure>
+
+<p><code>NexT</code> 随着版本的升级，省去了很多操作，基本都剩开关的设置了</p>
+<h2 id="DaoVoice-实现在线联系"><a href="#DaoVoice-实现在线联系" class="headerlink" title="DaoVoice 实现在线联系"></a><code>DaoVoice</code> 实现在线联系</h2><ol>
+<li><p>注册登录 <code>DaoVoice</code></p>
 <p><a href="http://www.daovoice.io/" target="_blank" rel="noopener">DaoVoice</a> 点击进行登录注册，邀请码</p>
-<pre><code>c1f73bd5</code></pre><p>登录成功后，你可能是这个目录</p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428141105.png" style="zoom:50%">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c1f73bd5</span><br></pre></td></tr></table></figure>
+
+<p>登录成功后，你可能是这个目录</p>
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428141105.png" style="zoom:50%">
 
 <p>这样的话你需要关掉这个页面，重新进入 <a href="http://www.daovoice.io/" target="_blank" rel="noopener">DaoVoice</a> 点击登录，如果最后看到是这个目录</p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428141212.png" style="zoom:50%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428141212.png" style="zoom:50%">
 
 <p>那就可以继续下面的 ~ </p>
-<ol start="2">
-<li>集成 </li>
-</ol>
+</li>
+<li><p>集成 </p>
 <p>找到你的 <code>app_id</code></p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428141938.png" style="zoom:30%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428141938.png" style="zoom:30%">
 
 <p>并将 <code>1</code> 和 <code>2</code> 的代码 粘贴到 <code>themes/next/layout/_partials/head.swig</code> </p>
-<pre><code>{% if theme.daovoice %}
-<script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/你的appid.js","daovoice")</script>
-daovoice('init', {
-  app_id: "你的appid"
-});
-daovoice('update');
-{% endif %}</code></pre><p><strong>有两处需要填写你的 <code>appid</code> 并且要加 <code>if</code> 开始和结束代码</strong></p>
-<p>然后再  <code>NexT 配置文件</code> 中添加</p>
-<pre><code>daovoice: true
-daovoice_app_id: 你的appid</code></pre><p>编译并运行 <code>Hexo</code> </p>
-<pre><code>hexo g &amp;&amp; hexo s</code></pre><p>会发现 <code>DaoVoice</code> 官网会提示</p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428143112.png" style="zoom:30%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200516194622.png" style="zoom:70%">
 
-<ol start="3">
-<li>绑定微信</li>
-</ol>
+<p><strong>有两处需要填写你的 <code>appid</code> 并且要加 <code>if</code> 开始和结束代码</strong></p>
+<p>然后再  <code>NexT 配置文件</code> 中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">daovoice: true</span><br><span class="line">daovoice_app_id: 你的appid</span><br></pre></td></tr></table></figure>
+
+<p>编译并运行 <code>Hexo</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+
+<p>会发现 <code>DaoVoice</code> 官网会提示</p>
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428143112.png" style="zoom:30%">
+</li>
+<li><p>绑定微信</p>
 <p>点击右上角头像，然后点击绑定微信</p>
-<p><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428143854.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428143916.png" alt=""></p>
+<p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428143854.png" alt=""></p>
+<p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20190428143916.png" alt=""></p>
 <p>这样，可以同时在 <code>DaoVoice</code> 网页的对话页面，和微信小程序 <code>DaoVoice</code> 同时回复~ </p>
-<h3 id="文章置顶"><a href="#文章置顶" class="headerlink" title="文章置顶"></a>文章置顶</h3><ol>
-<li>将 <code>node_modules/hexo-generator-index/lib/generator.js</code> 文件内的内容替换为</li>
+</li>
 </ol>
-<pre><code>&#39;use strict&#39;;
-var pagination = require(&#39;hexo-pagination&#39;);
-module.exports = function(locals){
-  var config = this.config;
-  var posts = locals.posts;
-    posts.data = posts.data.sort(function(a, b) {
-        if(a.top &amp;&amp; b.top) { // 两篇文章top都有定义
-            if(a.top == b.top) return b.date - a.date; // 若top值一样则按照文章日期降序排
-            else return b.top - a.top; // 否则按照top值降序排
-        }
-        else if(a.top &amp;&amp; !b.top) { // 以下是只有一篇文章top有定义，那么将有top的排在前面（这里用异或操作居然不行233）
-            return -1;
-        }
-        else if(!a.top &amp;&amp; b.top) {
-            return 1;
-        }
-        else return b.date - a.date; // 都没定义按照文章日期降序排
-    });
-  var paginationDir = config.pagination_dir || &#39;page&#39;;
-  return pagination(&#39;&#39;, posts, {
-    perPage: config.index_generator.per_page,
-    layout: [&#39;index&#39;, &#39;archive&#39;],
-    format: paginationDir + &#39;/%d/&#39;,
-    data: {
-      __index: true
-    }
-  });
-};</code></pre><ol start="2">
-<li>在文章头部添加 <code>top</code> 值</li>
+<h2 id="文章置顶"><a href="#文章置顶" class="headerlink" title="文章置顶"></a>文章置顶</h2><ol>
+<li><p>将 <code>node_modules/hexo-generator-index/lib/generator.js</code> 文件内的内容替换为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;;</span><br><span class="line">var pagination &#x3D; require(&#39;hexo-pagination&#39;);</span><br><span class="line">module.exports &#x3D; function(locals)&#123;</span><br><span class="line">    var config &#x3D; this.config;</span><br><span class="line">    var posts &#x3D; locals.posts;</span><br><span class="line">    posts.data &#x3D; posts.data.sort(function(a, b) &#123;</span><br><span class="line">        if(a.top &amp;&amp; b.top) &#123; &#x2F;&#x2F; 两篇文章top都有定义</span><br><span class="line">            if(a.top &#x3D;&#x3D; b.top) return b.date - a.date; &#x2F;&#x2F; 若top值一样则按照文章日期降序排</span><br><span class="line">            else return b.top - a.top; &#x2F;&#x2F; 否则按照top值降序排</span><br><span class="line">        &#125;</span><br><span class="line">        else if(a.top &amp;&amp; !b.top) &#123; &#x2F;&#x2F; 以下是只有一篇文章top有定义，那么将有top的排在前面（这里用异或操作居然不行233）</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line">        else if(!a.top &amp;&amp; b.top) &#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125;</span><br><span class="line">        else return b.date - a.date; &#x2F;&#x2F; 都没定义按照文章日期降序排</span><br><span class="line">    &#125;);</span><br><span class="line">    var paginationDir &#x3D; config.pagination_dir || &#39;page&#39;;</span><br><span class="line">    return pagination(&#39;&#39;, posts, &#123;</span><br><span class="line">    perPage: config.index_generator.per_page,</span><br><span class="line">    layout: [&#39;index&#39;, &#39;archive&#39;],</span><br><span class="line">    format: paginationDir + &#39;&#x2F;%d&#x2F;&#39;,</span><br><span class="line">    data: &#123;</span><br><span class="line">      __index: true</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在文章头部添加 <code>top</code> 值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: Hexo 搭建博客大全</span><br><span class="line">date: 2019-04-18 17:32:22</span><br><span class="line">categories: Hexo</span><br><span class="line">tags: [Hexo, NexT, 博客]</span><br><span class="line">top: 100</span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
-<pre><code>title: Hexo 搭建博客大全
-date: 2019-04-18 17:32:22
-categories: Hexo
-tags: [Hexo, NexT, 博客]
-top: 100</code></pre><h3 id="搜索功能"><a href="#搜索功能" class="headerlink" title="搜索功能"></a>搜索功能</h3><ol>
-<li>安装插件</li>
+<h2 id="搜索功能"><a href="#搜索功能" class="headerlink" title="搜索功能"></a>搜索功能</h2><ol>
+<li><p>安装插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>Hexo 配置文件</code> 中添加 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#本地搜索</span><br><span class="line">search:</span><br><span class="line">    path: search.xml</span><br><span class="line">    field: post</span><br><span class="line">    format: html</span><br><span class="line">    limit: 10000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>NexT 配置文件</code> 启动搜索功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">local_search:</span><br><span class="line">    enable: true</span><br><span class="line">    trigger: auto</span><br><span class="line">    top_n_per_article: 1</span><br><span class="line">    unescape: false</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>完成，清理缓存编译运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
-<pre><code>npm install hexo-generator-searchdb --save</code></pre><ol start="2">
-<li>在 <code>Hexo 配置文件</code> 中添加 </li>
-</ol>
-<pre><code># 本地搜索
-search:
-  path: search.xml
-  field: post
-  format: html
-  limit: 10000</code></pre><ol start="3">
-<li>在 <code>NexT 配置文件</code> 启动搜索功能</li>
-</ol>
-<pre><code>local_search:
-  enable: true
-  trigger: auto
-  top_n_per_article: 1
-  unescape: false</code></pre><ol start="4">
-<li>完成，清理缓存编译运行</li>
-</ol>
-<pre><code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</code></pre><h3 id="隐藏特定文章"><a href="#隐藏特定文章" class="headerlink" title="隐藏特定文章"></a>隐藏特定文章</h3><p>比如说没写完的 ~ </p>
+<h2 id="隐藏特定文章"><a href="#隐藏特定文章" class="headerlink" title="隐藏特定文章"></a>隐藏特定文章</h2><p>比如说没写完的 ~ </p>
 <p>首先修改 <code>/themes/next/layout/index.swig</code> 文件，把</p>
-<pre><code>   {% for post in page.posts %}
-     {{ post_template.render(post, true) }}
-   {% endfor %}</code></pre><p>替换成</p>
-<pre><code>   {% for post in page.posts %}
-      {% set hide = false %}
-      {% if theme.hide.hide_post %}
-        {% if post.hide %}
-          {% set hide = true %}
-        {% endif %}
-      {% endif %}
-      {% if !hide %}
-        {{ post_template.render(post, true) }}
-      {% endif %}
-    {% endfor %}</code></pre><p>在 <code>NexT 配置文件</code>  添加代码</p>
-<pre><code># Hide single post
-hide:
-  hide_post: true</code></pre><h3 id="细节美化"><a href="#细节美化" class="headerlink" title="细节美化"></a>细节美化</h3><h4 id="●-头像"><a href="#●-头像" class="headerlink" title="● 头像"></a>● 头像</h4><p>在<code>NexT 配置文件</code> 中，找到 <code>avatar</code> 字段</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for post in page.posts %&#125;</span><br><span class="line">  &#123;&#123; post_template.render(post, true) &#125;&#125;</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>替换成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for post in page.posts %&#125;</span><br><span class="line">   &#123;% set hide &#x3D; false %&#125;</span><br><span class="line">   &#123;% if theme.hide.hide_post %&#125;</span><br><span class="line">     &#123;% if post.hide %&#125;</span><br><span class="line">       &#123;% set hide &#x3D; true %&#125;</span><br><span class="line">     &#123;% endif %&#125;</span><br><span class="line">   &#123;% endif %&#125;</span><br><span class="line">   &#123;% if !hide %&#125;</span><br><span class="line">     &#123;&#123; post_template.render(post, true) &#125;&#125;</span><br><span class="line">   &#123;% endif %&#125;</span><br><span class="line"> &#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>NexT 配置文件</code>  添加代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Hide single post</span><br><span class="line">hide:</span><br><span class="line">  hide_post: true</span><br></pre></td></tr></table></figure>
+
+<h2 id="细节美化"><a href="#细节美化" class="headerlink" title="细节美化"></a>细节美化</h2><h3 id="头像"><a href="#头像" class="headerlink" title="头像"></a>头像</h3><p>在<code>NexT 配置文件</code> 中，找到 <code>avatar</code> 字段</p>
 <table>
 <thead>
 <tr>
@@ -778,1115 +342,155 @@ hide:
 <td>旋转动画</td>
 </tr>
 </tbody></table>
-<h4 id="●-回到顶部"><a href="#●-回到顶部" class="headerlink" title="● 回到顶部"></a>● 回到顶部</h4><p>打开 <code>NexT 配置文件</code> 搜索 <code>back2top</code>  </p>
-<pre><code>back2top:
-  enable: true
-  # 回到侧边栏顶部.
-  sidebar: true
-  # 滚动%标签.
-  scrollpercent: true</code></pre><h4 id="●-页面底部优化"><a href="#●-页面底部优化" class="headerlink" title="● 页面底部优化"></a>● 页面底部优化</h4><ul>
+<h3 id="回到顶部"><a href="#回到顶部" class="headerlink" title="回到顶部"></a>回到顶部</h3><p>打开 <code>NexT 配置文件</code> 搜索 <code>back2top</code>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">back2top:</span><br><span class="line">  enable: true</span><br><span class="line">  # 回到侧边栏顶部.</span><br><span class="line">  sidebar: true</span><br><span class="line">  # 滚动%标签.</span><br><span class="line">  scrollpercent: true</span><br></pre></td></tr></table></figure>
+
+<h3 id="页面底部优化"><a href="#页面底部优化" class="headerlink" title="页面底部优化"></a>页面底部优化</h3><ul>
 <li>跳动的心</li>
 </ul>
 <p>参考自作者 <a href="https://11.tt/posts/2018/set-up-hexo-with-coding-and-github/" target="_blank" rel="noopener">十一種情緒的堆棧</a> 在这篇文章 1/2 处左右</p>
 <p>效果就在本页面底部 ~ ，首先先去 <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener">The Icons</a> 选择一张图片，例如搜索 <code>heartbeat</code> ，点击进去将图片代码 <code>fa-heartbeat</code> 复制下来，打开<code>NexT 配置文件</code> ，搜索 <code>footer</code> 关键字</p>
-<pre><code>footer:
-  icon:
-    name: fas fa-heartbeat
-    animated: true
-    color: &quot;#ff0000&quot;</code></pre><p>需要将复制的图片代码粘贴到 <code>name</code> 字段，并且前面加上 fas ，如果需要动画的话，将 <code>animated</code> 设置为 <code>true</code> ，并将 <code>color</code> 修改为 <code>#ff0000</code> 。就和我底部效果一样了啦。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">footer:</span><br><span class="line">  icon:</span><br><span class="line">    name: fas fa-heartbeat</span><br><span class="line">    animated: true</span><br><span class="line">    color: &quot;#ff0000&quot;</span><br></pre></td></tr></table></figure>
+
+<p>需要将复制的图片代码粘贴到 <code>name</code> 字段，并且前面加上 fas ，如果需要动画的话，将 <code>animated</code> 设置为 <code>true</code> ，并将 <code>color</code> 修改为 <code>#ff0000</code> 。就和我底部效果一样了啦。</p>
 <ul>
 <li>访问统计</li>
 </ul>
 <p>还是在 <code>NexT 配置文件</code> ，搜索 <code>busuanzi_count</code> 字段。</p>
-<pre><code>busuanzi_count:
-  enable: true
-  total_visitors: true
-  total_visitors_icon: user
-  total_views: true
-  total_views_icon: eye
-  post_views: true
-  post_views_icon: eye</code></pre><p>将 <code>enable</code> 设置为 <code>true</code> 就有和我底部一样的 访问统计 功能了</p>
-<p><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesvisit.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">busuanzi_count:</span><br><span class="line">  enable: true</span><br><span class="line">  total_visitors: true</span><br><span class="line">  total_visitors_icon: user</span><br><span class="line">  total_views: true</span><br><span class="line">  total_views_icon: eye</span><br><span class="line">  post_views: true</span><br><span class="line">  post_views_icon: eye</span><br></pre></td></tr></table></figure>
+
+<p>将 <code>enable</code> 设置为 <code>true</code> 就有和我底部一样的 访问统计 功能了</p>
+<p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesvisit.png" alt=""></p>
 <p>统计这块还可以添加一个字数和阅读时长统计，在<code>hexo</code> 根目录配置文件 <code>hexo/_config.yml</code> 搜索 <code>symbols_count_time</code> 如果没有则添加</p>
-<pre><code>symbols_count_time:
- symbols: true 
- time: true 
- total_symbols: true 
- total_time: true</code></pre><p>在 <code>NexT 配置文件</code> 搜索 <code>symbols_count_time</code> </p>
-<pre><code>symbols_count_time:
-  separated_meta: true
-  item_text_post: true
-  item_text_total: false
-  awl: 4
-  wpm: 275</code></pre><p><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesnumber.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line"> symbols: true </span><br><span class="line"> time: true </span><br><span class="line"> total_symbols: true </span><br><span class="line"> total_time: true</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>NexT 配置文件</code> 搜索 <code>symbols_count_time</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  separated_meta: true</span><br><span class="line">  item_text_post: true</span><br><span class="line">  item_text_total: false</span><br><span class="line">  awl: 4</span><br><span class="line">  wpm: 275</span><br></pre></td></tr></table></figure>
+
+<p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesnumber.png" alt=""></p>
 <p><strong>注: 格式很重要</strong> </p>
-<h4 id="●-圆角布局"><a href="#●-圆角布局" class="headerlink" title="● 圆角布局"></a>● 圆角布局</h4><p>参考自作者 <a href="https://blog.enjoytoshare.club/article/hexo-do-optimization.html" target="_blank" rel="noopener">EnjoyToShare</a> 在这篇文章 3.12，这篇里边还有好多好看的样式 ~</p>
+<h3 id="圆角布局"><a href="#圆角布局" class="headerlink" title="圆角布局"></a>圆角布局</h3><p>参考自作者 <a href="https://blog.enjoytoshare.club/article/hexo-do-optimization.html" target="_blank" rel="noopener">EnjoyToShare</a> 在这篇文章 3.12，这篇里边还有好多好看的样式 ~</p>
 <p>在 <code>/themes/next/source/css/_variables</code> 中的 <code>Gemini.styl</code> 文件添加</p>
-<pre><code>// 修改主题页面布局为圆角
-$border-radius-inner            = 15px 15px 15px 15px;
-$border-radius                  = 15px;</code></pre><h4 id="●-文章标签、分类"><a href="#●-文章标签、分类" class="headerlink" title="● 文章标签、分类"></a>● 文章标签、分类</h4><p>我们在用 <code>hexo new post</code> 创建文件时</p>
-<pre><code>hexo new post &quot;name&quot;</code></pre><p><code>hexo</code> 自动为我们的文章头部生成了如下的内容</p>
-<pre><code>title: 标题
-date: 2019-04-18 17:32:22</code></pre><ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 修改主题页面布局为圆角</span><br><span class="line">$border-radius-inner            &#x3D; 15px 15px 15px 15px;</span><br><span class="line">$border-radius                  &#x3D; 15px;</span><br></pre></td></tr></table></figure>
+
+<h3 id="文章标签、分类"><a href="#文章标签、分类" class="headerlink" title="文章标签、分类"></a>文章标签、分类</h3><p>我们在用 <code>hexo new post</code> 创建文件时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post &quot;name&quot;</span><br></pre></td></tr></table></figure>
+
+<p><code>hexo</code> 自动为我们的文章头部生成了如下的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: 标题</span><br><span class="line">date: 2019-04-18 17:32:22</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li>首先添加分类</li>
 </ul>
 <p>在 <code>data</code> 下方添加 <code>categories</code> </p>
-<pre><code>title: 标题
-date: 2019-04-18 17:32:22</code></pre><pre><code>categories: Hexo</code></pre><p><strong>注意：英文冒号，还有一个空格</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: 标题</span><br><span class="line">date: 2019-04-18 17:32:22</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">categories: Hexo</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：英文冒号，还有一个空格</strong></p>
 <p>这样分类就添加上了，还需要给分类一个跳转页，创建一个 <code>categories.md</code> 用于跳转</p>
-<pre><code>hexo new page categories</code></pre><p>会提示我们输入目录 <code>/source/categories/index.md</code>  ，打开这个 <code>index.md</code> ，加入 <code>type</code> 这个页面用于做什么的，<code>comment</code> 是否开启评论，前提是你有评论功能的话。</p>
-<pre><code>title: categories
-date: 2019-04-25 14:53:31</code></pre><pre><code>type: categories
-comments: false</code></pre><p>这样分类就设置好了，检查一下 <code>Hexo 配置文件</code> ，搜索  <code>category_dir</code> 字段 <code>category_dir: categories</code> 这里已经设置了分类夹的名称，如果之前创建的文件夹完成和这个不一样，需要统一才行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
+
+<p>会提示我们输入目录 <code>/source/categories/index.md</code>  ，打开这个 <code>index.md</code> ，加入 <code>type</code> 这个页面用于做什么的，<code>comment</code> 是否开启评论，前提是你有评论功能的话。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: categories</span><br><span class="line">date: 2019-04-25 14:53:31</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type: categories</span><br><span class="line">comments: false</span><br></pre></td></tr></table></figure>
+
+<p>这样分类就设置好了，检查一下 <code>Hexo 配置文件</code> ，搜索  <code>category_dir</code> 字段 <code>category_dir: categories</code> 这里已经设置了分类夹的名称，如果之前创建的文件夹完成和这个不一样，需要统一才行。</p>
 <ul>
 <li>添加标签</li>
 </ul>
 <p>同样在 <code>Hexo 配置文件</code> 搜索，<code>tag_dir</code> 可以知道 <code>tag</code> 设置好的文件夹名称，<code>tag_dir: tags</code>  ，我们可以在 <code>categories</code> 下添加 <code>tags</code> 来添加标签。</p>
-<pre><code>tags: [Hexo, NexT, 博客]</code></pre><p>然后添加跳转页面</p>
-<pre><code>hexo new page tags</code></pre><p>创建完成后，为 <code>tags/index.md</code> 添加内容 </p>
-<pre><code>title: categories
-date: 2019-04-25 15:34:07</code></pre><pre><code>type: tags
-comments: false</code></pre><p>标签比分类多一步，我们需要安装一个插件</p>
-<pre><code>npm install hexo-generator-tag --save</code></pre><p>这样 <code>hexo g &amp;&amp; hexo s</code> 编译并运行，本地就可以看到了，标签在文章底部，发现它是 <code># xxx</code> 很难看，修改的 <code>#</code> 需要找到 <code>/themes/next/layout/_macro/post.swig</code> ，搜索 </p>
-<pre><code>rel=&quot;tag&quot;&gt;#</code></pre><p>将 <code>#</code> 换成</p>
-<pre><code>&lt;i class=&quot;fa fa-tag&quot;&gt;&lt;/i&gt;</code></pre><p>这里的 <code>fa-tag</code> 也是在 <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener">The Icons</a> 中的图片。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tags: [Hexo, NexT, 博客]</span><br></pre></td></tr></table></figure>
+
+<p>然后添加跳转页面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
+
+<p>创建完成后，为 <code>tags/index.md</code> 添加内容 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title: categories</span><br><span class="line">date: 2019-04-25 15:34:07</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type: tags</span><br><span class="line">comments: false</span><br></pre></td></tr></table></figure>
+
+<p>标签比分类多一步，我们需要安装一个插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-tag --save</span><br></pre></td></tr></table></figure>
+
+<p>这样 <code>hexo g &amp;&amp; hexo s</code> 编译并运行，本地就可以看到了，标签在文章底部，发现它是 <code># xxx</code> 很难看，修改的 <code>#</code> 需要找到 <code>/themes/next/layout/_macro/post.swig</code> ，搜索 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rel&#x3D;&quot;tag&quot;&gt;#</span><br></pre></td></tr></table></figure>
+
+<p>将 <code>#</code> 换成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;i class&#x3D;&quot;fa fa-tag&quot;&gt;&lt;&#x2F;i&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>fa-tag</code> 也是在 <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener">The Icons</a> 中的图片。</p>
 <ul>
 <li>将标签、分类添加至做出菜单栏</li>
 </ul>
 <p>打开 <code>NexT 配置文件</code>   搜索 <code>menu</code> </p>
-<pre><code>menu:
-  home: / || home
-  #about: /about/ || user
-  tags: /tags/ || tags
-  categories: /categories/ || th
-  archives: /archives/ || archive
-  #schedule: /schedule/ || calendar
-  #sitemap: /sitemap.xml || sitemap
-  #commonweal: /404/ || heartbeat</code></pre><p>将 <code>tags</code> 和 <code>categories</code> 打开，完成 ~ </p>
-<h4 id="●-强调颜色"><a href="#●-强调颜色" class="headerlink" title="● 强调颜色"></a>● 强调颜色</h4><p>参考自作者 <a href="https://www.jianshu.com/p/f054333ac9e6" target="_blank" rel="noopener">Moorez</a> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: &#x2F; || home</span><br><span class="line">  #about: &#x2F;about&#x2F; || user</span><br><span class="line">  tags: &#x2F;tags&#x2F; || tags</span><br><span class="line">  categories: &#x2F;categories&#x2F; || th</span><br><span class="line">  archives: &#x2F;archives&#x2F; || archive</span><br><span class="line">  #schedule: &#x2F;schedule&#x2F; || calendar</span><br><span class="line">  #sitemap: &#x2F;sitemap.xml || sitemap</span><br><span class="line">  #commonweal: &#x2F;404&#x2F; || heartbeat</span><br></pre></td></tr></table></figure>
+
+<p>将 <code>tags</code> 和 <code>categories</code> 打开，完成 ~ </p>
+<h3 id="强调颜色"><a href="#强调颜色" class="headerlink" title="强调颜色"></a>强调颜色</h3><p>参考自作者 <a href="https://www.jianshu.com/p/f054333ac9e6" target="_blank" rel="noopener">Moorez</a> </p>
 <ul>
 <li>‘’ 内容样式的修改</li>
 </ul>
 <p>打开 <code>/hemes/next/source/css/_custom/custom.styl</code> ，在里面加入</p>
-<pre><code>// Custom styles.
-code {
-    color: #ff7600;
-    background: #fbf7f8;
-    margin: 2px;
-}
-// 大代码块的自定义样式
-.highlight, pre {
-    margin: 5px 0;
-    padding: 5px;
-    border-radius: 3px;
-}
-.highlight, code, pre {
-    border: 1px solid #d6d6d6;
-}</code></pre><ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Custom styles.</span><br><span class="line">code &#123;</span><br><span class="line">    color: #ff7600;</span><br><span class="line">    background: #fbf7f8;</span><br><span class="line">    margin: 2px;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 大代码块的自定义样式</span><br><span class="line">.highlight, pre &#123;</span><br><span class="line">    margin: 5px 0;</span><br><span class="line">    padding: 5px;</span><br><span class="line">    border-radius: 3px;</span><br><span class="line">&#125;</span><br><span class="line">.highlight, code, pre &#123;</span><br><span class="line">    border: 1px solid #d6d6d6;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li>链接样式修改</li>
 </ul>
 <p>修改文件 <code>/themes/next/source/css/_common/components/post/post.styl</code>，在末尾添加如下css样式</p>
-<pre><code>// 文章内链接文本样式
-.post-body p a{
-  color: #0593d3;
-  border-bottom: none;
-  border-bottom: 1px solid #0593d3;
-  &amp;:hover {
-    color: #fc6423;
-    border-bottom: none;
-    border-bottom: 1px solid #fc6423;
-  }
-}</code></pre><p>设置网站图标</p>
-<h4 id="●-设置网站图标"><a href="#●-设置网站图标" class="headerlink" title="● 设置网站图标"></a>● 设置网站图标</h4><p>参考自作者 <a href="https://www.jianshu.com/p/f054333ac9e6" target="_blank" rel="noopener">Moorez</a> </p>
-<p>首先找一张喜欢的图片，可以在 <a href="http://www.easyicon.net/" target="_blank" rel="noopener">EasyIcon</a> 中或其他任意地方，分别下载 <code>32px</code> 和 <code>16px</code> 两张，然后放到 <code>/themes/next/source/images</code> 里，然后修改 <code>NexT 配置文件</code>  </p>
-<pre><code>favicon:
-  small: /images/c_16.png
-  medium: /images/c_32.png
-  apple_touch_icon: /images/apple-touch-icon-next.png
-  safari_pinned_tab: /images/logo.svg</code></pre><img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesblog_title.png" style="zoom:100%">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 文章内链接文本样式</span><br><span class="line">.post-body p a&#123;</span><br><span class="line">  color: #0593d3;</span><br><span class="line">  border-bottom: none;</span><br><span class="line">  border-bottom: 1px solid #0593d3;</span><br><span class="line">  &amp;:hover &#123;</span><br><span class="line">    color: #fc6423;</span><br><span class="line">    border-bottom: none;</span><br><span class="line">    border-bottom: 1px solid #fc6423;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="●-主页文章添加边框阴影效果"><a href="#●-主页文章添加边框阴影效果" class="headerlink" title="●  主页文章添加边框阴影效果"></a>●  主页文章添加边框阴影效果</h4><p>在 <code>theme/next/source/css/_custom/custom.styl</code>  文件下添加</p>
-<pre><code>// 主页文章添加阴影效果
-.posts-expand { 
-    .post {
-        margin-top: 30px;
-        margin-bottom: 30px;
-    //border-radius: 15px;
-        -webkit-box-shadow: 5px 5px 20px rgba(119,118,118,.6);
-        -moz-box-shadow: 5px 5px 20px rgba(119,118,118,.6);
-    }
-}</code></pre><p>很多博客上都没有 <code>posts-expand</code> 这一层，如果没有这一层，你的归档页面将会变得很丑~如果你用了之前的圆角布局，需要把 <code>border-radius: 15px;</code> 的注释删掉。</p>
+<p>设置网站图标</p>
+<h3 id="设置网站图标"><a href="#设置网站图标" class="headerlink" title="设置网站图标"></a>设置网站图标</h3><p>参考自作者 <a href="https://www.jianshu.com/p/f054333ac9e6" target="_blank" rel="noopener">Moorez</a> </p>
+<p>首先找一张喜欢的图片，可以在 <a href="http://www.easyicon.net/" target="_blank" rel="noopener">EasyIcon</a> 中或其他任意地方，分别下载 <code>32px</code> 和 <code>16px</code> 两张，然后放到 <code>/themes/next/source/images</code> 里，然后修改 <code>NexT 配置文件</code>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">favicon:</span><br><span class="line">  small: &#x2F;images&#x2F;c_16.png</span><br><span class="line">  medium: &#x2F;images&#x2F;c_32.png</span><br><span class="line">  apple_touch_icon: &#x2F;images&#x2F;apple-touch-icon-next.png</span><br><span class="line">  safari_pinned_tab: &#x2F;images&#x2F;logo.svg</span><br></pre></td></tr></table></figure>
+
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/picturesblog_title.png" style="zoom:100%">
+
+<h3 id="主页文章添加边框阴影效果"><a href="#主页文章添加边框阴影效果" class="headerlink" title="主页文章添加边框阴影效果"></a>主页文章添加边框阴影效果</h3><p>在 <code>theme/next/source/css/_custom/custom.styl</code>  文件下添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 主页文章添加阴影效果</span><br><span class="line">.posts-expand &#123; </span><br><span class="line">	.post &#123;</span><br><span class="line">		margin-top: 30px;</span><br><span class="line">		margin-bottom: 30px;</span><br><span class="line">	&#x2F;&#x2F;border-radius: 15px;</span><br><span class="line">		-webkit-box-shadow: 5px 5px 20px rgba(119,118,118,.6);</span><br><span class="line">		-moz-box-shadow: 5px 5px 20px rgba(119,118,118,.6);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很多博客上都没有 <code>posts-expand</code> 这一层，如果没有这一层，你的归档页面将会变得很丑~如果你用了之前的圆角布局，需要把 <code>border-radius: 15px;</code> 的注释删掉。</p>
 <p>应用主要作用实在 <code>-webkit-box-shadow</code> 和 <code>-moz-box-shadow</code> 属性上。</p>
 <p>基于主流浏览器上使用 <code>box-shadow</code> 属性时，我们需要将属性的名称写成 <code>-webkit-box-shadow</code> 的形式。Firefox浏览器则需要写成 <code>-moz-box-shadow</code> 的形式。</p>
 <p>四个值分别为 <code>X轴</code>与 <code>Y轴</code> 移动 、<code>阴影值大小</code> 、<code>阴影颜色rgba</code></p>
 <hr>
-<h2 id="更多样式修改-💦💦"><a href="#更多样式修改-💦💦" class="headerlink" title="更多样式修改 💦💦"></a>更多样式修改 💦💦</h2><p><a href="https://bestzuo.cn/posts/1689445187.html" target="_blank" rel="noopener">Sanarous Hexo博客界面美化2.0</a></p>
+<h1 id="更多样式修改-💦💦"><a href="#更多样式修改-💦💦" class="headerlink" title="更多样式修改 💦💦"></a>更多样式修改 💦💦</h1><p><a href="https://bestzuo.cn/posts/1689445187.html" target="_blank" rel="noopener">Sanarous Hexo博客界面美化2.0</a></p>
 <p><a href="https://leafjame.github.io/posts/2114475547.html" target="_blank" rel="noopener">Leaface Hexo NexT主题美化2.0</a></p>
 <p><a href="https://walesexcitedmei.github.io/2018/08/30/HEXO-NexT-%E4%B8%BB%E9%A2%98%E6%8F%90%E9%AB%98%E5%8D%9A%E5%AE%A2%E9%A2%9C%E5%80%BC/" target="_blank" rel="noopener">[HEXO] NexT 主题提高博客颜值</a></p>
-
-            </div>
-            <hr/>
-
-            
-
-    <div class="reprint" id="reprint-statement">
-        
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="https://calmcenter.club" rel="external nofollow noreferrer">CalmCenter</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="https://calmcenter.club/2019/hexo-functional-style.html">https://calmcenter.club/2019/hexo-functional-style.html</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="https://calmcenter.club" target="_blank">CalmCenter</a>
-                    !
-                </span>
-            </div>
-        
-    </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/tags/Hexo/">
-                                    <span class="chip bg-color">Hexo</span>
-                                </a>
-                            
-                                <a href="/tags/git/">
-                                    <span class="chip bg-color">git</span>
-                                </a>
-                            
-                                <a href="/tags/github/">
-                                    <span class="chip bg-color">github</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-
-<div id="article-share">
-    
-    
-
-    
-
-</div>
-
-                </div>
-            </div>
-            
-                <style>
-    #reward {
-        margin: 40px 0;
-        text-align: center;
-    }
-
-    #reward .reward-link {
-        font-size: 1.4rem;
-        line-height: 38px;
-    }
-
-    #reward .btn-floating:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    #rewardModal {
-        width: 320px;
-        height: 350px;
-    }
-
-    #rewardModal .reward-title {
-        margin: 15px auto;
-        padding-bottom: 5px;
-    }
-
-    #rewardModal .modal-content {
-        padding: 10px;
-    }
-
-    #rewardModal .close {
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        color: rgba(0, 0, 0, 0.5);
-        font-size: 1.3rem;
-        line-height: 20px;
-        cursor: pointer;
-    }
-
-    #rewardModal .close:hover {
-        color: #ef5350;
-        transform: scale(1.3);
-        -moz-transform:scale(1.3);
-        -webkit-transform:scale(1.3);
-        -o-transform:scale(1.3);
-    }
-
-    #rewardModal .reward-tabs {
-        margin: 0 auto;
-        width: 210px;
-    }
-
-    .reward-tabs .tabs {
-        height: 38px;
-        margin: 10px auto;
-        padding-left: 0;
-    }
-
-    .reward-content ul {
-        padding-left: 0 !important;
-    }
-
-    .reward-tabs .tabs .tab {
-        height: 38px;
-        line-height: 38px;
-    }
-
-    .reward-tabs .tab a {
-        color: #fff;
-        background-color: #ccc;
-    }
-
-    .reward-tabs .tab a:hover {
-        background-color: #ccc;
-        color: #fff;
-    }
-
-    .reward-tabs .wechat-tab .active {
-        color: #fff !important;
-        background-color: #22AB38 !important;
-    }
-
-    .reward-tabs .alipay-tab .active {
-        color: #fff !important;
-        background-color: #019FE8 !important;
-    }
-
-    .reward-tabs .reward-img {
-        width: 210px;
-        height: 210px;
-    }
-</style>
-
-<div id="reward">
-    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
-
-    <!-- Modal Structure -->
-    <div id="rewardModal" class="modal">
-        <div class="modal-content">
-            <a class="close modal-close"><i class="fas fa-times"></i></a>
-            <h4 class="reward-title">你的赏识是我前进的动力</h4>
-            <div class="reward-content">
-                <div class="reward-tabs">
-                    <ul class="tabs row">
-                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
-                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
-                    </ul>
-                    <div id="alipay">
-                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
-                    </div>
-                    <div id="wechat">
-                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(function () {
-        $('.tabs').tabs();
-    });
-</script>
-            
-        </div>
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-        <style>
-    .valine-card {
-        margin: 1.5rem auto;
-    }
-
-    .valine-card .card-content {
-        padding: 20px 20px 5px 20px;
-    }
-
-    #vcomments textarea {
-        box-sizing: border-box;
-        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
-    }
-
-    #vcomments p {
-        margin: 2px 2px 10px;
-        font-size: 1.05rem;
-        line-height: 1.78rem;
-    }
-
-    #vcomments blockquote p {
-        text-indent: 0.2rem;
-    }
-
-    #vcomments a {
-        padding: 0 2px;
-        color: #4cbf30;
-        font-weight: 500;
-        text-decoration: none;
-    }
-
-    #vcomments img {
-        max-width: 100%;
-        height: auto;
-        cursor: pointer;
-    }
-
-    #vcomments ol li {
-        list-style-type: decimal;
-    }
-
-    #vcomments ol,
-    ul {
-        display: block;
-        padding-left: 2em;
-        word-spacing: 0.05rem;
-    }
-
-    #vcomments ul li,
-    ol li {
-        display: list-item;
-        line-height: 1.8rem;
-        font-size: 1rem;
-    }
-
-    #vcomments ul li {
-        list-style-type: disc;
-    }
-
-    #vcomments ul ul li {
-        list-style-type: circle;
-    }
-
-    #vcomments table, th, td {
-        padding: 12px 13px;
-        border: 1px solid #dfe2e5;
-    }
-
-    #vcomments table, th, td {
-        border: 0;
-    }
-
-    table tr:nth-child(2n), thead {
-        background-color: #fafafa;
-    }
-
-    #vcomments table th {
-        background-color: #f2f2f2;
-        min-width: 80px;
-    }
-
-    #vcomments table td {
-        min-width: 80px;
-    }
-
-    #vcomments h1 {
-        font-size: 1.85rem;
-        font-weight: bold;
-        line-height: 2.2rem;
-    }
-
-    #vcomments h2 {
-        font-size: 1.65rem;
-        font-weight: bold;
-        line-height: 1.9rem;
-    }
-
-    #vcomments h3 {
-        font-size: 1.45rem;
-        font-weight: bold;
-        line-height: 1.7rem;
-    }
-
-    #vcomments h4 {
-        font-size: 1.25rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    #vcomments h5 {
-        font-size: 1.1rem;
-        font-weight: bold;
-        line-height: 1.4rem;
-    }
-
-    #vcomments h6 {
-        font-size: 1rem;
-        line-height: 1.3rem;
-    }
-
-    #vcomments p {
-        font-size: 1rem;
-        line-height: 1.5rem;
-    }
-
-    #vcomments hr {
-        margin: 12px 0;
-        border: 0;
-        border-top: 1px solid #ccc;
-    }
-
-    #vcomments blockquote {
-        margin: 15px 0;
-        border-left: 5px solid #42b983;
-        padding: 1rem 0.8rem 0.3rem 0.8rem;
-        color: #666;
-        background-color: rgba(66, 185, 131, .1);
-    }
-
-    #vcomments pre {
-        font-family: monospace, monospace;
-        padding: 1.2em;
-        margin: .5em 0;
-        background: #272822;
-        overflow: auto;
-        border-radius: 0.3em;
-        tab-size: 4;
-    }
-
-    #vcomments code {
-        font-family: monospace, monospace;
-        padding: 1px 3px;
-        font-size: 0.92rem;
-        color: #e96900;
-        background-color: #f8f8f8;
-        border-radius: 2px;
-    }
-
-    #vcomments pre code {
-        font-family: monospace, monospace;
-        padding: 0;
-        color: #e8eaf6;
-        background-color: #272822;
-    }
-
-    #vcomments pre[class*="language-"] {
-        padding: 1.2em;
-        margin: .5em 0;
-    }
-
-    #vcomments code[class*="language-"],
-    pre[class*="language-"] {
-        color: #e8eaf6;
-    }
-
-    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-        position: inherit;
-        margin-left: -1.3rem;
-        margin-right: 0.4rem;
-        margin-top: -1px;
-        vertical-align: middle;
-        left: unset;
-        visibility: visible;
-    }
-
-    #vcomments b,
-    strong {
-        font-weight: bold;
-    }
-
-    #vcomments dfn {
-        font-style: italic;
-    }
-
-    #vcomments small {
-        font-size: 85%;
-    }
-
-    #vcomments cite {
-        font-style: normal;
-    }
-
-    #vcomments mark {
-        background-color: #fcf8e3;
-        padding: .2em;
-    }
-
-    #vcomments table, th, td {
-        padding: 12px 13px;
-        border: 1px solid #dfe2e5;
-    }
-
-    table tr:nth-child(2n), thead {
-        background-color: #fafafa;
-    }
-
-    #vcomments table th {
-        background-color: #f2f2f2;
-        min-width: 80px;
-    }
-
-    #vcomments table td {
-        min-width: 80px;
-    }
-
-    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-        position: inherit;
-        margin-left: -1.3rem;
-        margin-right: 0.4rem;
-        margin-top: -1px;
-        vertical-align: middle;
-        left: unset;
-        visibility: visible;
-    }
-</style>
-
-<div class="card valine-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
-        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
-        <span>评论</span>
-    </div>
-    <div id="vcomments" class="card-content" style="display: grid">
-    </div>
-</div>
-
-<script src="/libs/valine/av-min.js"></script>
-<script src="/libs/valine/Valine.min.js"></script>
-<script>
-    new Valine({
-        el: '#vcomments',
-        appId: 'KiQHU70TUHYrumpFuuhC3UEg-gzGzoHsz',
-        appKey: 'wX1m2ATu8q4CyeRhOQ3FUucn',
-        notify: 'false' === 'true',
-        verify: 'false' === 'true',
-        visitor: 'false' === 'true',
-        avatar: 'mm',
-        pageSize: '10',
-        lang: 'zh-cn',
-        placeholder: '💦💦既然来了何不留下你的足迹(支持 Markdown 哦~)'
-    });
-</script>
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2019/hexo-website-management.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Hexo 网站管理">
-                        
-                        <span class="card-title">Hexo 网站管理</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            加速、域名、基础 SEO
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-21
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Hexo/" class="post-category">
-                                    Hexo
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Hexo/">
-                        <span class="chip bg-color">Hexo</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%9F%9F%E5%90%8D/">
-                        <span class="chip bg-color">域名</span>
-                    </a>
-                    
-                    <a href="/tags/coding/">
-                        <span class="chip bg-color">coding</span>
-                    </a>
-                    
-                    <a href="/tags/seo/">
-                        <span class="chip bg-color">seo</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/hexo-live2d.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Live2D 看板娘">
-                        
-                        <span class="card-title">Live2D 看板娘</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            右下角可爱的血小板就是这么来的~
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-20
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/live2D/" class="post-category">
-                                    live2D
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/live2D/">
-                        <span class="chip bg-color">live2D</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-    </div>
-</article>
-
-</div>
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-<!-- 代码块折行 -->
-
-<style type="text/css">
-code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
-</style>
-
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
-
-    
-
-</main>
-
-
-
-    <footer class="page-footer bg-color">
-
-<link rel="stylesheet" href="/live2d/css/live2d.css" />
-<div id="landlord">
-  <div class="message" style="opacity:0"></div>
-  <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
-  <div class="hide-button">隐藏</div>
-</div>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript">
-  var message_Path = '/live2d/'
-  var home_Path = 'https://calmcenter.club/'
-</script>
-<script type="text/javascript" src="/live2d/js/live2d.js"></script>
-<script type="text/javascript" src="/live2d/js/message.js"></script>
-<script type="text/javascript">
-  loadlive2d("live2d", "/live2d/model/xxb2/model.json");
-</script>
-
-    <div class="container row center-align" style="margin-bottom: 15px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            <span id="year">2020</span>
-            <a href="https://calmcenter.club" target="_blank">CalmCenter</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">52.6k</span>&nbsp;字
-            
-            
-            
-            
-            
-            
-            <span id="busuanzi_container_site_pv">
-                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
-                    class="white-color"></span>&nbsp;次
-            </span>
-            
-            
-            <span id="busuanzi_container_site_uv">
-                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
-                    class="white-color"></span>&nbsp;人
-            </span>
-            
-            <br>
-            
-            <span id="sitetime">载入运行时间...</span>
-            <script>
-                function siteTime() {
-                    var seconds = 1000;
-                    var minutes = seconds * 60;
-                    var hours = minutes * 60;
-                    var days = hours * 24;
-                    var years = days * 365;
-                    var today = new Date();
-                    var startYear = "2020";
-                    var startMonth = "1";
-                    var startDate = "16";
-                    var startHour = "0";
-                    var startMinute = "0";
-                    var startSecond = "0";
-                    var todayYear = today.getFullYear();
-                    var todayMonth = today.getMonth() + 1;
-                    var todayDate = today.getDate();
-                    var todayHour = today.getHours();
-                    var todayMinute = today.getMinutes();
-                    var todaySecond = today.getSeconds();
-                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
-                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
-                    var diff = t2 - t1;
-                    var diffYears = Math.floor(diff / years);
-                    var diffDays = Math.floor((diff / days) - diffYears * 365);
-                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
-                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
-                        minutes);
-                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
-                        diffMinutes * minutes) / seconds);
-                    if (startYear == todayYear) {
-                        document.getElementById("year").innerHTML = todayYear;
-                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
-                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
-                    } else {
-                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
-                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
-                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
-                    }
-                }
-                setInterval(siteTime, 1000);
-            </script>
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/CalmCenter" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fab fa-github"></i>
-    </a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    </div>
-</footer>
-
-<div class="progress-bar"></div>
-
-
-
- <script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/b6dbddb6.js","daovoice")
- daovoice('init', {
-  app_id: "c1f73bd5"
-});
-daovoice('update');
- </script>
-
-
-
-    <!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
-
-<script src="/js/search.js"></script>
-<script type="text/javascript">
-$(function () {
-    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
-});
-</script>
-    <!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</div>
-
-
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
-
-    <!-- Baidu Analytics -->
-
-    <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-    
-    
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-    
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i["DaoVoiceObject"] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            a.charset = "utf-8";
-            m.parentNode.insertBefore(a, m)
-        })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
-            "//widget.daovoice.io/widget/6984b559.js", "daovoice")
-        daovoice('init', {
-            app_id: "c1f73bd5"
-        });
-        daovoice('update');
-    </script>
-    
-
-    
-
-    
-
-    
-    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
-    
-    
-    
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-    
-
-</body>
-
-</html>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">CalmCenter</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://calmcenter.club/2019/hexo-functional-style.html">https://calmcenter.club/2019/hexo-functional-style.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://calmcenter.club" target="_blank">CalmCenter</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hexo/">Hexo</a><a class="post-meta__tags" href="/tags/git/">git</a><a class="post-meta__tags" href="/tags/github/">github</a></div><div class="post_share"></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.png" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.png" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/hexo-website-management.html"><img class="prev_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover12.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Hexo 网站管理</div></div></a></div><div class="next-post pull_right"><a href="/2019/hexo-live2d.html"><img class="next_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover25.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Live2D 看板娘</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2019/complete-works-of-hexo.html" title="Hexo 搭建博客篇"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover5.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-01</div><div class="relatedPosts_title">Hexo 搭建博客篇</div></div></a></div><div class="relatedPosts_item"><a href="/2019/hexo-code-management.html" title="Hexo 管理代码"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover5.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-19</div><div class="relatedPosts_title">Hexo 管理代码</div></div></a></div><div class="relatedPosts_item"><a href="/2019/hexo-bash.html" title="Hexo 基础搭建"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover24.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-18</div><div class="relatedPosts_title">Hexo 基础搭建</div></div></a></div><div class="relatedPosts_item"><a href="/2019/hexo-website-management.html" title="Hexo 网站管理"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover12.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-21</div><div class="relatedPosts_title">Hexo 网站管理</div></div></a></div><div class="relatedPosts_item"><a href="/2020/picnotshow.html" title="博客图片不显示问题"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover18.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-03-01</div><div class="relatedPosts_title">博客图片不显示问题</div></div></a></div></div><div class="clear_both"></div></div><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var requestSetting = function (from,set) {
+  var from = from
+  var setting = set.split(',').filter(function(item){
+  return from.indexOf(item) > -1
+  });
+  setting = setting.length == 0 ? from :setting;
+  return setting
+}
+
+var guestInfo = requestSetting(['nick','mail','link'],'nick,mail,link')
+var requiredFields = requestSetting(['nick','mail','link'],'nick,mail')
+
+window.valine = new Valine({
+  el:'#vcomment',
+  appId: 'KiQHU70TUHYrumpFuuhC3UEg-gzGzoHsz',
+  appKey: 'wX1m2ATu8q4CyeRhOQ3FUucn',
+  notify: true,
+  verify: true,
+  placeholder: '💦💦既然来了何不留下你的足迹(支持 Markdown 哦~)',
+  avatar: 'robohash',
+  meta: guestInfo,
+  pageSize: '10',
+  lang: 'zh-CN',
+  recordIP: false,
+  serverURLs: '',
+  emojiCDN: '',
+  emojiMaps: "",
+  enableQQ: false,
+  requiredFields: requiredFields
+});</script></div></article></main><footer id="footer" style="background-image: url(https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover25.webp)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div><link rel="stylesheet" href="/live2d/css/live2d.css"/></div><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="240" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
+var home_Path = 'https://calmcenter.club/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/xxb2/model.json");</script></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><a id="to_comment" href="#post-comment" title="直达评论"><i class="scroll_to_comment fa fa-comments">  </i></a><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script id="ribbon_piao" mobile="true" src="/js/third-party/piao.js"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script><script src="/js/search/local-search.js"></script></body></html>

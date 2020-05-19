@@ -1,470 +1,92 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>App 内存知识介绍💦 | CalmCenter</title><meta name="description" content="🌞 工欲善其事必先利其器🌞在解决内存问题之前，必须知道内存的基本知识这篇文章带你了解 JVM 的管理分配机制、Dalbik、ART等的内存基础知识。"><meta name="keywords" content="Android"><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '2'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
 
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
 
-<head>
-    <meta charset="utf-8">
-    <meta name="keywords" content="Android">
-    <meta name="description" content="Android 内存是如何管理的以及如何优化">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>App 内存知识介绍 | CalmCenter</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
 
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
-    
-    <script src="/libs/jquery/jquery.min.js"></script>
-    
-<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
-
-
-<body>
-    <header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper head-container">
-            <div class="brand-logo">
-                <a href="/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">CalmCenter</span>
-                </a>
-            </div>
-            
-
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="canonical" href="https://calmcenter.club/2020/memory-optimization.html"><link rel="prev" title="App 内存检测优化💦" href="https://calmcenter.club/2020/memory-optimization2.html"><link rel="next" title="生财有术日历" href="https://calmcenter.club/2020/sheng-cai-you-zhu-ri-li.html"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: true,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"top-right"},
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: false
   
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/" class="waves-effect waves-light">
-      
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
-
-<div id="mobile-nav" class="side-nav sidenav">
-
-    <div class="mobile-head bg-color">
-        
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">CalmCenter</div>
-        <div class="logo-desc">
-            
-            目标设置到月球，即使陨落也是在群星之间！
-            
-        </div>
-    </div>
-
-    
-
-    <ul class="menu-list mobile-menu-list">
-        
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
-          
-        </li>
-        
-        
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/CalmCenter" class="waves-effect waves-light" target="_blank">
-                <i class="fab fa-github-square fa-fw"></i>Fork Me
-            </a>
-        </li>
-        
-    </ul>
-</div>
-
-        </div>
-
-        
-            <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #F062A7;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/CalmCenter" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewBox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
-        
-    </nav>
-
-</header>
-
-    
-<script src="/libs/cryptojs/crypto-js.min.js"></script>
-<script>
-    (function() {
-        let pwd = '';
-        if (pwd && pwd.length > 0) {
-            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
-                alert('密码错误，将返回主页！');
-                location.href = '/';
-            }
-        }
-    })();
-</script>
-
-
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200301185544.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">App 内存知识介绍</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-<main class="post-container content">
-
-    
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        height: calc(100vh - 250px);
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/tags/Android/">
-                                <span class="chip bg-color">Android</span>
-                            </a>
-                        
-                            <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
-                                <span class="chip bg-color">性能优化</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/Android/" class="post-category">
-                                Android
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-29
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-04-15
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.2k
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    25 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-
-        </div>
-        <hr class="clearfix">
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <p>Android 性能优化第二篇， 内存优化是减少崩溃率工作中非常关键的一部分，由于Android有垃圾自动回收机制不需要手动干预，但也因此，经常出现内存问题如内存泄漏、内存泄漏引发 <code>GC</code> 频繁导致页面卡顿和内存溢出等问题，如果不了解内存是如何管理的以及如何优化，会难以排查问题。</p>
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">21</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">16</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本文主要记载"><span class="toc-text">本文主要记载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-什么是内存？"><span class="toc-text">1 什么是内存？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-JVM-如何分配内存？"><span class="toc-text">2 JVM 如何分配内存？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-所有线程共享的数据区域"><span class="toc-text">2.1 所有线程共享的数据区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-线程私有的数据区域"><span class="toc-text">2.2 线程私有的数据区域</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-JVM-如何管理内存？"><span class="toc-text">3 JVM 如何管理内存？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-引用计数算法"><span class="toc-text">3.1 引用计数算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-可达性算法"><span class="toc-text">3.2 可达性算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-引用介绍"><span class="toc-text">3.3 引用介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-垃圾回收器"><span class="toc-text">3.4 垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-标记-清除算法（Mark-Sweep）"><span class="toc-text">3.4.1 标记-清除算法（Mark-Sweep）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-2-复制算法（Copying）"><span class="toc-text">3.4.2 复制算法（Copying）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-3-标记-整理算法（Mark-Compact）"><span class="toc-text">3.4.3 标记-整理算法（Mark-Compact）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-4-分代收集算法（Generational-Collection）"><span class="toc-text">3.4.4 分代收集算法（Generational Collection）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-什么是-Dalvik"><span class="toc-text">4 什么是 Dalvik?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-Dalvik-与-JVM-的区别"><span class="toc-text">4.1 Dalvik 与 JVM 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-Dalvik-堆大小"><span class="toc-text">4.2 Dalvik 堆大小</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-什么是-ART"><span class="toc-text">5 什么是 ART?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-ART-与-Dalvik-的区别"><span class="toc-text">5.1 ART 与 Dalvik 的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-内存引发的问题"><span class="toc-text">6 内存引发的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-内存泄漏"><span class="toc-text">6.1 内存泄漏</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-1-常见的内存泄漏"><span class="toc-text">6.1.1 常见的内存泄漏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-低杀"><span class="toc-text">6.2 低杀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-内存抖动"><span class="toc-text">6.3 内存抖动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-Android-Bitmap-内存分配的变化"><span class="toc-text">7 Android Bitmap 内存分配的变化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-内存优化的两个误区"><span class="toc-text">8 内存优化的两个误区</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#8-1-内存占用越少越好。"><span class="toc-text">8.1 内存占用越少越好。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-2-Native-内存不用管"><span class="toc-text">8.2 Native 内存不用管</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#感谢"><span class="toc-text">感谢</span></a></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover28.webp)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">CalmCenter</a></span><span class="pull_right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">App 内存知识介绍💦</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2020-02-29 19:59:00"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2020-02-29</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-05-18 18:44:24"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-18</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Android/">Android</a></span></div><div class="meta-secondline"> </div><div class="meta-thirdline"><span class="post-meta-pv-cv"><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>Android 性能优化第二篇， 内存优化是减少崩溃率工作中非常关键的一部分，由于Android有垃圾自动回收机制不需要手动干预，但也因此，经常出现内存问题如内存泄漏、内存泄漏引发 <code>GC</code> 频繁导致页面卡顿和内存溢出等问题，如果不了解内存是如何管理的以及如何优化，会难以排查问题。</p>
 <p>这篇文章集结了很多文章精华部分(个人认为)，在这里整理分享出更多更完整内存知识，所以这篇文章会很长，目录我会分的很细，方便查找，文末会贴出参考文章。</p>
 <p><strong>注意：如果出现图片不显示问题请移步</strong> <a href="https://calmcenter.club/2019/PicNotShow.html">图片不显示问题</a></p>
-<h1 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h1><hr>
-<ul>
+<h1 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h1><ul>
 <li><strong>1 什么是内存？</strong></li>
 <li><strong>2 JVM 如何分配内存？</strong><ul>
 <li>2.1 所有线程共享的数据区域</li>
@@ -509,15 +131,14 @@
 </ul>
 </li>
 </ul>
-<h2 id="1-什么是内存？"><a href="#1-什么是内存？" class="headerlink" title="1 什么是内存？"></a>1 什么是内存？</h2><hr>
-<p>内存是计算机中重要的部件之一，是与 CPU 进行沟通的桥梁，是 CPU 能直接寻址的存储空间，由半导体器件制成。</p>
+<hr>
+<h1 id="1-什么是内存？"><a href="#1-什么是内存？" class="headerlink" title="1 什么是内存？"></a>1 什么是内存？</h1><p>内存是计算机中重要的部件之一，是与 CPU 进行沟通的桥梁，是 CPU 能直接寻址的存储空间，由半导体器件制成。</p>
 <blockquote>
 <p>如果说数据是商品，那硬盘就是商店的仓库，内存就是商店的货架，仓库里的商品你是不能直接买的，你只能买货架上的商品。</p>
 <p>每一个程序中使用的内存区域相当于是不同的货架，当一个货架上需要摆放的商品超过这个货架所能容纳的最大值，就会出现放不下的情况，也就是内存溢出。</p>
 </blockquote>
-<h2 id="2-JVM-如何分配内存？"><a href="#2-JVM-如何分配内存？" class="headerlink" title="2 JVM 如何分配内存？"></a>2 JVM 如何分配内存？</h2><hr>
-<h3 id="2-1-所有线程共享的数据区域"><a href="#2-1-所有线程共享的数据区域" class="headerlink" title="2.1 所有线程共享的数据区域"></a>2.1 <strong>所有线程共享的数据区域</strong></h3><hr>
-<ul>
+<hr>
+<h1 id="2-JVM-如何分配内存？"><a href="#2-JVM-如何分配内存？" class="headerlink" title="2 JVM 如何分配内存？"></a>2 JVM 如何分配内存？</h1><h2 id="2-1-所有线程共享的数据区域"><a href="#2-1-所有线程共享的数据区域" class="headerlink" title="2.1 所有线程共享的数据区域"></a>2.1 <strong>所有线程共享的数据区域</strong></h2><ul>
 <li><strong>堆</strong>（Java Heap）<ul>
 <li><code>Java</code> 堆是 <code>JVM</code> 管理的内存中最大的一块内存区域。</li>
 <li>几乎所有的对象实例都是在堆中分配内存。</li>
@@ -530,8 +151,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="2-2-线程私有的数据区域"><a href="#2-2-线程私有的数据区域" class="headerlink" title="2.2 线程私有的数据区域"></a>2.2 <strong>线程私有的数据区域</strong></h3><hr>
-<ul>
+<h2 id="2-2-线程私有的数据区域"><a href="#2-2-线程私有的数据区域" class="headerlink" title="2.2 线程私有的数据区域"></a>2.2 <strong>线程私有的数据区域</strong></h2><ul>
 <li><p><strong>程序计数器</strong>（Program Counter Register）</p>
 </li>
 <li><p>一块较小的内存空间，可看做是当前线程所执行的字节码的行号指示器。</p>
@@ -556,46 +176,20 @@
 <li>当执行 Java 方法时会进行压栈的操作，在栈中会保存局部变量、操作数栈和方法出口等信息。<code>JVM</code> 规定了栈的最大深度，如果线程请求执行方法时栈的深度大于规定的深度，就会抛出栈溢出异常 <code>StackOverflowError</code>。</li>
 <li>如果虚拟机在扩展时无法申请到足够的内存，就会抛出内存溢出异常 <code>OutOfMemoryError</code>。</li>
 </ul>
+<div class="note default no-icon">
+            <p><strong>栈帧（Stack Frame）</strong></p><p>当 <code>Java</code> 程序出现异常时，程序会打印出对应的异常堆栈，通过这个堆栈我们可以知道方法的调用链路，而这个调用链路就是由一个个 Java 方法栈帧组成的。</p><ol><li><p><strong>局部变量表</strong>（Local Variable Table）：里面的变量只在当前函数调用中有效，当函数调用结束后，随着函数栈帧的销毁，局部变量表也会随之销毁。</p><p>局部变量表中存放的<strong>编译期</strong>可知的各种数据有：</p><ul><li><p>基本数据类型：如 boolean、char、int 等。</p></li><li><p>对象引用：reference 类型，可能是一个指向对象起始地址的引用指针，也可能是指向一个代表对象的句柄或其他与此对象相关的位置。</p></li><li><p><code>returnAddress</code>类型：指向一条虚拟机指令的操作码。与前面介绍的那些数值类的原生类型不同，<code>returnAddress</code> 类型在 <code>Java</code> 语言之中并不存在相应的类型，也无法在程序运行期间更改 <code>returnAddress</code> 类型的值。</p></li></ul></li><li><p><strong>操作数栈</strong>（Operand Stack）：操作数栈（Operand Stack）也叫操作栈，它主要用于保存计算过程的中间结果，同时作为计算过程中临时变量的存储空间。</p></li><li><p><strong>动态连接</strong>（Dynamic Linking）：每个栈帧都包含一个指向运行时常量池中该栈帧所属方法的引用，持有这个引用是为了支持方法调用过程中的动态连接</p></li><li><p><strong>方法返回地址</strong>：当一个方法开始执行后，只有两种方式可以退出这个方法，一种是正常完成出口，另一种是异常完成出口。</p><ul><li>正常完成出口（Normal Method Invocation Completion）：执行引擎遇到任意一个方法返回的字节码指令，这时候可能会有返回值传递给上层的方法调用者。是否有返回值和返回值的类型将根据遇到哪种方法返回指令来决定，这种退出方法的方式称为正常完成出口。</li><li>异常完成出口（Abrupt Method Invocation Completion）：在方法执行过程中遇到异常，并且这个异常没有在方法体内得到处理，就会导致方法退出，这种退出方式称为异常完成出口。一个方法使用异常完成出口的方式退出，任何值都不会返回给它的调用者。</li></ul><p>无论采用哪种退出方式，在方法退出后，都需要返回到方法被调用的位置，程序才能继续执行。</p></li></ol>
+          </div>
+
 </li>
 </ul>
-<blockquote>
-<p><strong>栈帧（Stack Frame）</strong></p>
-<p>当 <code>Java</code> 程序出现异常时，程序会打印出对应的异常堆栈，通过这个堆栈我们可以知道方法的调用链路，而这个调用链路就是由一个个 Java 方法栈帧组成的。</p>
-<ol>
-<li><p><strong>局部变量表</strong>（Local Variable Table）：里面的变量只在当前函数调用中有效，当函数调用结束后，随着函数栈帧的销毁，局部变量表也会随之销毁。</p>
-<p>局部变量表中存放的<strong>编译期</strong>可知的各种数据有：</p>
-<ul>
-<li><p>基本数据类型：如 boolean、char、int 等。</p>
-</li>
-<li><p>对象引用：reference 类型，可能是一个指向对象起始地址的引用指针，也可能是指向一个代表对象的句柄或其他与此对象相关的位置。</p>
-</li>
-<li><p><code>returnAddress</code>类型：指向一条虚拟机指令的操作码。与前面介绍的那些数值类的原生类型不同，<code>returnAddress</code> 类型在 <code>Java</code> 语言之中并不存在相应的类型，也无法在程序运行期间更改 <code>returnAddress</code> 类型的值。</p>
-</li>
-</ul>
-</li>
-<li><p><strong>操作数栈</strong>（Operand Stack）：操作数栈（Operand Stack）也叫操作栈，它主要用于保存计算过程的中间结果，同时作为计算过程中临时变量的存储空间。</p>
-</li>
-<li><p><strong>动态连接</strong>（Dynamic Linking）：每个栈帧都包含一个指向运行时常量池中该栈帧所属方法的引用，持有这个引用是为了支持方法调用过程中的动态连接</p>
-</li>
-<li><p><strong>方法返回地址</strong>：当一个方法开始执行后，只有两种方式可以退出这个方法，一种是正常完成出口，另一种是异常完成出口。</p>
-<ul>
-<li>正常完成出口（Normal Method Invocation Completion）：执行引擎遇到任意一个方法返回的字节码指令，这时候可能会有返回值传递给上层的方法调用者。是否有返回值和返回值的类型将根据遇到哪种方法返回指令来决定，这种退出方法的方式称为正常完成出口。</li>
-<li>异常完成出口（Abrupt Method Invocation Completion）：在方法执行过程中遇到异常，并且这个异常没有在方法体内得到处理，就会导致方法退出，这种退出方式称为异常完成出口。一个方法使用异常完成出口的方式退出，任何值都不会返回给它的调用者。</li>
-</ul>
-<p>无论采用哪种退出方式，在方法退出后，都需要返回到方法被调用的位置，程序才能继续执行。</p>
-</li>
-</ol>
-</blockquote>
-<h2 id="3-JVM-如何管理内存？"><a href="#3-JVM-如何管理内存？" class="headerlink" title="3 JVM 如何管理内存？"></a>3 JVM 如何管理内存？</h2><hr>
-<p>JVM 的管理主要有 <strong>引用计数算法</strong>、<strong>可达性算法</strong>、<strong>Java 引用</strong> 以及 <strong>垃圾回收器</strong> 知识点。</p>
-<h3 id="3-1-引用计数算法"><a href="#3-1-引用计数算法" class="headerlink" title="3.1 引用计数算法"></a>3.1 引用计数算法</h3><hr>
-<p>给对象中添加一个引用计数器，每当有一个地方引用该对象时，计数器值加1；引用失效时，计数器值减1；任意时刻计数器为0的对象就是不可能再被使用的，表示该对象不存在引用关系。</p>
+<hr>
+<h1 id="3-JVM-如何管理内存？"><a href="#3-JVM-如何管理内存？" class="headerlink" title="3 JVM 如何管理内存？"></a>3 JVM 如何管理内存？</h1><p>JVM 的管理主要有 <strong>引用计数算法</strong>、<strong>可达性算法</strong>、<strong>Java 引用</strong> 以及 <strong>垃圾回收器</strong> 知识点。</p>
+<h2 id="3-1-引用计数算法"><a href="#3-1-引用计数算法" class="headerlink" title="3.1 引用计数算法"></a>3.1 引用计数算法</h2><p>给对象中添加一个引用计数器，每当有一个地方引用该对象时，计数器值加1；引用失效时，计数器值减1；任意时刻计数器为0的对象就是不可能再被使用的，表示该对象不存在引用关系。</p>
 <p>优点：实现简单，判定效率也很高；<br>缺点：难以解决对象之间相互循环引用导致计数器值不等于0的问题。</p>
-<h3 id="3-2-可达性算法"><a href="#3-2-可达性算法" class="headerlink" title="3.2 可达性算法"></a>3.2 可达性算法</h3><hr>
-<p>判定对象是否是存活的</p>
+<h2 id="3-2-可达性算法"><a href="#3-2-可达性算法" class="headerlink" title="3.2 可达性算法"></a>3.2 可达性算法</h2><p>判定对象是否是存活的</p>
 <p>这个算法的基本思路就是通过一系列 <code>GC Roots</code> 对象作为起始点，从这些节点开始向下搜索，搜索走过的路径就叫引用链。<br>当一个对象到 <code>GC Roots</code> 没有任何引用链相连时（<code>GC Roots</code> 到这个对象不可达），则证明此对象是不可用的。</p>
 <p>比如下图中的 <code>object5、object6、object7</code>，虽然它们互有关联，但是它们到 <code>GC Roots</code> 是不可达的，所以它们会被判定为可回收对象。</p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200330171812.png" style="zoom:90%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200330171812.png" style="zoom:90%">
 
 <p>那么那些点可以作为 <code>GC Roots</code> 呢？一般来说，如下情况的对象可以作为 <code>GC Roots</code> ：</p>
 <ol>
@@ -614,8 +208,7 @@
 <p>本地方法栈中 <code>Native</code> 方法引用的对象。</p>
 </li>
 </ol>
-<h3 id="3-3-引用介绍"><a href="#3-3-引用介绍" class="headerlink" title="3.3 引用介绍"></a>3.3 引用介绍</h3><hr>
-<p>无论是通过引用计数算法判断对象的引用数量，还是通过可达性分析算法判断对象的引用链是否可达，判定对象是否存活都与引用有关。</p>
+<h2 id="3-3-引用介绍"><a href="#3-3-引用介绍" class="headerlink" title="3.3 引用介绍"></a>3.3 引用介绍</h2><p>无论是通过引用计数算法判断对象的引用数量，还是通过可达性分析算法判断对象的引用链是否可达，判定对象是否存活都与引用有关。</p>
 <p>在 <code>JDK 1.2</code> 之后，<code>Java</code> 对引用的概念进行了扩充，将引用分为<strong>强引用</strong>、<strong>软引用</strong>、<strong>弱引用</strong>和<strong>虚引用</strong>四种，这四种引用强度按顺序依次减弱。如果没有指定对象引用类型，默认是<strong>强引用</strong>。</p>
 <ol>
 <li><strong>强引用</strong>：<ul>
@@ -646,40 +239,34 @@
 </ul>
 </li>
 </ol>
-<h3 id="3-4-垃圾回收器"><a href="#3-4-垃圾回收器" class="headerlink" title="3.4 垃圾回收器"></a>3.4 垃圾回收器</h3><hr>
-<p>垃圾回收器就是我们经常说到的 <code>GC（Garbage Collector）</code>，当我们操作不当导致某块内存泄漏时，<code>GC</code> 就不能对这块内存进行回收。</p>
+<h2 id="3-4-垃圾回收器"><a href="#3-4-垃圾回收器" class="headerlink" title="3.4 垃圾回收器"></a>3.4 垃圾回收器</h2><p>垃圾回收器就是我们经常说到的 <code>GC（Garbage Collector）</code>，当我们操作不当导致某块内存泄漏时，<code>GC</code> 就不能对这块内存进行回收。</p>
 <p>拿 <code>Android</code> 来说，进行 <code>GC</code> 时，所有线程都要暂停，包括主线程，<code>16ms</code> 是 <code>Android</code> 要求的每帧绘制时间，而当 <code>GC</code> 的时间超过 <code>16ms</code>，就会造成丢帧的情况，也就是界面卡顿。</p>
 <p>垃圾回收器回收资源的方式就是垃圾回收算法</p>
-<h4 id="3-4-1-标记-清除算法（Mark-Sweep）"><a href="#3-4-1-标记-清除算法（Mark-Sweep）" class="headerlink" title="3.4.1 标记-清除算法（Mark-Sweep）"></a>3.4.1 标记-清除算法（Mark-Sweep）</h4><hr>
-<p>最基础的收集算法：分为 <strong>标记</strong> 和 <strong>清除</strong> 两个阶段，首先，标记出所有需要回收的对象，然后统一回收所有被标记的对象。<br>这种方法有两个不足点：</p>
+<h3 id="3-4-1-标记-清除算法（Mark-Sweep）"><a href="#3-4-1-标记-清除算法（Mark-Sweep）" class="headerlink" title="3.4.1 标记-清除算法（Mark-Sweep）"></a>3.4.1 标记-清除算法（Mark-Sweep）</h3><p>最基础的收集算法：分为 <strong>标记</strong> 和 <strong>清除</strong> 两个阶段，首先，标记出所有需要回收的对象，然后统一回收所有被标记的对象。<br>这种方法有两个不足点：</p>
 <ol>
 <li>标记和清除的效率都不高</li>
 <li>标记清除后会产生大量不连续的内存碎片，内存碎片太多会导致当程序需要分配较大的对象时，无法找到足够的连续内存而不得不提前触发 ·<code>GC</code></li>
 </ol>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200330181053.png" style="zoom:90%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200330181053.png" style="zoom:90%">
 
 
-
-<h4 id="3-4-2-复制算法（Copying）"><a href="#3-4-2-复制算法（Copying）" class="headerlink" title="3.4.2 复制算法（Copying）"></a>3.4.2 复制算法（Copying）</h4><hr>
-<p>为了解决 <strong>标记-清除算法</strong> 效率问题，<strong>复制收集算法</strong> 出现了。</p>
+<h3 id="3-4-2-复制算法（Copying）"><a href="#3-4-2-复制算法（Copying）" class="headerlink" title="3.4.2 复制算法（Copying）"></a>3.4.2 复制算法（Copying）</h3><p>为了解决 <strong>标记-清除算法</strong> 效率问题，<strong>复制收集算法</strong> 出现了。</p>
 <p>将内存按容量划分为大小相等的两块，每次只使用其中的一块，当这一块内存将用完了，就将还存活着的对象复制到另一块内存上面，然后再把已使用过的内存空间一次清理掉。</p>
 <ul>
 <li>优点：实现简单，运行高效；每次都是对整个半区进行内存回收，内存分配时也不需要考虑内存碎片等情况，只要移动堆顶指针，按顺序分配内存即可；</li>
 <li>缺点：粗暴的将内存一分为二，代价有点高。在对象存活率高时，要进行较多的复制操作，这时效率就变低了</li>
 </ul>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200330181822.png" style="zoom:60%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200330181822.png" style="zoom:60%">
 
-<h4 id="3-4-3-标记-整理算法（Mark-Compact）"><a href="#3-4-3-标记-整理算法（Mark-Compact）" class="headerlink" title="3.4.3 标记-整理算法（Mark-Compact）"></a>3.4.3 标记-整理算法（Mark-Compact）</h4><hr>
-<p><strong>标记-整理算法</strong> 的标记过程与 <strong>标记-清除算法</strong> 一样，但后续步骤是让所有存活的对象向一端移动，然后直接清理掉边界外的内存。</p>
+<h3 id="3-4-3-标记-整理算法（Mark-Compact）"><a href="#3-4-3-标记-整理算法（Mark-Compact）" class="headerlink" title="3.4.3 标记-整理算法（Mark-Compact）"></a>3.4.3 标记-整理算法（Mark-Compact）</h3><p><strong>标记-整理算法</strong> 的标记过程与 <strong>标记-清除算法</strong> 一样，但后续步骤是让所有存活的对象向一端移动，然后直接清理掉边界外的内存。</p>
 <ul>
 <li>避免了 <strong>标记-清除算法</strong> 内存碎片；</li>
 <li>避免了 <strong>复制算法</strong> 50%的空间浪费；</li>
 <li>主要针对对象存活率高的老年代。</li>
 </ul>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200403112950.png" style="zoom:60%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200403112950.png" style="zoom:60%">
 
-<h4 id="3-4-4-分代收集算法（Generational-Collection）"><a href="#3-4-4-分代收集算法（Generational-Collection）" class="headerlink" title="3.4.4 分代收集算法（Generational Collection）"></a>3.4.4 分代收集算法（Generational Collection）</h4><hr>
-<p>现代商业虚拟机的垃圾回收都采用 <strong>分代收集算法</strong> ，这种算法会根据对象存活周期的不同将内存划分为几块，这样就可以根据各个区域的特点采用最适当的收集算法。</p>
+<h3 id="3-4-4-分代收集算法（Generational-Collection）"><a href="#3-4-4-分代收集算法（Generational-Collection）" class="headerlink" title="3.4.4 分代收集算法（Generational Collection）"></a>3.4.4 分代收集算法（Generational Collection）</h3><p>现代商业虚拟机的垃圾回收都采用 <strong>分代收集算法</strong> ，这种算法会根据对象存活周期的不同将内存划分为几块，这样就可以根据各个区域的特点采用最适当的收集算法。</p>
 <p>堆内存可分为 <strong>新生区</strong> 、<strong>养老区</strong> 和 <strong>永久存</strong> 储区三个区域。</p>
 <ul>
 <li><p><strong>新生区（Young Generation Space）</strong></p>
@@ -706,13 +293,12 @@
 <li><strong>永久存储区（Permanent Space）</strong></li>
 </ul>
 <p>一个常驻内存区域，用于存放 <code>JDK</code> 自身携带的 <code>Class Interface</code> 元数据。<br>永久存储区存储的是运行环境必需的类信息，被装载进该区域的数据是不会被垃圾回收器回收掉的，只有 <code>JVM</code> 关闭时才会释放此区域的内存。</p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200403114531.png" style="zoom:80%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200403114531.png" style="zoom:80%">
 
-<h2 id="4-什么是-Dalvik"><a href="#4-什么是-Dalvik" class="headerlink" title="4 什么是 Dalvik?"></a>4 什么是 Dalvik?</h2><hr>
-<p><code>Dalvik</code> 是 <code>Dalvik Virtual Machine</code>（<code>Dalvik</code> 虚拟机）的简称，是 <code>Android</code> 平台的核心组成部分之一。<code>Android 4.4</code> 之前都是使用 <code>Dalvik</code>。</p>
+<hr>
+<h1 id="4-什么是-Dalvik"><a href="#4-什么是-Dalvik" class="headerlink" title="4 什么是 Dalvik?"></a>4 什么是 Dalvik?</h1><p><code>Dalvik</code> 是 <code>Dalvik Virtual Machine</code>（<code>Dalvik</code> 虚拟机）的简称，是 <code>Android</code> 平台的核心组成部分之一。<code>Android 4.4</code> 之前都是使用 <code>Dalvik</code>。</p>
 <p>在 <code>Androd</code> 中，每一个应用都运行在一个 <code>Dalvik VM</code> 实例中，每一个 <code>Dalvik VM</code> 都运行在一个独立的进程空间，这种机制使得 <code>Dalvik</code> 运行在有限的内存中同时运行多个进程。</p>
-<h3 id="4-1-Dalvik-与-JVM-的区别"><a href="#4-1-Dalvik-与-JVM-的区别" class="headerlink" title="4.1 Dalvik 与 JVM 的区别"></a>4.1 Dalvik 与 JVM 的区别</h3><hr>
-<p><code>Dalvik</code> 不是 <code>Java</code> 虚拟机，它并不是按照 Java 虚拟机规范实现的，两者之间并不兼容。</p>
+<h2 id="4-1-Dalvik-与-JVM-的区别"><a href="#4-1-Dalvik-与-JVM-的区别" class="headerlink" title="4.1 Dalvik 与 JVM 的区别"></a>4.1 Dalvik 与 JVM 的区别</h2><p><code>Dalvik</code> 不是 <code>Java</code> 虚拟机，它并不是按照 Java 虚拟机规范实现的，两者之间并不兼容。</p>
 <ol>
 <li><p>架构</p>
 <ul>
@@ -740,10 +326,11 @@
 </ul>
 </li>
 </ol>
-<h3 id="4-2-Dalvik-堆大小"><a href="#4-2-Dalvik-堆大小" class="headerlink" title="4.2 Dalvik 堆大小"></a>4.2 Dalvik 堆大小</h3><hr>
-<p>每一个手机厂商都可以设定设备中每一个进程能够使用的堆大小，有关进程堆大小的值有下面三个。</p>
+<h2 id="4-2-Dalvik-堆大小"><a href="#4-2-Dalvik-堆大小" class="headerlink" title="4.2 Dalvik 堆大小"></a>4.2 Dalvik 堆大小</h2><p>每一个手机厂商都可以设定设备中每一个进程能够使用的堆大小，有关进程堆大小的值有下面三个。</p>
 <p>如果我们想看堆内存大小应该怎么办呢？</p>
-<pre><code>   adb shell getprop dalvik.vm.heapsize</code></pre><ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell getprop dalvik.vm.heapsize</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li><p>dalvik.vm.heapstartsize</p>
 <p>堆分配的初始值大小，这个值越小，系统内存消耗越慢，但是当应用扩展这个堆，导致 <code>GC</code> 和堆调整时，应用会变慢。</p>
 <p>这个值越大，应用越流畅，但是可运行的应用也会相对减少。</p>
@@ -755,12 +342,11 @@
 <p>进程可用的堆内存最大值，一旦应用申请的内存超过这个值，就会 <code>OOM</code>。</p>
 </li>
 </ul>
-<h2 id="5-什么是-ART"><a href="#5-什么是-ART" class="headerlink" title="5 什么是 ART?"></a>5 什么是 ART?</h2><hr>
-<p><code>ART</code> 的全称是 <code>Android Runtime</code>，是从 <code>Android 4.4</code> 开始新增的 <strong>应用运行时环境</strong>，用于替代 <code>Dalvik</code> 虚拟机。</p>
+<hr>
+<h1 id="5-什么是-ART"><a href="#5-什么是-ART" class="headerlink" title="5 什么是 ART?"></a>5 什么是 ART?</h1><p><code>ART</code> 的全称是 <code>Android Runtime</code>，是从 <code>Android 4.4</code> 开始新增的 <strong>应用运行时环境</strong>，用于替代 <code>Dalvik</code> 虚拟机。</p>
 <p><code>Dalvik VM</code> 和 <code>ART</code> 都可以支持已转换为 <code>.dex（Dalvik Executable）</code>格式的 <code>Java</code> 应用程序的运行。</p>
 <p><code>Dalvik</code> 是为 32 位 <code>CPU</code> 设计的，而 <code>ART</code> 支持 64 位并兼容 32 位 <code>CPU</code>，这也是 <code>Dalvik</code> 被淘汰的主要原因。</p>
-<h3 id="5-1-ART-与-Dalvik-的区别"><a href="#5-1-ART-与-Dalvik-的区别" class="headerlink" title="5.1 ART 与 Dalvik 的区别"></a>5.1 ART 与 Dalvik 的区别</h3><hr>
-<ol>
+<h2 id="5-1-ART-与-Dalvik-的区别"><a href="#5-1-ART-与-Dalvik-的区别" class="headerlink" title="5.1 ART 与 Dalvik 的区别"></a>5.1 ART 与 Dalvik 的区别</h2><ol>
 <li><p>预编译</p>
 <ul>
 <li><p><code>Dalvik</code> 中的应用每次运行时，字节码都需要通过即时编译器 JIT 转换为机器码，这会使得应用的运行效率降低。</p>
@@ -779,17 +365,15 @@
 </ul>
 </li>
 </ol>
-<h2 id="6-内存引发的问题"><a href="#6-内存引发的问题" class="headerlink" title="6 内存引发的问题"></a>6 内存引发的问题</h2><hr>
-<ol>
+<hr>
+<h1 id="6-内存引发的问题"><a href="#6-内存引发的问题" class="headerlink" title="6 内存引发的问题"></a>6 内存引发的问题</h1><ol>
 <li>内存造成的第一个问题是<strong>异常</strong>。异常包括 <code>OOM</code>、内存分配失败这些崩溃，也包括因为整体内存不足导致应用被杀死、设备重启等问题。</li>
 <li>内存造成的第二个问题是卡顿。<strong>内存泄漏</strong> 导致 <code>Java</code> 内存不足会频繁 <code>GC</code>，常见现象是 <strong>内存抖动</strong>，这个问题在 <code>Dalvik</code> 虚拟机会更加明显。而 ART 虚拟机在内存管理跟回收策略上都做大量优化</li>
 <li>除了频繁 <code>GC</code> 造成卡顿之外，物理内存不足时系统会触发 <strong>low memory killer</strong> 机制，系统负载过高是造成卡顿的另外一个原因。</li>
 </ol>
-<h3 id="6-1-内存泄漏"><a href="#6-1-内存泄漏" class="headerlink" title="6.1 内存泄漏"></a>6.1 内存泄漏</h3><hr>
-<p>内存泄漏指的是，当一块内存没有被使用，但无法被 GC 时的情况。</p>
+<h2 id="6-1-内存泄漏"><a href="#6-1-内存泄漏" class="headerlink" title="6.1 内存泄漏"></a>6.1 内存泄漏</h2><p>内存泄漏指的是，当一块内存没有被使用，但无法被 GC 时的情况。</p>
 <p>内存泄漏的表现就是可用内存逐渐减少，无法被回收的内存逐渐累积，直到无更多可用内存可申请时，就会导致 <code>OOM</code>。</p>
-<h4 id="6-1-1-常见的内存泄漏"><a href="#6-1-1-常见的内存泄漏" class="headerlink" title="6.1.1 常见的内存泄漏"></a>6.1.1 常见的内存泄漏</h4><hr>
-<ol>
+<h3 id="6-1-1-常见的内存泄漏"><a href="#6-1-1-常见的内存泄漏" class="headerlink" title="6.1.1 常见的内存泄漏"></a>6.1.1 常见的内存泄漏</h3><ol>
 <li><p><strong>非静态内部类</strong></p>
 <ul>
 <li><p><strong>泄漏场景</strong> </p>
@@ -800,17 +384,8 @@
 </li>
 <li><p><strong>解决</strong></p>
 <p>把 <code>Handler</code> 或 <code>AsyncTask</code> 声明为静态内部类，并且使用 <code>WeakReference</code> 包住 <code>Activity</code>，这样 <code>Handler</code> 拿到的就是一个 <code>Activity</code> 的弱引用，<code>GC</code> 就可以回收 <code>Activity</code>。这种方式适用于所有匿名内部类导致的内存泄漏问题。</p>
-<pre><code>public static class MyHandler extends Handler {
-    Activity activity;
-    public MyHandler(Activity activity) {
-        activity = new WeakReference&lt;&gt;(activity).get();
-    }
-
-    @Override
-    public void handleMessage(Message message) {
-       // ...
-    }
-}</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public static class MyHandler extends Handler &#123;</span><br><span class="line">    Activity activity;</span><br><span class="line">    public MyHandler(Activity activity) &#123;</span><br><span class="line">        activity &#x3D; new WeakReference&lt;&gt;(activity).get();</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    @Override</span><br><span class="line">    public void handleMessage(Message message) &#123;</span><br><span class="line">       &#x2F;&#x2F; ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 <li><p><strong>静态变量</strong></p>
@@ -843,50 +418,34 @@
 <p>一般情况下，在应用中只要使用一次 <code>Webview</code>，它占用的内存就不会被释放。</p>
 </li>
 <li><p><strong>解决</strong></p>
-<pre><code>@Override
-protected void onDestroy() {
-    if( mWebView!=null) {
-        // 如果先调用destroy()方法，则会命中if (isDestroyed()) return;这一行代码，需要先onDetachedFromWindow()，再
-        // destory()
-        ViewParent parent = mWebView.getParent();
-        if (parent != null) {
-            ((ViewGroup) parent).removeView(mWebView);
-        }
-        mWebView.stopLoading();
-        // 退出时调用此方法，移除绑定的服务，否则某些特定系统会报错
-        mWebView.getSettings().setJavaScriptEnabled(false);
-        mWebView.clearHistory();
-        mWebView.clearView();
-        mWebView.removeAllViews();
-        mWebView.destroy();
-    }
-    super.on Destroy();
-}</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onDestroy() &#123;</span><br><span class="line">    if( mWebView!&#x3D;null) &#123;</span><br><span class="line">        &#x2F;&#x2F; 如果先调用destroy()方法，则会命中if (isDestroyed()) return;这一行代码，需要先onDetachedFromWindow()，再</span><br><span class="line">        &#x2F;&#x2F; destory()</span><br><span class="line">        ViewParent parent &#x3D; mWebView.getParent();</span><br><span class="line">        if (parent !&#x3D; null) &#123;</span><br><span class="line">            ((ViewGroup) parent).removeView(mWebView);</span><br><span class="line">        &#125;</span><br><span class="line">        mWebView.stopLoading();</span><br><span class="line">        &#x2F;&#x2F; 退出时调用此方法，移除绑定的服务，否则某些特定系统会报错</span><br><span class="line">        mWebView.getSettings().setJavaScriptEnabled(false);</span><br><span class="line">        mWebView.clearHistory();</span><br><span class="line">        mWebView.clearView();</span><br><span class="line">        mWebView.removeAllViews();</span><br><span class="line">        mWebView.destroy();</span><br><span class="line">    &#125;</span><br><span class="line">    super.on Destroy();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
 </ul>
 </li>
 </ol>
-<h3 id="6-2-低杀"><a href="#6-2-低杀" class="headerlink" title="6.2 低杀"></a>6.2 低杀</h3><hr>
-<p>在内存不足时，这种机制就会针对于所有进程进行回收(优先级由高到低，优先回收低优先级)</p>
+<h2 id="6-2-低杀"><a href="#6-2-低杀" class="headerlink" title="6.2 低杀"></a>6.2 低杀</h2><p>在内存不足时，这种机制就会针对于所有进程进行回收(优先级由高到低，优先回收低优先级)</p>
 <p>进程优先级：</p>
 <ol>
-<li><strong>前台进程</strong>：优先级最高的进程，是正在于用户交互的进程<ul>
+<li><p><strong>前台进程</strong>：优先级最高的进程，是正在于用户交互的进程</p>
+<ul>
 <li>进程持有一个与用户交互的 Activity（该 Activity 的 onResume 方法被调用）</li>
 <li>进程持有一个 Service，<code>[Service 与用户正在交互的 Activity 绑定]</code>  <code>[Service 调用了 startForeground() 方法(前台服务)]</code>  <code>[Service 正在执行以下生命周期函数（onCreate、onStart、onDestroy ）]</code></li>
 <li>进程持有一个 <code>BroadcastReceiver</code>，这个 <code>BroadcastReceiver</code> 正在执行它的 <code>onReceive()</code> 方法</li>
 </ul>
 </li>
-<li><strong>可见进程</strong>：不含有任何前台组件，但用户还能再屏幕上看见它<ul>
+<li><p><strong>可见进程</strong>：不含有任何前台组件，但用户还能再屏幕上看见它</p>
+<ul>
 <li>进程持有一个 <code>Activity</code>，这个 <code>Activity</code> 处于 <code>pause</code> 状态</li>
 <li>进程持有一个 <code>Service</code> 这个 <code>Service</code> 和一个可见的 <code>Activity</code> 绑定。</li>
 <li>可见进程是非常重要的进程，除非前台进程已经把系统的可用内存耗光，否则系统不会终止可见进程。</li>
 </ul>
 </li>
-<li><strong>服务进程</strong>：可能在播放音乐或在后台下载文件，除非系统内存不足，否则系统会尽量维持服务进程的运行。</li>
-</ol>
+<li><p><strong>服务进程</strong>：可能在播放音乐或在后台下载文件，除非系统内存不足，否则系统会尽量维持服务进程的运行。</p>
 <ul>
 <li>如果一个进程中运行着一个 <code>Service</code>，并且这个 <code>service</code> 是通过 <code>startService</code> 开启的，那这个进程就是一个服务进程。</li>
 </ul>
-<ol start="4">
+</li>
 <li><p><strong>后台进程</strong></p>
 <p>系统会把后台进程（<code>Background Process</code>）保存在一个 <code>LruCache</code> 列表中，因为终止后台进程对用户体验影响不大，所以系统会酌情清理部分后台进程。</p>
 <p>你可以在 <code>Activity</code> 的 <code>onSaveInstanceState()</code> 方法中保存一些数据，以免在应用在后台被系统清理掉后，用户已输入的信息被清空，导致要重新输入。</p>
@@ -898,982 +457,71 @@ protected void onDestroy() {
 <p>系统保留空进程的目的是为了加快下次启动进程的速度。</p>
 </li>
 </ol>
-<h3 id="6-3-内存抖动"><a href="#6-3-内存抖动" class="headerlink" title="6.3 内存抖动"></a>6.3 内存抖动</h3><hr>
-<p>当我们在短时间内频繁创建大量临时对象时，就会引起内存抖动，比如在一个 <code>for</code> 循环中创建临时对象实例。</p>
+<h2 id="6-3-内存抖动"><a href="#6-3-内存抖动" class="headerlink" title="6.3 内存抖动"></a>6.3 内存抖动</h2><p>当我们在短时间内频繁创建大量临时对象时，就会引起内存抖动，比如在一个 <code>for</code> 循环中创建临时对象实例。</p>
 <p>内存检测表现如下</p>
-<img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200412160136.png" style="zoom:80%">
+<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200412160136.png" style="zoom:80%">
 
 <p><strong>预防的方法</strong></p>
 <ol>
-<li><p>尽量避免在循环体中创建对象</p>
-</li>
-<li><p>尽量不要在自定义 <code>View</code> 的 <code>onDraw()</code> 方法中创建对象，因为这个方法会被频繁调用</p>
-</li>
-<li><p>对于能够复用的对象，可以考虑使用对象池把它们缓存起来</p>
-</li>
+<li>尽量避免在循环体中创建对象</li>
+<li>尽量不要在自定义 <code>View</code> 的 <code>onDraw()</code> 方法中创建对象，因为这个方法会被频繁调用</li>
+<li>对于能够复用的对象，可以考虑使用对象池把它们缓存起来</li>
 </ol>
-<h2 id="7-Android-Bitmap-内存分配的变化"><a href="#7-Android-Bitmap-内存分配的变化" class="headerlink" title="7 Android Bitmap 内存分配的变化"></a>7 <strong>Android Bitmap 内存分配的变化</strong></h2><hr>
-<ul>
+<hr>
+<h1 id="7-Android-Bitmap-内存分配的变化"><a href="#7-Android-Bitmap-内存分配的变化" class="headerlink" title="7 Android Bitmap 内存分配的变化"></a>7 <strong>Android Bitmap 内存分配的变化</strong></h1><ul>
 <li>在 <code>Android 3.0</code> 之前，<code>Bitmap</code> 对象放在 <code>Java</code> 堆，而像素数据是放在 <code>Native</code> 内存中。如果不手动调用 <code>recycle</code>，<code>Bitmap Native</code> 内存的回收完全依赖 <code>finalize</code> 函数回调，这个时机不太可控。</li>
 <li><code>Android 3.0～Android 7.0</code> 将 <code>Bitmap</code> 对象和像素数据统一放到 <code>Java</code> 堆中，这样就算我们不调用 <code>recycle</code>，<code>Bitmap</code> 内存也会随着对象一起被回收。不过 <code>Bitmap</code> 是内存消耗的大户，把它的内存放到 <code>Java</code> 堆中似乎不是那么美妙。即使是华为 <code>Mate 20</code>，最大的 <code>Java</code> 堆限制也才到 512MB，可能我的物理内存还有 5GB，但是应用还是会因为<code>Java</code> 堆内存不足导致 <code>OOM</code>。<code>Bitmap</code> 放到 <code>Java</code> 堆的另外一个问题会引起大量的 <code>GC</code>，对系统内存也没有完全利用起来。</li>
 <li>有没有一种实现，可以将 <code>Bitmap</code> 内存放到 <code>Nativ</code>e 中，也可以做到和对象一起快速释放，同时 <code>GC</code> 的时候也能考虑这些内存防止被滥用？<code>NativeAllocationRegistry</code> 可以一次满足你这三个要求，<code>Android 8.0</code> 正是使用这个辅助回收 <code>Native</code> 内存的机制，来实现像素数据放到 <code>Native</code> 内存中。<code>Android 8.0</code> 还新增了硬件位图 <code>Hardware Bitmap</code>，它可以减少图片内存并提升绘制效率。</li>
 </ul>
-<h2 id="8-内存优化的两个误区"><a href="#8-内存优化的两个误区" class="headerlink" title="8 内存优化的两个误区"></a>8 内存优化的两个误区</h2><hr>
-<h3 id="8-1-内存占用越少越好。"><a href="#8-1-内存占用越少越好。" class="headerlink" title="8.1 内存占用越少越好。"></a>8.1 内存占用越少越好。</h3><ol>
+<hr>
+<h1 id="8-内存优化的两个误区"><a href="#8-内存优化的两个误区" class="headerlink" title="8 内存优化的两个误区"></a>8 内存优化的两个误区</h1><h2 id="8-1-内存占用越少越好。"><a href="#8-1-内存占用越少越好。" class="headerlink" title="8.1 内存占用越少越好。"></a>8.1 内存占用越少越好。</h2><ol>
 <li>有些人认为内存是洪水猛兽，占用越少应用的性能越好，这种认识在具体的优化过程中很容易“用力过猛”。</li>
 <li>应用是否占用了过多的内存，跟设备、系统和当时情况有关，而不是 <code>300MB</code>、<code>400MB</code> 这样一个绝对的数值。当系统内存充足的时候，我们可以多用一些获得更好的性能。当系统内存不足的时候，希望可以做到“用时分配，及时释放”</li>
 </ol>
-<h3 id="8-2-Native-内存不用管"><a href="#8-2-Native-内存不用管" class="headerlink" title="8.2 Native 内存不用管"></a>8.2 <code>Native</code> 内存不用管</h3><ol>
+<h2 id="8-2-Native-内存不用管"><a href="#8-2-Native-内存不用管" class="headerlink" title="8.2 Native 内存不用管"></a>8.2 <code>Native</code> 内存不用管</h2><ol>
 <li>虽然 <code>Android 8.0</code> 重新将 <code>Bitmap</code> 内存放回到 <code>Native</code> 中，那么我们是不是就可以随心所欲地使用图片呢？</li>
 <li>答案当然是否定的。正如前面所说当系统物理内存不足时，<code>lmk</code> 开始杀进程，从后台、桌面、服务、前台，直到手机重启。</li>
 </ol>
-<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a><strong>感谢</strong></h2><hr>
-<blockquote>
+<hr>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a><strong>感谢</strong></h1><blockquote>
 <p><a href="https://time.geekbang.org/column/article/74044" target="_blank" rel="noopener">极客时间 Android开发高手课</a>  </p>
 <p><a href="https://coding.imooc.com/learn/list/308.html" target="_blank" rel="noopener">慕课 Top团队大牛带你玩转Android性能分析与优化</a></p>
 <p><a href="https://juejin.im/post/5d3ada056fb9a07eb94fd1bc#heading-3" target="_blank" rel="noopener">探索 Android 内存优化方法</a></p>
 <p><a href="https://juejin.im/post/5d3a870df265da1b855c9d41#heading-15" target="_blank" rel="noopener">探索 Java 内存管理机制</a></p>
 <p><a href="https://juejin.im/post/58b18e442f301e0068028a90" target="_blank" rel="noopener">Android性能优化（三）之内存管理</a></p>
 </blockquote>
-
-            </div>
-            <hr/>
-
-            
-
-    <div class="reprint" id="reprint-statement">
-        
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="https://calmcenter.club" rel="external nofollow noreferrer">CalmCenter</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="https://calmcenter.club/2020/memory-optimization.html">https://calmcenter.club/2020/memory-optimization.html</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="https://calmcenter.club" target="_blank">CalmCenter</a>
-                    !
-                </span>
-            </div>
-        
-    </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/tags/Android/">
-                                    <span class="chip bg-color">Android</span>
-                                </a>
-                            
-                                <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
-                                    <span class="chip bg-color">性能优化</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-
-<div id="article-share">
-    
-    
-
-    
-
-</div>
-
-                </div>
-            </div>
-            
-                <style>
-    #reward {
-        margin: 40px 0;
-        text-align: center;
-    }
-
-    #reward .reward-link {
-        font-size: 1.4rem;
-        line-height: 38px;
-    }
-
-    #reward .btn-floating:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    #rewardModal {
-        width: 320px;
-        height: 350px;
-    }
-
-    #rewardModal .reward-title {
-        margin: 15px auto;
-        padding-bottom: 5px;
-    }
-
-    #rewardModal .modal-content {
-        padding: 10px;
-    }
-
-    #rewardModal .close {
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        color: rgba(0, 0, 0, 0.5);
-        font-size: 1.3rem;
-        line-height: 20px;
-        cursor: pointer;
-    }
-
-    #rewardModal .close:hover {
-        color: #ef5350;
-        transform: scale(1.3);
-        -moz-transform:scale(1.3);
-        -webkit-transform:scale(1.3);
-        -o-transform:scale(1.3);
-    }
-
-    #rewardModal .reward-tabs {
-        margin: 0 auto;
-        width: 210px;
-    }
-
-    .reward-tabs .tabs {
-        height: 38px;
-        margin: 10px auto;
-        padding-left: 0;
-    }
-
-    .reward-content ul {
-        padding-left: 0 !important;
-    }
-
-    .reward-tabs .tabs .tab {
-        height: 38px;
-        line-height: 38px;
-    }
-
-    .reward-tabs .tab a {
-        color: #fff;
-        background-color: #ccc;
-    }
-
-    .reward-tabs .tab a:hover {
-        background-color: #ccc;
-        color: #fff;
-    }
-
-    .reward-tabs .wechat-tab .active {
-        color: #fff !important;
-        background-color: #22AB38 !important;
-    }
-
-    .reward-tabs .alipay-tab .active {
-        color: #fff !important;
-        background-color: #019FE8 !important;
-    }
-
-    .reward-tabs .reward-img {
-        width: 210px;
-        height: 210px;
-    }
-</style>
-
-<div id="reward">
-    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
-
-    <!-- Modal Structure -->
-    <div id="rewardModal" class="modal">
-        <div class="modal-content">
-            <a class="close modal-close"><i class="fas fa-times"></i></a>
-            <h4 class="reward-title">你的赏识是我前进的动力</h4>
-            <div class="reward-content">
-                <div class="reward-tabs">
-                    <ul class="tabs row">
-                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
-                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
-                    </ul>
-                    <div id="alipay">
-                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
-                    </div>
-                    <div id="wechat">
-                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(function () {
-        $('.tabs').tabs();
-    });
-</script>
-            
-        </div>
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-        <style>
-    .valine-card {
-        margin: 1.5rem auto;
-    }
-
-    .valine-card .card-content {
-        padding: 20px 20px 5px 20px;
-    }
-
-    #vcomments textarea {
-        box-sizing: border-box;
-        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
-    }
-
-    #vcomments p {
-        margin: 2px 2px 10px;
-        font-size: 1.05rem;
-        line-height: 1.78rem;
-    }
-
-    #vcomments blockquote p {
-        text-indent: 0.2rem;
-    }
-
-    #vcomments a {
-        padding: 0 2px;
-        color: #4cbf30;
-        font-weight: 500;
-        text-decoration: none;
-    }
-
-    #vcomments img {
-        max-width: 100%;
-        height: auto;
-        cursor: pointer;
-    }
-
-    #vcomments ol li {
-        list-style-type: decimal;
-    }
-
-    #vcomments ol,
-    ul {
-        display: block;
-        padding-left: 2em;
-        word-spacing: 0.05rem;
-    }
-
-    #vcomments ul li,
-    ol li {
-        display: list-item;
-        line-height: 1.8rem;
-        font-size: 1rem;
-    }
-
-    #vcomments ul li {
-        list-style-type: disc;
-    }
-
-    #vcomments ul ul li {
-        list-style-type: circle;
-    }
-
-    #vcomments table, th, td {
-        padding: 12px 13px;
-        border: 1px solid #dfe2e5;
-    }
-
-    #vcomments table, th, td {
-        border: 0;
-    }
-
-    table tr:nth-child(2n), thead {
-        background-color: #fafafa;
-    }
-
-    #vcomments table th {
-        background-color: #f2f2f2;
-        min-width: 80px;
-    }
-
-    #vcomments table td {
-        min-width: 80px;
-    }
-
-    #vcomments h1 {
-        font-size: 1.85rem;
-        font-weight: bold;
-        line-height: 2.2rem;
-    }
-
-    #vcomments h2 {
-        font-size: 1.65rem;
-        font-weight: bold;
-        line-height: 1.9rem;
-    }
-
-    #vcomments h3 {
-        font-size: 1.45rem;
-        font-weight: bold;
-        line-height: 1.7rem;
-    }
-
-    #vcomments h4 {
-        font-size: 1.25rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    #vcomments h5 {
-        font-size: 1.1rem;
-        font-weight: bold;
-        line-height: 1.4rem;
-    }
-
-    #vcomments h6 {
-        font-size: 1rem;
-        line-height: 1.3rem;
-    }
-
-    #vcomments p {
-        font-size: 1rem;
-        line-height: 1.5rem;
-    }
-
-    #vcomments hr {
-        margin: 12px 0;
-        border: 0;
-        border-top: 1px solid #ccc;
-    }
-
-    #vcomments blockquote {
-        margin: 15px 0;
-        border-left: 5px solid #42b983;
-        padding: 1rem 0.8rem 0.3rem 0.8rem;
-        color: #666;
-        background-color: rgba(66, 185, 131, .1);
-    }
-
-    #vcomments pre {
-        font-family: monospace, monospace;
-        padding: 1.2em;
-        margin: .5em 0;
-        background: #272822;
-        overflow: auto;
-        border-radius: 0.3em;
-        tab-size: 4;
-    }
-
-    #vcomments code {
-        font-family: monospace, monospace;
-        padding: 1px 3px;
-        font-size: 0.92rem;
-        color: #e96900;
-        background-color: #f8f8f8;
-        border-radius: 2px;
-    }
-
-    #vcomments pre code {
-        font-family: monospace, monospace;
-        padding: 0;
-        color: #e8eaf6;
-        background-color: #272822;
-    }
-
-    #vcomments pre[class*="language-"] {
-        padding: 1.2em;
-        margin: .5em 0;
-    }
-
-    #vcomments code[class*="language-"],
-    pre[class*="language-"] {
-        color: #e8eaf6;
-    }
-
-    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-        position: inherit;
-        margin-left: -1.3rem;
-        margin-right: 0.4rem;
-        margin-top: -1px;
-        vertical-align: middle;
-        left: unset;
-        visibility: visible;
-    }
-
-    #vcomments b,
-    strong {
-        font-weight: bold;
-    }
-
-    #vcomments dfn {
-        font-style: italic;
-    }
-
-    #vcomments small {
-        font-size: 85%;
-    }
-
-    #vcomments cite {
-        font-style: normal;
-    }
-
-    #vcomments mark {
-        background-color: #fcf8e3;
-        padding: .2em;
-    }
-
-    #vcomments table, th, td {
-        padding: 12px 13px;
-        border: 1px solid #dfe2e5;
-    }
-
-    table tr:nth-child(2n), thead {
-        background-color: #fafafa;
-    }
-
-    #vcomments table th {
-        background-color: #f2f2f2;
-        min-width: 80px;
-    }
-
-    #vcomments table td {
-        min-width: 80px;
-    }
-
-    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-        position: inherit;
-        margin-left: -1.3rem;
-        margin-right: 0.4rem;
-        margin-top: -1px;
-        vertical-align: middle;
-        left: unset;
-        visibility: visible;
-    }
-</style>
-
-<div class="card valine-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
-        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
-        <span>评论</span>
-    </div>
-    <div id="vcomments" class="card-content" style="display: grid">
-    </div>
-</div>
-
-<script src="/libs/valine/av-min.js"></script>
-<script src="/libs/valine/Valine.min.js"></script>
-<script>
-    new Valine({
-        el: '#vcomments',
-        appId: 'KiQHU70TUHYrumpFuuhC3UEg-gzGzoHsz',
-        appKey: 'wX1m2ATu8q4CyeRhOQ3FUucn',
-        notify: 'false' === 'true',
-        verify: 'false' === 'true',
-        visitor: 'false' === 'true',
-        avatar: 'mm',
-        pageSize: '10',
-        lang: 'zh-cn',
-        placeholder: '💦💦既然来了何不留下你的足迹(支持 Markdown 哦~)'
-    });
-</script>
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2020/memory-optimization2.html">
-                    <div class="card-image">
-                        
-                        <img src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200301184335.jpg" class="responsive-img" alt="App 内存检测优化">
-                        
-                        <span class="card-title">App 内存检测优化</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Android 内存是如何管理的以及如何优化
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-29
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Android/" class="post-category">
-                                    Android
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Android/">
-                        <span class="chip bg-color">Android</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
-                        <span class="chip bg-color">性能优化</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/sheng-cai-you-zhu-ri-li.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="生财有术日历">
-                        
-                        <span class="card-title">生财有术日历</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            每日一句
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-01
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            CalmCenter
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-    </div>
-</article>
-
-</div>
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-<!-- 代码块折行 -->
-
-<style type="text/css">
-code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
-</style>
-
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
-
-    
-
-</main>
-
-
-
-    <footer class="page-footer bg-color">
-
-<link rel="stylesheet" href="/live2d/css/live2d.css" />
-<div id="landlord">
-  <div class="message" style="opacity:0"></div>
-  <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
-  <div class="hide-button">隐藏</div>
-</div>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript">
-  var message_Path = '/live2d/'
-  var home_Path = 'https://calmcenter.club/'
-</script>
-<script type="text/javascript" src="/live2d/js/live2d.js"></script>
-<script type="text/javascript" src="/live2d/js/message.js"></script>
-<script type="text/javascript">
-  loadlive2d("live2d", "/live2d/model/xxb2/model.json");
-</script>
-
-    <div class="container row center-align" style="margin-bottom: 15px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            <span id="year">2020</span>
-            <a href="https://calmcenter.club" target="_blank">CalmCenter</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">52.6k</span>&nbsp;字
-            
-            
-            
-            
-            
-            
-            <span id="busuanzi_container_site_pv">
-                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
-                    class="white-color"></span>&nbsp;次
-            </span>
-            
-            
-            <span id="busuanzi_container_site_uv">
-                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
-                    class="white-color"></span>&nbsp;人
-            </span>
-            
-            <br>
-            
-            <span id="sitetime">载入运行时间...</span>
-            <script>
-                function siteTime() {
-                    var seconds = 1000;
-                    var minutes = seconds * 60;
-                    var hours = minutes * 60;
-                    var days = hours * 24;
-                    var years = days * 365;
-                    var today = new Date();
-                    var startYear = "2020";
-                    var startMonth = "1";
-                    var startDate = "16";
-                    var startHour = "0";
-                    var startMinute = "0";
-                    var startSecond = "0";
-                    var todayYear = today.getFullYear();
-                    var todayMonth = today.getMonth() + 1;
-                    var todayDate = today.getDate();
-                    var todayHour = today.getHours();
-                    var todayMinute = today.getMinutes();
-                    var todaySecond = today.getSeconds();
-                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
-                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
-                    var diff = t2 - t1;
-                    var diffYears = Math.floor(diff / years);
-                    var diffDays = Math.floor((diff / days) - diffYears * 365);
-                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
-                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
-                        minutes);
-                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
-                        diffMinutes * minutes) / seconds);
-                    if (startYear == todayYear) {
-                        document.getElementById("year").innerHTML = todayYear;
-                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
-                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
-                    } else {
-                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
-                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
-                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
-                    }
-                }
-                setInterval(siteTime, 1000);
-            </script>
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/CalmCenter" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fab fa-github"></i>
-    </a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    </div>
-</footer>
-
-<div class="progress-bar"></div>
-
-
-
- <script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/b6dbddb6.js","daovoice")
- daovoice('init', {
-  app_id: "c1f73bd5"
-});
-daovoice('update');
- </script>
-
-
-
-    <!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
-
-<script src="/js/search.js"></script>
-<script type="text/javascript">
-$(function () {
-    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
-});
-</script>
-    <!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</div>
-
-
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
-
-    <!-- Baidu Analytics -->
-
-    <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-    
-    
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-    
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i["DaoVoiceObject"] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            a.charset = "utf-8";
-            m.parentNode.insertBefore(a, m)
-        })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
-            "//widget.daovoice.io/widget/6984b559.js", "daovoice")
-        daovoice('init', {
-            app_id: "c1f73bd5"
-        });
-        daovoice('update');
-    </script>
-    
-
-    
-
-    
-
-    
-    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
-    
-    
-    
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-    
-
-</body>
-
-</html>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">CalmCenter</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://calmcenter.club/2020/memory-optimization.html">https://calmcenter.club/2020/memory-optimization.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://calmcenter.club" target="_blank">CalmCenter</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></div><div class="post_share"></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.png" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.png" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2020/memory-optimization2.html"><img class="prev_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover14.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">App 内存检测优化💦</div></div></a></div><div class="next-post pull_right"><a href="/2020/sheng-cai-you-zhu-ri-li.html"><img class="next_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover22.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">生财有术日历</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2019/complete-works-of-android-performance.html" title="Android 性能优化篇"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/20200228233120.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-01</div><div class="relatedPosts_title">Android 性能优化篇</div></div></a></div><div class="relatedPosts_item"><a href="/2020/network-optimization.html" title="App 网络优化"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover19.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-14</div><div class="relatedPosts_title">App 网络优化</div></div></a></div><div class="relatedPosts_item"><a href="/2020/package-optimization.html" title="App 包体积优化"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover10.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-18</div><div class="relatedPosts_title">App 包体积优化</div></div></a></div><div class="relatedPosts_item"><a href="/2020/power-optimization.html" title="App 电量优化"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover13.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-18</div><div class="relatedPosts_title">App 电量优化</div></div></a></div><div class="relatedPosts_item"><a href="/2020/ui-optimization.html" title="App UI优化💦"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover32.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-15</div><div class="relatedPosts_title">App UI优化💦</div></div></a></div><div class="relatedPosts_item"><a href="/2019/start-optimization.html" title="App 初体验-启动优化💦"><img class="relatedPosts_cover" data-src="https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover16.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-24</div><div class="relatedPosts_title">App 初体验-启动优化💦</div></div></a></div></div><div class="clear_both"></div></div><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var requestSetting = function (from,set) {
+  var from = from
+  var setting = set.split(',').filter(function(item){
+  return from.indexOf(item) > -1
+  });
+  setting = setting.length == 0 ? from :setting;
+  return setting
+}
+
+var guestInfo = requestSetting(['nick','mail','link'],'nick,mail,link')
+var requiredFields = requestSetting(['nick','mail','link'],'nick,mail')
+
+window.valine = new Valine({
+  el:'#vcomment',
+  appId: 'KiQHU70TUHYrumpFuuhC3UEg-gzGzoHsz',
+  appKey: 'wX1m2ATu8q4CyeRhOQ3FUucn',
+  notify: true,
+  verify: true,
+  placeholder: '💦💦既然来了何不留下你的足迹(支持 Markdown 哦~)',
+  avatar: 'robohash',
+  meta: guestInfo,
+  pageSize: '10',
+  lang: 'zh-CN',
+  recordIP: false,
+  serverURLs: '',
+  emojiCDN: '',
+  emojiMaps: "",
+  enableQQ: false,
+  requiredFields: requiredFields
+});</script></div></article></main><footer id="footer" style="background-image: url(https://raw.githubusercontent.com/CalmCenter/picGo/master/pictures/cover28.webp)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div><link rel="stylesheet" href="/live2d/css/live2d.css"/></div><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="240" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
+var home_Path = 'https://calmcenter.club/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/xxb2/model.json");</script></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><a id="to_comment" href="#post-comment" title="直达评论"><i class="scroll_to_comment fa fa-comments">  </i></a><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script id="ribbon_piao" mobile="true" src="/js/third-party/piao.js"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script><script src="/js/search/local-search.js"></script></body></html>
