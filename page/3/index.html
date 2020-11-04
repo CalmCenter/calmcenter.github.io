@@ -1,118 +1,511 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CalmCenter - CalmCenter</title><meta name="description" content="目标设置到月球，即使陨落也是在群星之间！"><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = 'false'
-var t = Cookies.get("theme")
-if (autoChangeMode == '1'){
-  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
-  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
-  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
-  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-
-  if (t === undefined){
-    if (isLightMode) activateLightMode()
-    else if (isDarkMode) activateDarkMode()
-    else if (isNotSpecified || hasNoSupport){
-      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
-      var now = new Date()
-      var hour = now.getHours()
-      var isNight = hour < 6 || hour >= 18
-      isNight ? activateDarkMode() : activateLightMode()
-  }
-  } else if (t == 'light') activateLightMode()
-  else activateDarkMode()
-
-} else if (autoChangeMode == '2'){
-  now = new Date();
-  hour = now.getHours();
-  isNight = hour < 6 || hour >= 18
-  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
-  else if (t === 'light') activateLightMode()
-  else activateDarkMode() 
-} else {
-  if ( t == 'dark' ) activateDarkMode()
-  else if ( t == 'light') activateLightMode()
-}
-
-function activateDarkMode(){
-  document.documentElement.setAttribute('data-theme', 'dark')
-  if (document.querySelector('meta[name="theme-color"]') !== null){
-    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
-  }
-}
-function activateLightMode(){
-  document.documentElement.setAttribute('data-theme', 'light')
-  if (document.querySelector('meta[name="theme-color"]') !== null){
-  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
-  }
-}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="canonical" href="https://calmcenter.club/page/3/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CalmCenter - CalmCenter</title><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="目标设置到月球，即使陨落也是在群星之间！">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CalmCenter">
+<meta property="og:url" content="https://calmcenter.club/page/3/index.html">
+<meta property="og:site_name" content="CalmCenter">
+<meta property="og:description" content="目标设置到月球，即使陨落也是在群星之间！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://calmcenter.club/img/avatar.jpg">
+<meta property="article:author" content="CalmCenter">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://calmcenter.club/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://calmcenter.club/page/3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var GLOBAL_CONFIG = { 
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  localSearch: undefined,
   translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
     noSupport: '浏览器不支持'
   },
-  bookmark: {
-    message_prev: '按',
-    message_next: '键将本页加入书签'
+  relativeDate: {
+    homepage: false,
+    post: false
   },
-  runtime_unit: '天',
-  runtime: true,
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
   copyright: undefined,
   ClickShowText: undefined,
-  medium_zoom: true,
-  fancybox: false,
-  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"top-right"},
-  baiduPush: false,
-  highlightCopy: true,
-  highlightLang: false,
-  highlightShrink: 'none',
-  isFontAwesomeV5: false,
-  isPhotoFigcaption: true,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"top-right"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
   islazyload: true,
   isanchor: false
-  
-}</script><script>var GLOBAL_CONFIG_SITE = { 
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
   isPost: false,
   isHome: true,
-  isSidebar: false  
-  }</script><noscript><style>
-#page-header {
-  opacity: 1
-}
-.justified-gallery img{
-  opacity: 1
-}
-</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">38</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">17</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div></div></div><div id="body-wrap"><div class="full_page" id="nav" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover2.webp)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">CalmCenter</a></span><span class="pull_right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="site-info"><h1 id="site_title">CalmCenter</h1><div id="site_subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/CalmCenter" target="_blank" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a></div></div><div id="scroll_down"><i class="fa fa-angle-down scroll-down-effects"></i></div></div><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/memory-optimization2.html" title="App 内存检测优化💦">App 内存检测优化💦</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2020-02-29 19:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-02-29</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Android/">Android</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></span></div><div class="content">🌞一个好的架构可以减少甚至避免我们犯错，而一个好的监控可以帮助我们及时发现问题🌞内存优化的重点在于监控和平时代码规范。 Memory Profiler、MAT、LeakCanary 使用知识你值得拥有 ~</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/memory-optimization.html" title="App 内存知识介绍💦">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover35.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="App 内存知识介绍💦"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/memory-optimization.html" title="App 内存知识介绍💦">App 内存知识介绍💦</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2020-02-28 19:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-02-28</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Android/">Android</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></span></div><div class="content">🌞 工欲善其事必先利其器🌞在解决内存问题之前，必须知道内存的基本知识这篇文章带你了解 JVM 的管理分配机制、Dalbik、ART等的内存基础知识。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2019/start-optimization.html" title="App 初体验-启动优化💦">App 初体验-启动优化💦</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2019-12-24 17:32:22"><i class="fa fa-calendar" aria-hidden="true"></i>2019-12-24</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Android/">Android</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></span></div><div class="content">Android 性能第一篇，随着项目功能的迭（zeng）代（jia），启动速度也会受到影响，性能优化之路的第一步，也就是启动优化，个人认为非常重要，它可以直接影响 APP 的留存率，没有人希望自己应用半天打不开。这篇文章就带你解决🌞用户初体验-启动优化🌞。</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/hexo-website-management.html" title="Hexo 网站管理">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover11.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 网站管理"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/hexo-website-management.html" title="Hexo 网站管理">Hexo 网站管理</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2019-12-21 22:05:22"><i class="fa fa-calendar" aria-hidden="true"></i>2019-12-21</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Hexo/">Hexo</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%9F%9F%E5%90%8D/">域名</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/coding/">coding</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/seo/">seo</a></span></div><div class="content">Hexo 网站管理,加速、域名、基础 SEO</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/hexo-functional-style.html" title="Hexo 功能样式配置">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover22.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 功能样式配置"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/hexo-functional-style.html" title="Hexo 功能样式配置">Hexo 功能样式配置</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2019-12-21 17:32:22"><i class="fa fa-calendar" aria-hidden="true"></i>2019-12-21</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Hexo/">Hexo</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/git/">git</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/github/">github</a></span></div><div class="content">Next 样式总结，持续更新</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/hexo-live2d.html" title="Live2D 看板娘">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover20.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Live2D 看板娘"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/hexo-live2d.html" title="Live2D 看板娘">Live2D 看板娘</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2019-12-20 14:32:22"><i class="fa fa-calendar" aria-hidden="true"></i>2019-12-20</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/live2D/">live2D</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/live2D/">live2D</a></span></div><div class="content">Live2D 看板娘，右下角可爱的血小板就是这么来的~</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/hexo-code-management.html" title="Hexo 管理代码">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover12.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 管理代码"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/hexo-code-management.html" title="Hexo 管理代码">Hexo 管理代码</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2019-12-19 17:32:22"><i class="fa fa-calendar" aria-hidden="true"></i>2019-12-19</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Hexo/">Hexo</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/git/">git</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/github/">github</a></span></div><div class="content">git 基本使用以及管理 Hexo 代码时注意事项</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/hexo-bash.html" title="Hexo 基础搭建">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover17.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 基础搭建"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/hexo-bash.html" title="Hexo 基础搭建">Hexo 基础搭建</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2019-12-18 17:32:22"><i class="fa fa-calendar" aria-hidden="true"></i>2019-12-18</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Hexo/">Hexo</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/git/">git</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/github/">github</a></span></div><div class="content">开始使用 Hexo 搭建基础页面，并发布到 Github Pages</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2019/picnotshow.html" title="GitHub 博客图片不显示问题">GitHub 博客图片不显示问题</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2019-03-01 19:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2019-03-01</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/github/">github</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/github/">github</a></span></div><div class="content">博客图片不显示问题</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-fw fa-chevron-left" aria-hidden="true"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">CalmCenter</div><div class="author-info__description">目标设置到月球，即使陨落也是在群星之间！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives"><div class="headline">文章</div><div class="length_num">38</div></a></div><div class="card-info-data-item is-center">      <a href="/tags"><div class="headline">标签</div><div class="length_num">17</div></a></div><div class="card-info-data-item is-center">     <a href="/categories"><div class="headline">分类</div><div class="length_num">5</div></a></div></div><div class="card-info-bookmark is-center"><a class="bookmark button--primary button--animated" id="bookmark-it" href="javascript:;" title="加入书签" target="_self"><i class="fa fa-bookmark" aria-hidden="true"></i><span>加入书签</span></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CalmCenter" target="_blank" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fa fa-bullhorn card-announcement-animation" aria-hidden="true"></i><span>公告</span></div><div class="announcement_content">不要努力成为一个成功的人，而要努力成为一个有价值的人。</div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fa fa-history" aria-hidden="true"></i><span>最新文章</span></div><div class="aside-recent-item"><div class="aside-recent-post"><a href="/2020/design-pattern-flyweight.html"><div class="aside-post-title no-aside-cover"><div class="aside-post_title" href="/2020/design-pattern-flyweight.html" title="设计模式-结构型-享元模式">设计模式-结构型-享元模式</div><time class="aside-post_meta post-meta__date" title="发表于 2020-09-21 18:59:00">2020-09-21</time></div></a></div><div class="aside-recent-post"><a href="/2020/design-pattern-composite.html"><div class="aside-post-cover"><img class="aside-post-bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover51.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" title="设计模式-结构型-组合模式" alt="设计模式-结构型-组合模式"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/design-pattern-composite.html" title="设计模式-结构型-组合模式">设计模式-结构型-组合模式</div><time class="aside-post_meta post-meta__date" title="发表于 2020-09-18 18:59:00">2020-09-18</time></div></a></div><div class="aside-recent-post"><a href="/2020/design-pattern-adapter.html"><div class="aside-post-title no-aside-cover"><div class="aside-post_title" href="/2020/design-pattern-adapter.html" title="设计模式-结构型-适配器模式">设计模式-结构型-适配器模式</div><time class="aside-post_meta post-meta__date" title="发表于 2020-08-27 18:59:00">2020-08-27</time></div></a></div><div class="aside-recent-post"><a href="/2020/design-pattern-decorator.html"><div class="aside-post-cover"><img class="aside-post-bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover53.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" title="设计模式-结构型-装饰模式" alt="设计模式-结构型-装饰模式"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/design-pattern-decorator.html" title="设计模式-结构型-装饰模式">设计模式-结构型-装饰模式</div><time class="aside-post_meta post-meta__date" title="发表于 2020-07-29 18:59:00">2020-07-29</time></div></a></div><div class="aside-recent-post"><a href="/2020/git-principle.html"><div class="aside-post-cover"><img class="aside-post-bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover47.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" title="Git 功能原理记录" alt="Git 功能原理记录"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/git-principle.html" title="Git 功能原理记录">Git 功能原理记录</div><time class="aside-post_meta post-meta__date" title="发表于 2020-07-16 17:32:22">2020-07-16</time></div></a></div></div></div></div><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fa fa-folder-open" aria-hidden="true"></i><span>分类</span></div><ul class="card-category-list">
-            <li class="card-category-list-item"><a class="card-category-list-link" href="/categories/Android/"><span class="card-category-list-name">Android</span><span class="card-category-list-count">12</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/Hexo/"><span class="card-category-list-name">Hexo</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/github/"><span class="card-category-list-name">github</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/live2D/"><span class="card-category-list-name">live2D</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/%E7%BC%96%E7%A0%81/"><span class="card-category-list-name">编码</span><span class="card-category-list-count">15</span></a></li>
-                       
-            </ul></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fa fa-tags" aria-hidden="true"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Android/" style="font-size: 20.5px; color: #99a5b6">Android</a> <a href="/tags/Hexo/" style="font-size: 17.5px; color: #999da3">Hexo</a> <a href="/tags/Next/" style="font-size: 16px; color: #999">Next</a> <a href="/tags/ViewPageIndicator/" style="font-size: 16px; color: #999">ViewPageIndicator</a> <a href="/tags/coding/" style="font-size: 16px; color: #999">coding</a> <a href="/tags/delvik/" style="font-size: 16px; color: #999">delvik</a> <a href="/tags/git/" style="font-size: 17.5px; color: #999da3">git</a> <a href="/tags/github/" style="font-size: 17.5px; color: #999da3">github</a> <a href="/tags/live2D/" style="font-size: 16px; color: #999">live2D</a> <a href="/tags/live2d/" style="font-size: 16px; color: #999">live2d</a> <a href="/tags/seo/" style="font-size: 16px; color: #999">seo</a> <a href="/tags/ui/" style="font-size: 16px; color: #999">ui</a> <a href="/tags/viewpage/" style="font-size: 16px; color: #999">viewpage</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 16px; color: #999">博客</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 16px; color: #999">域名</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 19px; color: #99a1ac">性能优化</a> <a href="/tags/%E7%BC%96%E7%A0%81/" style="font-size: 22px; color: #99a9bf">编码</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fa fa-archive" aria-hidden="true"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/09/"><span class="card-archive-list-date">九月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/08/"><span class="card-archive-list-date">八月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/07/"><span class="card-archive-list-date">七月 2020</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/06/"><span class="card-archive-list-date">六月 2020</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/05/"><span class="card-archive-list-date">五月 2020</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/04/"><span class="card-archive-list-date">四月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/02/"><span class="card-archive-list-date">二月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/01/"><span class="card-archive-list-date">一月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item more is-center"><a class="card-archive-list-link-more" href="/archives">
-              <span>查看更多</span><i class="fa fa-angle-right" aria-hidden="true"></i></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fa fa-line-chart" aria-hidden="true"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="webinfo-article-name">文章数目 :</div><div class="webinfo-article-count">38</div></div><div class="webinfo-item"><div class="webinfo-runtime-name">已运行时间 :</div><div class="webinfo-runtime-count" id="webinfo-runtime-count" start_date="12/1/2019 00:00:00">     </div></div><div class="webinfo-item"><div class="webinfo-site-wordcount-name">本站总字数 :</div><div class="webinfo-site-wordcount">149.5k</div></div><div class="webinfo-item">      <div class="webinfo-site-uv-name">本站访客数 :</div><div class="webinfo-site-uv-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="webinfo-site-name">本站总访问量 :</div><div class="webinfo-site-pv-count" id="busuanzi_value_site_pv"></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover2.webp)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="240" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
-var home_Path = 'https://calmcenter.club/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/xxb2/model.json");</script><link rel="stylesheet" href="/live2d/css/live2d.css"/></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
- <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script id="ribbon_piao" mobile="true" src="/js/third-party/piao.js"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
-POWERMODE.shake = true;
-document.body.addEventListener('input', POWERMODE);
-</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script><script src="/js/search/local-search.js"></script><script src="https://cdn.jsdelivr.net/npm/typed.js"></script><script>var subtitleType = function () {
-  loadScript('https://sdk.jinrishici.com/v2/browser/jinrishici.js',function () {
-      var subtitleEffect = true
-      jinrishici.load(function (result) {
-        if (subtitleEffect) {
-          var sub = ''.length == 0 ? new Array() : ''.split(',')
-          var content = result.data.content
-          var both = sub.unshift(content)
-          var typed = new Typed('#subtitle', {
-            strings: sub,
-            startDelay: 300,
-            typeSpeed: 150,
-            loop: false,
-            backSpeed: 50,
-          })
-        } else {
-          document.getElementById('subtitle').innerHTML = result.data.content
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2020-11-04 18:39:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
         }
       })
-    }
-  )
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover2.webp)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">CalmCenter</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">CalmCenter</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/network-optimization.html" title="App 网络优化🌞">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover19.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="App 网络优化🌞"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/network-optimization.html" title="App 网络优化🌞">App 网络优化🌞</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-05-20T09:32:22.000Z" title="发表于 2020-05-20 17:32:22">2020-05-20</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">在 PC 互联网时代，网络优化已经是一项非常复杂的工作。对于移动网络来说，弱网络、网络切换、网络劫持这些问题更加突出，网络优化这项工作也变得更加艰巨。
+本文主要记载
+1 网络库实现哪家强？
+2 网络需要优化哪些？
+2.1 HTTPDNS
+2.2 链接复用
+2.3 压缩与加密
+2.4 其他优化
+
+
+3 如何监控网络
+4 PLT HOOK Demo 练习
+
+
+1 网络库实现哪家强？在实际的开发工作中，我们很少会像《UNIX 网络编程》那样直接去操作底层的网络接口，一般都会使用网络库。Square 出品的 OkHttp 是目前最流行的 Android 网络库，它还被 Google 加入到 Android 系统内部，为广大开发者提供网络服务。
+网络库的作用是屏蔽了下层复杂的网络接口，让我们可以更高效地使用网络请求。主要有以下三点：
+
+统一编程接口：无论是同步还是异步请求，接口都非常简单易用。同时我们可以统一做策略管理，统一进行流解析（JSON、XML、Protocol Buffers）等。
+全局网络控制：在网络库内部我们可以做统一的网络调度、流量监控以及容灾管理等工作。
+高性能：既然我们把所有 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/storage-optimization.html" title="App 存储优化💦">App 存储优化💦</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-05-14T09:32:22.000Z" title="发表于 2020-05-14 17:32:22">2020-05-14</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">本文记录开发过程中常见存储方法的优缺点，希望可以在日常工作中如何做出更好的选择。
+注意：如果出现图片不显示问题请移步 图片不显示问题
+本文主要记载
+1 如何选择持久化存储方案？
+1.1 考察存储关键要素
+1.2 SharedPreferences
+1.3 ContentProvider
+1.4 SQLite 优化那些事儿
+1.4.1 OCR
+1.4.2 并发
+1.4.3 索引查询优化
+1.4.4 页大小与缓存大小
+1.4.5 其他优化
+
+
+1.5 SQLite 的其他特征
+1.5.1 损坏与恢复
+1.5.2 加密与安全
+
+
+
+
+2 如何优化数据存储？
+2.1 对象的序列化
+2.1.1 Serializable
+Serializable 的原理
+Serializable 的进阶
+Serializable 的注意事项
+
+
+2.1.2 Parcelable
+Parcelable 的永久存储
+Parcelable 的注意事项
+
+
+2.1.3 Serial
+
+
+2.2 数据的序列化
+2.2.1 Json
+2.2.2 Protocol Buffers
+
+
+
+
+3 Demo 相关练习
+3.1 重写  ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/power-optimization.html" title="App 电量优化">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover13.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="App 电量优化"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/power-optimization.html" title="App 电量优化">App 电量优化</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-05-10T04:59:00.000Z" title="发表于 2020-05-10 12:59:00">2020-05-10</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">耗电优化究竟需要做哪些工作？我们如何快速定位代码中的不合理调用，并且持续监控应用的耗电情况呢？
+本文主要记载
+1 优化哪些耗电行为？
+2 耗电优化的难点以及方法
+3 耗电监控
+3.1 耗电监控都监控什么
+3.2 Battery Historian
+3.3 Android Vitals
+3.4 Java Hook
+3.5 插桩
+
+
+4 耗电量计算原理
+
+
+1 优化哪些耗电行为？所谓的耗电优化不就是减少应用的耗电，增加用户的续航时间吗？但是落到实践中，如果应用需要播放视频、需要获取 GPS 信息、需要拍照，这些耗电看起来是无法避免的。
+假设这个时候发现某个应用他根本没怎么使用（前台时间很少），但是耗电却非常多。这种情况会跟用户的预期差别很大，他可能就会想去投诉。
+
+所以耗电优化的第一个方向是优化应用的后台耗电。 知道了系统是如何计算耗电的，那反过来看，我们也就可以知道应用在后台不应该做什么，例如长时间获取 WakeLock、WiFi 和蓝牙的扫描等。为什么说耗电优化第一个方向就是优化应用后台耗电，因为大部分厂商预装项目要求最严格的正是应用后台待机耗电。
+
+
+耗电优化的第二个方向是符合系统的 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/hobble-optimization.html" title="App 直观感受-卡顿优化🌈">App 直观感受-卡顿优化🌈</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-04-20T04:59:00.000Z" title="发表于 2020-04-20 12:59:00">2020-04-20</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">对用户来说，内存占用高、耗费电量、耗费流量 可能不容易被发现，但是用户对 卡顿 特别敏感，很容易直观感受到。
+注意：如果出现图片不显示问题请移步 图片不显示问题
+本文主要记载
+1 如何定义卡顿？
+2 如何排查卡顿？
+2.1 Linux 命令组合排查
+2.2 使用 top 命令查看进程信息
+
+
+3 有没有方便的 Android 卡顿排查工具？
+3.1 TraceView
+3.2 Nanoscope
+3.3 systrace
+3.4 Simpleperf
+3.5 可视化方法(Android Studio Profiler)
+3.6 Android Performance Montitor(BlockCanary)
+3.7 Profilo
+
+
+4 卡顿现场
+4.1 获取 java 线程状态
+4.2 获得所有线程堆栈
+4.3 SIGQUIT 信号实现
+4.4 Hook 实现
+
+
+5 相关 Demo 学习
+5.1 抓取 CPU 数据
+5.2 PLTHook 监控 Thread 的创建
+5.3 Loop 监控卡顿
+
+
+总结
+
+
+1 如何定义卡顿？60帧 每秒是目前最合适的图像显示速度，也是绝大部分 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/ui-optimization.html" title="App UI优化💦">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover32.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="App UI优化💦"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/ui-optimization.html" title="App UI优化💦">App UI优化💦</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-04-15T11:59:00.000Z" title="发表于 2020-04-15 19:59:00">2020-04-15</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">
+每个做 UI 的 Android 开发，上辈子都是折翼的天使。
+
+本文主要记载
+1 UI 优化究竟指的是什么呢？
+2 屏幕适配？？？
+3 如何测量、监控 UI 需要优化？
+3.1 过度绘制
+3.2 Profile GPU Rendering
+3.3 测量 setContentView 具体耗时
+3.3.1 AOP
+3.3.2 Factory2
+
+
+3.4 问题定位 systrace
+
+
+4 UI 优化常用手段
+4.1 尽量使用硬件加速
+4.2 Create View 优化
+4.2.1 使用代码创建
+4.2.2 异步创建
+
+
+4.3. measure/layout 优化
+4.4 其他
+4.4.1 Litho：异步布局
+4.4.2 Flutter：自己的布局 + 渲染引擎
+4.4.3 RenderThread 与 RenderScript
+
+
+
+
+5 总结
+
+
+1 UI 优化究竟指的是什么呢？我认为所谓的 UI 优化，应该包含两个方面
+
+一个是效率的提升，我们可以非常高效地把 UI 的设计图转化成应用界面，并且保证 UI 界面在不同尺寸和分辨率的手机上都是一致的
+另一个是性能的提升，在正 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/memory-optimization2.html" title="App 内存检测优化💦">App 内存检测优化💦</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-02-29T11:59:00.000Z" title="发表于 2020-02-29 19:59:00">2020-02-29</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">🌞一个好的架构可以减少甚至避免我们犯错，而一个好的监控可以帮助我们及时发现问题🌞内存优化的重点在于监控，和平时代码规范。这篇文章带你了解监控工具 Memory Profiler、MAT、LeakCanary 的使用以及分析。
+本文主要记载
+1 什么是 Memory Profiler？
+1.1 使用介绍
+1.1.1 启用高级分析
+1.1.2 计算内存(每个内存类别当前使用多少内存)
+1.1.3 查看内存分配(分配的对象数)
+1.1.4 在分析时提高应用性能
+1.1.5 捕获堆转储
+1.1.6 将堆转储另存为 HPROF 文件
+
+
+
+
+2 什么是 MAT？
+2.1 使用前提
+2.2 使用介绍
+
+
+3 什么是 LeakCanary？
+3.1 LeakCanary 原理
+3.2 LeakCanary 使用
+
+
+4 自定义实现 Demo
+4.1 自动化监测 Demo
+4.2 重复图片监测 Demo
+
+
+5 优化思路
+5.1 设备分级
+5.2 Bitmap 优化
+
+
+6 更多
+
+
+
+一个好的架构可以减少甚至避免我们犯错，而一个好的监控可以帮助我们及时发现问题。
+
+检测工具常见的有 Memory ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/memory-optimization.html" title="App 内存知识介绍💦">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover35.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="App 内存知识介绍💦"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/memory-optimization.html" title="App 内存知识介绍💦">App 内存知识介绍💦</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-02-28T11:59:00.000Z" title="发表于 2020-02-28 19:59:00">2020-02-28</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">Android 性能优化第二篇， 内存优化是减少崩溃率工作中非常关键的一部分，由于Android有垃圾自动回收机制不需要手动干预，但也因此，经常出现内存问题如内存泄漏、内存泄漏引发 GC 频繁导致页面卡顿和内存溢出等问题，如果不了解内存是如何管理的以及如何优化，会难以排查问题。
+这篇文章集结了很多文章精华部分(个人认为)，在这里整理分享出更多更完整内存知识，所以这篇文章会很长，目录我会分的很细，方便查找，文末会贴出参考文章。
+注意：如果出现图片不显示问题请移步 图片不显示问题
+本文主要记载
+1 什么是内存？
+2 JVM 如何分配内存？
+2.1 所有线程共享的数据区域
+2.2 线程私有的数据区域
+
+
+3 JVM 如何管理内存？
+3.1 引用计数算法
+3.2 可达性算法
+3.3 引用介绍
+3.4 垃圾回收器
+3.4.1 标记-清除算法（Mark-Sweep）
+3.4.2 复制算法（Copying）
+3.4.3 标记-整理算法（Mark-Compact）
+3.4.4 分代收集算法（Generational Collection）
+
+
+
+
+4 什么是 Dalvik?
+4.1 Dalvik 与  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2019/start-optimization.html" title="App 初体验-启动优化💦">App 初体验-启动优化💦</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-12-24T09:32:22.000Z" title="发表于 2019-12-24 17:32:22">2019-12-24</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">Android 性能第一篇，随着项目功能的迭（zeng）代（jia），启动速度也会受到影响，性能优化之路的第一步，也就是启动优化，个人认为非常重要，它可以直接影响 APP 的留存率，没有人希望自己应用半天打不开。这篇文章就带你解决🌞用户初体验-启动优化🌞。
+注意：如果出现图片不显示问题请移步 图片不显示问题
+本文主要记载
+1 启动
+2 检测启动消耗(敲黑板)
+2.1 启动时间测量方式
+2.1.1 adb 命令启动时间测量方式
+2.1.2 手动打点
+
+
+2.2 启动耗时检测方式
+2.2.1 TraceView
+2.2.2 systrace
+2.2.3 systrace + 函数插桩 AOP
+
+
+
+
+3 启动优化(干货)
+3.1 闪屏页展示
+3.2 异步启动实践
+3.3 数据重排
+3.4 类的加载
+3.5 延迟加载方案 IdleHandler
+3.6 其他优化思路
+
+
+
+
+1 启动Google官方文档 《Launch-Time Performance》 对应用启动优化的概述
+应用的启动分为冷启动、热启动、温启动，而启动最慢、挑战最大的就是冷启动：系统和App本身都有更多的工作要从头开始 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/hexo-website-management.html" title="Hexo 网站管理">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover21.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 网站管理"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/hexo-website-management.html" title="Hexo 网站管理">Hexo 网站管理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-12-21T14:05:22.000Z" title="发表于 2019-12-21 22:05:22">2019-12-21</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span></div><div class="content">目录请看  Hexo 搭建博客大全
+注意：如果出现图片不显示问题请移步 图片不显示问题
+本文主要记载
+加入 Coding 服务器
+个人域名
+SEO  推广
+
+
+重点： hexo 根目录配置文件 hexo/_config.yml  下文用 Hexo 配置文件 表示，NexT 样式配置文件 hexo/theme/next/_config.yml 下文用 NexT 配置文件 表示一定要分清，它们都叫 _comfig.yml
+
+
+本文章写于 2019/5/5 图片内容可能和您现在看的内容不太一样，但是功能大体是不会变的。
+
+加入 Coding 服务器这里加入Coding 服务器的作用主要是访问速度，其次就是由于 github 屏蔽百度的爬虫，所以使用 github page 服务的站点的链接无法被抓取，可用  Coding  的 page 服务。
+
+登录 Coding
+登录 Coding ，并创建项目
+
+个人设置
+首先你需要点击头像，找到个人设置，在个人设置中设置 密码 和 邮箱 才能设置 SSH ，如果你之前设置过 github 的 SSH 你只需要执行以下命令
+1clip &lt; ~&# ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/hexo-functional-style.html" title="Hexo 功能样式配置">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover11.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 功能样式配置"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/hexo-functional-style.html" title="Hexo 功能样式配置">Hexo 功能样式配置</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-12-21T09:32:22.000Z" title="发表于 2019-12-21 17:32:22">2019-12-21</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span></div><div class="content">目录请看  Hexo 搭建博客大全
+注意：如果出现图片不显示问题请移步 图片不显示问题
+本文主要记载
+NexT 主题设置
+基础样式设置
+图片相关
+打赏、评论、复制功能
+DaoVoice 实现在线联系
+文章置顶
+搜索功能
+细节美化
+
+12本文环境是 win10 或 win 7。mac 再执行 npm 时需要在前面添加 sudo本文整理于各大佬文章，文中会给出相应链接，如有侵权，请联系我修改或删除。
+
+
+功能样式配置NexT 主题设置*重点标注：hexo 根目录配置文件 hexo/_config.yml  下文用 Hexo 配置文件 表示，NexT 样式配置文件 hexo/theme/next/_config.yml 下文用 NexT 配置文件 表示一定要分清，它们都叫 _cpmfig.yml *
+这里有很多主题 这里主要说 NexT 
+进入 hexo 文件目录 ，执行
+1git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;hexo-theme-next themes&#x2F;next
+
+成功后，在 Hexo 配置文件  ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/hexo-live2d.html" title="Live2D 看板娘">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover14.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Live2D 看板娘"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/hexo-live2d.html" title="Live2D 看板娘">Live2D 看板娘</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-12-20T06:32:22.000Z" title="发表于 2019-12-20 14:32:22">2019-12-20</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/live2D/">live2D</a></span></div><div class="content">目录请看  Hexo 搭建博客大全
+注意：如果出现图片不显示问题请移步 图片不显示问题
+本文主要记载
+使用 hexo-helper-live2d 完成看板娘
+自定义看板娘(右下角那个~)
+运行、接入 Demo
+更换、修改模型
+
+
+
+
+使用 hexo-helper-live2d 完成看板娘我的 Live2D 版本是 3.1.1
+首先安装配置 hexo-helper-live2d，在 hexo 根目录下执行
+1npm install hexo-helper-live2d --save
+
+插件就安装完成了，你可一下选一个 模型 这个给出了展示效果，但是不全， 更多模型 这个没有展示效果，比之前的全一点，可以自己试试效果 ~
+在模型中记住自己选择模型的名字 live2d-widget-model-你选中的模型名字 ，然后进行安装
+1npm install live2d-widget-model-wanko --save
+
+然后再 Hexo 配置文件 中，添加如下代码，代码格式很重要！！！ 有时候复制进去没有缩进，效果是出不来的。
+123456789101112131415161718live2 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2019/hexo-code-management.html" title="Hexo 管理代码">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover15.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 管理代码"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/hexo-code-management.html" title="Hexo 管理代码">Hexo 管理代码</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-12-19T09:32:22.000Z" title="发表于 2019-12-19 17:32:22">2019-12-19</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span></div><div class="content">目录请看  Hexo 搭建博客大全
+注意：如果出现图片不显示问题请移步 图片不显示问题
+本文主要记载
+git 拉取代码
+git 创建分支
+git 提交分支代码
+其他终端如何使用 Hexo 源码
+
+
+
+
+一、管理代码当我们需要在不同的终端去写博客的时候，发现 github 库中只有编译后的代码，所以我们需要将我们的 hexo 源码页放入 github 的分支中
+首先我们需要拉取所有代码，选择一个空文件夹例如 D:\blog\github_hexo 
+1.1 拉取主分支代码1.1.1 初始化 git1git init
+
+1.1.2 clone 远程代码，复制刚才的 SSH 路径 或者 HTTPS 路径1git clone &lt;SSH&#x2F;HTTPS&gt;
+
+1.1.3 和远程仓库建立关联1git remote add origin &lt;SSH&#x2F;HTTPS&gt;
+
+如果 falal：remote origin already exists. ，执行下面命令
+1git remote rm origin
+
+然后再次建立关联 git remote add origin  ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">CalmCenter</div><div class="author-info__description">目标设置到月球，即使陨落也是在群星之间！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CalmCenter"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">不要努力成为一个成功的人，而要努力成为一个有价值的人。</div></div></div><div class="sticky_layout"><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div><ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/"><span class="card-category-list-name">Android</span><span class="card-category-list-count">12</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Hexo/"><span class="card-category-list-name">Hexo</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/github/"><span class="card-category-list-name">github</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/live2D/"><span class="card-category-list-name">live2D</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BC%96%E7%A0%81/"><span class="card-category-list-name">编码</span><span class="card-category-list-count">20</span></a></li>
+            
+            </ul></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Android/" style="font-size: 1.4em; color: #99a5b6">Android</a> <a href="/tags/Hexo/" style="font-size: 1.2em; color: #999da3">Hexo</a> <a href="/tags/Next/" style="font-size: 1.1em; color: #999">Next</a> <a href="/tags/ViewPageIndicator/" style="font-size: 1.1em; color: #999">ViewPageIndicator</a> <a href="/tags/coding/" style="font-size: 1.1em; color: #999">coding</a> <a href="/tags/delvik/" style="font-size: 1.1em; color: #999">delvik</a> <a href="/tags/git/" style="font-size: 1.2em; color: #999da3">git</a> <a href="/tags/github/" style="font-size: 1.2em; color: #999da3">github</a> <a href="/tags/live2D/" style="font-size: 1.1em; color: #999">live2D</a> <a href="/tags/live2d/" style="font-size: 1.1em; color: #999">live2d</a> <a href="/tags/seo/" style="font-size: 1.1em; color: #999">seo</a> <a href="/tags/ui/" style="font-size: 1.1em; color: #999">ui</a> <a href="/tags/viewpage/" style="font-size: 1.1em; color: #999">viewpage</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 1.1em; color: #999">博客</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 1.1em; color: #999">域名</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 1.3em; color: #99a1ac">性能优化</a> <a href="/tags/%E7%BC%96%E7%A0%81/" style="font-size: 1.5em; color: #99a9bf">编码</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/11/"><span class="card-archive-list-date">十一月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/10/"><span class="card-archive-list-date">十月 2020</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/09/"><span class="card-archive-list-date">九月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/08/"><span class="card-archive-list-date">八月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/07/"><span class="card-archive-list-date">七月 2020</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/06/"><span class="card-archive-list-date">六月 2020</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/05/"><span class="card-archive-list-date">五月 2020</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/04/"><span class="card-archive-list-date">四月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item more is-center"><a class="card-archive-list-link-more" href="/archives/">
+              <span>查看更多</span><i class="fas fa-angle-right"  ></i></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">43</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">155.7k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2020-11-04T10:39:46.102Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>function subtitleType () {
+  $.getScript('https://sdk.jinrishici.com/v2/browser/jinrishici.js',function () {
+    jinrishici.load(function (result) {
+      if (true) {
+        var sub = "".length == 0 ? new Array() : "".split(',')
+        var content = result.data.content
+        var both = sub.unshift(content)
+        var typed = new Typed('#subtitle', {
+          strings: sub,
+          startDelay: 300,
+          typeSpeed: 150,
+          loop: false,
+          backSpeed: 50,
+        })
+      } else {
+        document.getElementById('subtitle').innerHTML = result.data.content
+      }
+    })
+  })
 }
-window.addEventListener('load', subtitleType)
-</script></body></html>
+
+if (true) {
+  if (typeof Typed === 'function') subtitleType()
+  else $.getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js', subtitleType)
+} else {
+  subtitleType()
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>

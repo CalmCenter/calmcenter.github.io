@@ -1,118 +1,311 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CalmCenter - CalmCenter</title><meta name="description" content="目标设置到月球，即使陨落也是在群星之间！"><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = 'false'
-var t = Cookies.get("theme")
-if (autoChangeMode == '1'){
-  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
-  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
-  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
-  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-
-  if (t === undefined){
-    if (isLightMode) activateLightMode()
-    else if (isDarkMode) activateDarkMode()
-    else if (isNotSpecified || hasNoSupport){
-      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
-      var now = new Date()
-      var hour = now.getHours()
-      var isNight = hour < 6 || hour >= 18
-      isNight ? activateDarkMode() : activateLightMode()
-  }
-  } else if (t == 'light') activateLightMode()
-  else activateDarkMode()
-
-} else if (autoChangeMode == '2'){
-  now = new Date();
-  hour = now.getHours();
-  isNight = hour < 6 || hour >= 18
-  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
-  else if (t === 'light') activateLightMode()
-  else activateDarkMode() 
-} else {
-  if ( t == 'dark' ) activateDarkMode()
-  else if ( t == 'light') activateLightMode()
-}
-
-function activateDarkMode(){
-  document.documentElement.setAttribute('data-theme', 'dark')
-  if (document.querySelector('meta[name="theme-color"]') !== null){
-    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
-  }
-}
-function activateLightMode(){
-  document.documentElement.setAttribute('data-theme', 'light')
-  if (document.querySelector('meta[name="theme-color"]') !== null){
-  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
-  }
-}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="canonical" href="https://calmcenter.club/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CalmCenter - CalmCenter</title><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="目标设置到月球，即使陨落也是在群星之间！">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CalmCenter">
+<meta property="og:url" content="https://calmcenter.club/index.html">
+<meta property="og:site_name" content="CalmCenter">
+<meta property="og:description" content="目标设置到月球，即使陨落也是在群星之间！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://calmcenter.club/img/avatar.jpg">
+<meta property="article:author" content="CalmCenter">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://calmcenter.club/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://calmcenter.club/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var GLOBAL_CONFIG = { 
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  localSearch: undefined,
   translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
     noSupport: '浏览器不支持'
   },
-  bookmark: {
-    message_prev: '按',
-    message_next: '键将本页加入书签'
+  relativeDate: {
+    homepage: false,
+    post: false
   },
-  runtime_unit: '天',
-  runtime: true,
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
   copyright: undefined,
   ClickShowText: undefined,
-  medium_zoom: true,
-  fancybox: false,
-  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"top-right"},
-  baiduPush: false,
-  highlightCopy: true,
-  highlightLang: false,
-  highlightShrink: 'none',
-  isFontAwesomeV5: false,
-  isPhotoFigcaption: true,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"top-right"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
   islazyload: true,
   isanchor: false
-  
-}</script><script>var GLOBAL_CONFIG_SITE = { 
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
   isPost: false,
   isHome: true,
-  isSidebar: false  
-  }</script><noscript><style>
-#page-header {
-  opacity: 1
-}
-.justified-gallery img{
-  opacity: 1
-}
-</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">38</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">17</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div></div></div><div id="body-wrap"><div class="full_page" id="nav" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover2.webp)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">CalmCenter</a></span><span class="pull_right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="site-info"><h1 id="site_title">CalmCenter</h1><div id="site_subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/CalmCenter" target="_blank" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a></div></div><div id="scroll_down"><i class="fa fa-angle-down scroll-down-effects"></i></div></div><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/complete-works-of-android-performance.html" title="Android 性能优化篇">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/20200228233120.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android 性能优化篇"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/complete-works-of-android-performance.html" title="Android 性能优化篇">Android 性能优化篇</a><div class="article-meta-wrap"><span class="article-meta"><i class="fa fa-thumb-tack article-meta__icon sticky"></i><span class="sticky">置顶</span><span class="article-meta__separator">|</span></span><time class="post-meta__date" title="发表于 2019-12-01 18:32:22"><i class="fa fa-calendar" aria-hidden="true"></i>2019-12-01</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Android/">Android</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></span></div><div class="content">Android 性能优化大全目录，包含「启动优化」，「内存优化」，「UI 优化」，「卡顿优化」，「存储优化」，「网络优化」，「线程优化」，「包体积优化」，「稳定性优化」</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/design-mode.html" title="设计模式篇">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover42.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式篇"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/design-mode.html" title="设计模式篇">设计模式篇</a><div class="article-meta-wrap"><span class="article-meta"><i class="fa fa-thumb-tack article-meta__icon sticky"></i><span class="sticky">置顶</span><span class="article-meta__separator">|</span></span><time class="post-meta__date" title="发表于 2020-06-11 12:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-06-11</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">向着高质量的代码进发🚀🚀，向稀烂的代码挥挥手。👋</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/complete-works-of-hexo.html" title="Hexo 搭建博客篇">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover18.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 搭建博客篇"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/complete-works-of-hexo.html" title="Hexo 搭建博客篇">Hexo 搭建博客篇</a><div class="article-meta-wrap"><span class="article-meta"><i class="fa fa-thumb-tack article-meta__icon sticky"></i><span class="sticky">置顶</span><span class="article-meta__separator">|</span></span><time class="post-meta__date" title="发表于 2019-12-01 17:32:22"><i class="fa fa-calendar" aria-hidden="true"></i>2019-12-01</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Hexo/">Hexo</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Next/">Next</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/git/">git</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/github/">github</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/live2d/">live2d</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%8D%9A%E5%AE%A2/">博客</a></span></div><div class="content">Hexo 基础搭建、代码管理、功能样式、Live2D、网站管理</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/git-principle.html" title="Git 功能原理记录">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover47.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 功能原理记录"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/git-principle.html" title="Git 功能原理记录">Git 功能原理记录</a><div class="article-meta-wrap"><span class="article-meta"><i class="fa fa-thumb-tack article-meta__icon sticky"></i><span class="sticky">置顶</span><span class="article-meta__separator">|</span></span><time class="post-meta__date" title="发表于 2020-07-16 17:32:22"><i class="fa fa-calendar" aria-hidden="true"></i>2020-07-16</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/git/">git</a></span></div><div class="content">Git 是一个版本管理软件，由 Linux 之父花了 三天 搞出来的东西。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/design-pattern-flyweight.html" title="设计模式-结构型-享元模式">设计模式-结构型-享元模式</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2020-09-21 18:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-09-21</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">所谓“享元”，顾名思义就是被共享的单元。享元模式的意图是复用对象，节省内存，前提是享元对象是不可变对象。</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/design-pattern-composite.html" title="设计模式-结构型-组合模式">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover51.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式-结构型-组合模式"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/design-pattern-composite.html" title="设计模式-结构型-组合模式">设计模式-结构型-组合模式</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2020-09-18 18:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-09-18</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">组合模式的数据必须能表示成树形结构，这也导致了这种模式在实际的项目开发中并不那么常用。但是，一旦数据满足树形结构，应用这种模式就能发挥很大的作用，能让代码变得非常简洁。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/design-pattern-adapter.html" title="设计模式-结构型-适配器模式">设计模式-结构型-适配器模式</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2020-08-27 18:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-08-27</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">适配器是将两个不兼容的类融合在一起，它有点像粘合剂，将不同的东西通过一种转换使得它们能够协作起来。</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/design-pattern-decorator.html" title="设计模式-结构型-装饰模式">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover53.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式-结构型-装饰模式"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/design-pattern-decorator.html" title="设计模式-结构型-装饰模式">设计模式-结构型-装饰模式</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2020-07-29 18:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-07-29</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">装饰模式也称为包装模式，使用一种对客户端透明的方式来动态地扩展对象的功能，同时它也是继承关系的一种替代方案之一。</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/design-pattern-bridge.html" title="设计模式-结构型-桥接模式">设计模式-结构型-桥接模式</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2020-07-15 18:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-07-15</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">将抽象和实现解耦，让它们可以独立变化。我们相互独立却又生死相依！💞💞</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/design-pattern-proxy.html" title="设计模式-结构型-代理模式">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover40.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式-结构型-代理模式"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/design-pattern-proxy.html" title="设计模式-结构型-代理模式">设计模式-结构型-代理模式</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2020-07-13 12:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-07-13</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">代理模式通常用于一些非功能性需求，它在不改变原始类（或者叫被代理类）代码的情况下，通过引入代理类来给原始类附加功能。偷天换日☀️☀️</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/design-pattern-prototype.html" title="设计模式-创建型-原型模式">设计模式-创建型-原型模式</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2020-07-08 18:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-07-08</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">创建对象太胖了成本太大怎么办，那就看这里啊 ~ 😎</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/design-pattern-builder.html" title="设计模式-创建型-Builder 模式">     <img class="post_bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover41.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式-创建型-Builder 模式"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/design-pattern-builder.html" title="设计模式-创建型-Builder 模式">设计模式-创建型-Builder 模式</a><div class="article-meta-wrap"><time class="post-meta__date" title="发表于 2020-07-02 18:59:00"><i class="fa fa-calendar" aria-hidden="true"></i>2020-07-02</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">构建复杂对象...对象？能有多复杂？不都是俩耳朵俩眼睛一个鼻子一张嘴俩胳膊俩...😵😵确实挺复杂。光数都这么多，更别说怎么构建了 ~</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-fw fa-chevron-right" aria-hidden="true"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">CalmCenter</div><div class="author-info__description">目标设置到月球，即使陨落也是在群星之间！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives"><div class="headline">文章</div><div class="length_num">38</div></a></div><div class="card-info-data-item is-center">      <a href="/tags"><div class="headline">标签</div><div class="length_num">17</div></a></div><div class="card-info-data-item is-center">     <a href="/categories"><div class="headline">分类</div><div class="length_num">5</div></a></div></div><div class="card-info-bookmark is-center"><a class="bookmark button--primary button--animated" id="bookmark-it" href="javascript:;" title="加入书签" target="_self"><i class="fa fa-bookmark" aria-hidden="true"></i><span>加入书签</span></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CalmCenter" target="_blank" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fa fa-bullhorn card-announcement-animation" aria-hidden="true"></i><span>公告</span></div><div class="announcement_content">不要努力成为一个成功的人，而要努力成为一个有价值的人。</div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fa fa-history" aria-hidden="true"></i><span>最新文章</span></div><div class="aside-recent-item"><div class="aside-recent-post"><a href="/2020/design-pattern-flyweight.html"><div class="aside-post-title no-aside-cover"><div class="aside-post_title" href="/2020/design-pattern-flyweight.html" title="设计模式-结构型-享元模式">设计模式-结构型-享元模式</div><time class="aside-post_meta post-meta__date" title="发表于 2020-09-21 18:59:00">2020-09-21</time></div></a></div><div class="aside-recent-post"><a href="/2020/design-pattern-composite.html"><div class="aside-post-cover"><img class="aside-post-bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover51.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" title="设计模式-结构型-组合模式" alt="设计模式-结构型-组合模式"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/design-pattern-composite.html" title="设计模式-结构型-组合模式">设计模式-结构型-组合模式</div><time class="aside-post_meta post-meta__date" title="发表于 2020-09-18 18:59:00">2020-09-18</time></div></a></div><div class="aside-recent-post"><a href="/2020/design-pattern-adapter.html"><div class="aside-post-title no-aside-cover"><div class="aside-post_title" href="/2020/design-pattern-adapter.html" title="设计模式-结构型-适配器模式">设计模式-结构型-适配器模式</div><time class="aside-post_meta post-meta__date" title="发表于 2020-08-27 18:59:00">2020-08-27</time></div></a></div><div class="aside-recent-post"><a href="/2020/design-pattern-decorator.html"><div class="aside-post-cover"><img class="aside-post-bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover53.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" title="设计模式-结构型-装饰模式" alt="设计模式-结构型-装饰模式"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/design-pattern-decorator.html" title="设计模式-结构型-装饰模式">设计模式-结构型-装饰模式</div><time class="aside-post_meta post-meta__date" title="发表于 2020-07-29 18:59:00">2020-07-29</time></div></a></div><div class="aside-recent-post"><a href="/2020/git-principle.html"><div class="aside-post-cover"><img class="aside-post-bg" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover47.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" title="Git 功能原理记录" alt="Git 功能原理记录"/></div><div class="aside-post-title"><div class="aside-post_title" href="/2020/git-principle.html" title="Git 功能原理记录">Git 功能原理记录</div><time class="aside-post_meta post-meta__date" title="发表于 2020-07-16 17:32:22">2020-07-16</time></div></a></div></div></div></div><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fa fa-folder-open" aria-hidden="true"></i><span>分类</span></div><ul class="card-category-list">
-            <li class="card-category-list-item"><a class="card-category-list-link" href="/categories/Android/"><span class="card-category-list-name">Android</span><span class="card-category-list-count">12</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/Hexo/"><span class="card-category-list-name">Hexo</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/github/"><span class="card-category-list-name">github</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/live2D/"><span class="card-category-list-name">live2D</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/%E7%BC%96%E7%A0%81/"><span class="card-category-list-name">编码</span><span class="card-category-list-count">15</span></a></li>
-                       
-            </ul></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fa fa-tags" aria-hidden="true"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Android/" style="font-size: 20.5px; color: #99a5b6">Android</a> <a href="/tags/Hexo/" style="font-size: 17.5px; color: #999da3">Hexo</a> <a href="/tags/Next/" style="font-size: 16px; color: #999">Next</a> <a href="/tags/ViewPageIndicator/" style="font-size: 16px; color: #999">ViewPageIndicator</a> <a href="/tags/coding/" style="font-size: 16px; color: #999">coding</a> <a href="/tags/delvik/" style="font-size: 16px; color: #999">delvik</a> <a href="/tags/git/" style="font-size: 17.5px; color: #999da3">git</a> <a href="/tags/github/" style="font-size: 17.5px; color: #999da3">github</a> <a href="/tags/live2D/" style="font-size: 16px; color: #999">live2D</a> <a href="/tags/live2d/" style="font-size: 16px; color: #999">live2d</a> <a href="/tags/seo/" style="font-size: 16px; color: #999">seo</a> <a href="/tags/ui/" style="font-size: 16px; color: #999">ui</a> <a href="/tags/viewpage/" style="font-size: 16px; color: #999">viewpage</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 16px; color: #999">博客</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 16px; color: #999">域名</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 19px; color: #99a1ac">性能优化</a> <a href="/tags/%E7%BC%96%E7%A0%81/" style="font-size: 22px; color: #99a9bf">编码</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fa fa-archive" aria-hidden="true"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/09/"><span class="card-archive-list-date">九月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/08/"><span class="card-archive-list-date">八月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/07/"><span class="card-archive-list-date">七月 2020</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/06/"><span class="card-archive-list-date">六月 2020</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/05/"><span class="card-archive-list-date">五月 2020</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/04/"><span class="card-archive-list-date">四月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/02/"><span class="card-archive-list-date">二月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/01/"><span class="card-archive-list-date">一月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item more is-center"><a class="card-archive-list-link-more" href="/archives">
-              <span>查看更多</span><i class="fa fa-angle-right" aria-hidden="true"></i></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fa fa-line-chart" aria-hidden="true"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="webinfo-article-name">文章数目 :</div><div class="webinfo-article-count">38</div></div><div class="webinfo-item"><div class="webinfo-runtime-name">已运行时间 :</div><div class="webinfo-runtime-count" id="webinfo-runtime-count" start_date="12/1/2019 00:00:00">     </div></div><div class="webinfo-item"><div class="webinfo-site-wordcount-name">本站总字数 :</div><div class="webinfo-site-wordcount">149.5k</div></div><div class="webinfo-item">      <div class="webinfo-site-uv-name">本站访客数 :</div><div class="webinfo-site-uv-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="webinfo-site-name">本站总访问量 :</div><div class="webinfo-site-pv-count" id="busuanzi_value_site_pv"></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover2.webp)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="240" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
-var home_Path = 'https://calmcenter.club/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/xxb2/model.json");</script><link rel="stylesheet" href="/live2d/css/live2d.css"/></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
- <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script id="ribbon_piao" mobile="true" src="/js/third-party/piao.js"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
-POWERMODE.shake = true;
-document.body.addEventListener('input', POWERMODE);
-</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script><script src="/js/search/local-search.js"></script><script src="https://cdn.jsdelivr.net/npm/typed.js"></script><script>var subtitleType = function () {
-  loadScript('https://sdk.jinrishici.com/v2/browser/jinrishici.js',function () {
-      var subtitleEffect = true
-      jinrishici.load(function (result) {
-        if (subtitleEffect) {
-          var sub = ''.length == 0 ? new Array() : ''.split(',')
-          var content = result.data.content
-          var both = sub.unshift(content)
-          var typed = new Typed('#subtitle', {
-            strings: sub,
-            startDelay: 300,
-            typeSpeed: 150,
-            loop: false,
-            backSpeed: 50,
-          })
-        } else {
-          document.getElementById('subtitle').innerHTML = result.data.content
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2020-11-04 18:39:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
         }
       })
-    }
-  )
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover2.webp)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">CalmCenter</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">CalmCenter</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/complete-works-of-android-performance.html" title="Android 性能优化篇">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/20200228233120.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android 性能优化篇"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/complete-works-of-android-performance.html" title="Android 性能优化篇">Android 性能优化篇</a><div class="article-meta-wrap"><span class="article-meta"><i class="fas fa-thumbtack article-meta__icon sticky"></i><span class="sticky">置顶</span><span class="article-meta__separator">|</span></span><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-12-01T10:32:22.000Z" title="发表于 2019-12-01 18:32:22">2019-12-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">随着项目版本的迭代，App 的性能问题会逐渐暴露出来，而好的用户体验与性能表现紧密相关。 最近项目核心功能收尾，准备开启优化之路，打造一个高用户体验的 APP 
+技术不断更新，我将在边学习边实践的过程中进行分享，并将实践结果与大家分享，希望大家看到文章中有不足的地方及时给我留言，我将与大家积极讨论。
+注意：如果出现图片不显示问题请移步 图片不显示问题 
+
+性能优化App 初体验-启动优化 more  💦 
+App 内存知识介绍 more 💦 
+App 内存检测优化 more 💦  
+App UI 优化 more 💦 
+App 直观感受-卡顿优化 more 🌈 
+App 电量优化 
+App 存储优化💦 
+App 网络优化🌞 
+App 刷脂 
+
+极客时间 Android开发高手课  
+慕课 Top团队大牛带你玩转Android性能分析与优化 
+
+微信 Matrix  源码解读首先了解 Matrix 的配置源码 腾讯 Apm 框架 Matrix 源码阅读 - gradle插件 其中使用到了 gradle 中 Transform 和 Task 相关文章 Gradle自定义插件实现 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/design-mode.html" title="设计模式篇">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover42.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式篇"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/design-mode.html" title="设计模式篇">设计模式篇</a><div class="article-meta-wrap"><span class="article-meta"><i class="fas fa-thumbtack article-meta__icon sticky"></i><span class="sticky">置顶</span><span class="article-meta__separator">|</span></span><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-06-11T04:59:00.000Z" title="发表于 2020-06-11 12:59:00">2020-06-11</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">面向对象 more
+面向对象
+面向过程
+面向对象编程相比面向过程有哪些优势？
+抽象类和接口
+
+设计原则 more设计原则包括 SOLID、KISS、YAGNI、DRY、LOD
+
+SOLID 原则：
+
+单一职责原则 (Single Responsibility Principe 简称 SRP)
+开闭原则 (Open-Closed Principle 简称 OCP)
+里氏替换原则 (Liskov Substitution Principle 简称 LSP)
+接口隔离原则 (Interface Segregation Principle 简称 ISP)
+依赖反转原则 (Dependency Inversion Principe 简称 DIP)
+
+
+KISS 原则
+
+DRY 原则
+
+迪米特法则（Law of Demeter LOD）
+
+
+设计原则和思想其实比设计模式更加重要，掌握了代码的设计原则和思想，我们甚至可以自己创造出来新的设计模式。
+单元测试 more
+什么是单元测试？
+为什么要写单元测试？
+如何编写单元测试？
+
+设计模式设计模式要干的事情就是解耦，创建型设计模式主要解决 “对象的创建 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2019/complete-works-of-hexo.html" title="Hexo 搭建博客篇">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover18.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 搭建博客篇"></a></div><div class="recent-post-info"><a class="article-title" href="/2019/complete-works-of-hexo.html" title="Hexo 搭建博客篇">Hexo 搭建博客篇</a><div class="article-meta-wrap"><span class="article-meta"><i class="fas fa-thumbtack article-meta__icon sticky"></i><span class="sticky">置顶</span><span class="article-meta__separator">|</span></span><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2019-12-01T09:32:22.000Z" title="发表于 2019-12-01 17:32:22">2019-12-01</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span></div><div class="content">一、为什么要写这篇文章各大网站关于搭建博客的文章已经不是一篇两篇了，但是他们的文章也有坑~(可能是版本问题)也各有各的特点，这里带你踩坑，并带你实现他们的特点
+
+把无序的信息变的有序，本质上也是信息差，也是可以创造价值的。
+
+所以我准备整理一下各各博客的特点，尽力写成一本大全。
+二、本文主要记载
+Hexo 基础搭建
+管理代码( git 基本操作)
+装饰博客
+live2D 看板娘
+网站管理12本文环境是 win10 或 win 7。mac 再执行 npm 时需要在前面添加 sudo本文整理于各大佬文章，文中会给出相应链接，如有侵权，请联系我修改或删除。
+
+
+
+
+
+
+Hexo 基础搭建 more  
+搭建本地博客
+部署到 Github Pages
+
+管理代码( git 基本操作) more
+git 拉取代码
+git 创建分支
+git 提交分支代码
+其他终端如何使用 Hexo 源码
+
+功能样式配置 more  
+NexT 主题设置
+基础样式设置
+图片相关
+打赏、评论、复制功能
+DaoVoice 实现在线联系
+文章置顶
+搜索功能
+细节美化
+
+live2D 看板娘 more  
+使用 hexo- ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/git-principle.html" title="Git 功能原理记录">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover47.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git 功能原理记录"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/git-principle.html" title="Git 功能原理记录">Git 功能原理记录</a><div class="article-meta-wrap"><span class="article-meta"><i class="fas fa-thumbtack article-meta__icon sticky"></i><span class="sticky">置顶</span><span class="article-meta__separator">|</span></span><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-07-16T09:32:22.000Z" title="发表于 2020-07-16 17:32:22">2020-07-16</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/Hexo/">Hexo</a></span></div><div class="content">Git 是一个版本管理软件，由 Linux 之父花了 三天 搞出来的东西。
+手动惭愧 (〃’▽’〃)
+一 clone(项目)1git clone https:&#x2F;&#x2F;github.com&#x2F;CalmCenter&#x2F;UiStarge.git ui-starge
+
+最后那个 ui-starge 表示手动指定本地仓库目录名称。
+使用 git clone 时，除了从远程仓库把 .git 这个仓库目录下载到工作目录中，还会 checkout （签出） master（checkout 的意思就是把某个 commit 作为当前 commit，把 HEAD 移动过去，并把工作目录的文件内容替换成这个 commit 所对应的内容）。
+二 push(提交)add(添加至暂存区)push 做的事是：把当前 branch 的位置（即它指向哪个 commit）上传到远端仓库，并把它的路径上的  commits  一并上传。
+基础步骤 add -&gt; commit -&gt; push ，接下来一个一个看
+1git add test.txt
+
+add 后面可以使文件或者文件夹， ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/design-pattern-state.html" title="设计模式-行为型-状态模式">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover57.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式-行为型-状态模式"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/design-pattern-state.html" title="设计模式-行为型-状态模式">设计模式-行为型-状态模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-11-03T04:59:00.000Z" title="发表于 2020-11-03 12:59:00">2020-11-03</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content"></div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/design-pattern-chainofresponsibility.html" title="设计模式-行为型-责任链模式">设计模式-行为型-责任链模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-30T10:59:00.000Z" title="发表于 2020-10-30 18:59:00">2020-10-30</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handles it.(将请求的发送和接收解耦，让多个接收对象都有机会处理这个请求。将这些接收对象串成一条链，并沿着这条链传递这个请求，直到链上的某个接收对象能够处理它为止。)
+职责链模式常用在框架开发中，用来实现框架的过滤器、拦截器功能，让框架的使用者在不需要修改框架源码的情况下，添加新的过滤拦截功能。这也体现了之前讲到的对扩展开放、对修改关闭的设计原则。
+1 责任链模式 UML
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/design-pattern-strategy.html" title="设计模式-行为型-策略模式">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover44.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式-行为型-策略模式"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/design-pattern-strategy.html" title="设计模式-行为型-策略模式">设计模式-行为型-策略模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-29T04:59:00.000Z" title="发表于 2020-10-29 12:59:00">2020-10-29</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.(定义一系列算法，将每个算法分别封装起来，让它们可以互相替换。策略模式可以使算法的变化独立于使用它们的客户端（这里的客户端代指使用算法的代码）。)
+策略模式，最常见的应用场景是，利用它来避免冗长的 if-else  或 switch 分支判断。不过，它的作用还不止如此。它也可以像模板模式那样，提供框架的扩展点等等。
+工厂模式是解耦对象的创建和使用，观察者模式是解耦观察者和被观察者。策略模式跟两者类似，也能起到解耦的作用，不过，它解耦的是策略的定义、创建、使用这三部分。
+1 策略模式 UML
+
+Context ： 用来操作策略的类
+Stragety：策略的抽象
+ConcreteStragetyA：具体的策略实现
+
+策略模式的定义根据上图可实现如下代码。
+12345678910111 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/design-pattern-template.html" title="设计模式-行为型-模板方法模式">设计模式-行为型-模板方法模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-20T04:59:00.000Z" title="发表于 2020-10-20 12:59:00">2020-10-20</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm’s structure.(模板方法模式在一个方法中定义一个算法骨架，并将某些步骤推迟到子类中实现。模板方法模式可以让子类在不改变算法整体结构的情况下，重新定义算法中的某些步骤。)
+这里的 “算法” ，也可以理解为广义上的 “业务逻辑” ，并不特指数据结构和算法中的 “算法” 。这里的算法骨架就是 “模板” ，包含算法骨架的方法就是 “模板方法” ，这也是模板方法模式名字的由来。
+模板方法模式实现12345678910111213141516171819202122232425262728293031323334353637383940public abstract class AbstractClass &#1 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/design-pattern-observer.html" title="设计模式-行为型-观察模式">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover46.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式-行为型-观察模式"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/design-pattern-observer.html" title="设计模式-行为型-观察模式">设计模式-行为型-观察模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-16T10:59:00.000Z" title="发表于 2020-10-16 18:59:00">2020-10-16</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">观察者模式（Observer Design Pattern）也被称为发布订阅模式（Publish-Subscribe Design Pattern）
+
+Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
+
+在对象之间定义一个一对多的依赖，当一个对象状态改变的时候，所有依赖的对象都会自动收到通知。
+一般情况下，被依赖的对象叫作被观察者（Observable），依赖的对象叫作观察者（Observer）。
+1 观察者模式 UML
+
+Subject：抽象主题，也就是被观察（Observable）的角色，抽象主题角色把所有观察者对象的引用保存在一个集合里，每个主题都可以有任意数量的观察者，抽象主题提供一个接口，可以增加和删除观察者对象。
+ConcreteSubject：具体主题，该角色将有关状态存入具体观察者对象，在具体主题的内部状态发生改变时，给所有注册过的 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/design-pattern-flyweight.html" title="设计模式-结构型-享元模式">设计模式-结构型-享元模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-21T10:59:00.000Z" title="发表于 2020-09-21 18:59:00">2020-09-21</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">所谓 “享元”，顾名思义就是被共享的单元。享元模式的意图是复用对象，节省内存，前提是享元对象是不可变对象。
+当一个系统中存在大量重复对象的时候，如果这些重复的对象是不可变对象，我们就可以利用享元模式将对象设计成享元，在内存中只保留一份实例，供多处代码引用。这样可以减少内存中对象的数量，起到节省内存的目的。
+实际上，不仅仅相同对象可以设计成享元，对于相似对象，我们也可以将这些对象中相同的部分（字段）提取出来，设计成享元，让这些大量相似对象引用这些享元。
+定义中的 “不可变对象” 指的是，一旦通过构造函数初始化完成之后，它的状态（对象的成员变量或者属性）就不会再被修改了。所以，不可变对象不能暴露任何 set() 等修改内部状态的方法。之所以要求享元是不可变对象，那是因为它会被多处代码共享使用，避免一处代码对享元进行了修改，影响到其他使用它的代码。
+1 享元模式 UML
+举个 🌰
+过年回家买火车票是一件很困难的事，无数人用刷票插件软件在向服务端发出请求，对于每一个请求服务器都必须做出应答。
+在用户设置好出发地和目的地之后，每次请求都返回一个查询的车票结果。那么当数以万计的人不间断在请求数据 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/design-pattern-composite.html" title="设计模式-结构型-组合模式">     <img class="post_bg" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover51.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设计模式-结构型-组合模式"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/design-pattern-composite.html" title="设计模式-结构型-组合模式">设计模式-结构型-组合模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-18T10:59:00.000Z" title="发表于 2020-09-18 18:59:00">2020-09-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">Compose objects into tree structure to represent part-whole hierarchies.Composite lets client treat individual objects and compositions of objects uniformly. 
+(将一组对象组织（Compose）成树形结构，以表示一种“部分 - 整体”的层次结构。组合让客户端（在很多设计模式书籍中，“客户端”代指代码的使用者。）可以统一单个对象和组合对象的处理逻辑。)
+组合模式的数据必须能表示成树形结构，这也导致了这种模式在实际的项目开发中并不那么常用。但是，一旦数据满足树形结构，应用这种模式就能发挥很大的作用，能让代码变得非常简洁。
+1 组合模式 UML
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/design-pattern-adapter.html" title="设计模式-结构型-适配器模式">设计模式-结构型-适配器模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-08-27T10:59:00.000Z" title="发表于 2020-08-27 18:59:00">2020-08-27</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A0%81/">编码</a></span></div><div class="content">适配器是将两个不兼容的类融合在一起，它有点像粘合剂，将不同的东西通过一种转换使得它们能够协作起来。例如，经常碰到要在两个没有关系的类型之间进行交互，第一个解决方案是修改各自类的接口，但是如果没有源代码或者我们不愿意为了一个应用而修改各自的接口，此时怎么办？这种情况我们往往会使用一个 Adapter ，在这两种接口之间创建一个 “混血儿” 接口，这个 Adapter 会将这两个接口进行兼容，在不修改原有代码的情况下满足需求。
+1 适配器模式 UML
+
+冲突：Target 期待调用 operation2 方法，而 Adaptee 并没有（这就是所谓的不兼容了）。
+解决方案：为使 Target 能够使用 Adaptee 类里的 operation3 方法，故提供一个中间环节Adapter类（继承 Adaptee &amp; 实现 Target 接口），把Adaptee 的 API  与 Target 的 API 衔接起来（适配）。
+
+1234567891011121314151617181920212223242526//目标抽象类定义客户所需接口，可以是一个抽象类或接口，也可以是具体类。p ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">CalmCenter</div><div class="author-info__description">目标设置到月球，即使陨落也是在群星之间！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CalmCenter"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">不要努力成为一个成功的人，而要努力成为一个有价值的人。</div></div></div><div class="sticky_layout"><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div><ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/"><span class="card-category-list-name">Android</span><span class="card-category-list-count">12</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Hexo/"><span class="card-category-list-name">Hexo</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/github/"><span class="card-category-list-name">github</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/live2D/"><span class="card-category-list-name">live2D</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BC%96%E7%A0%81/"><span class="card-category-list-name">编码</span><span class="card-category-list-count">20</span></a></li>
+            
+            </ul></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Android/" style="font-size: 1.4em; color: #99a5b6">Android</a> <a href="/tags/Hexo/" style="font-size: 1.2em; color: #999da3">Hexo</a> <a href="/tags/Next/" style="font-size: 1.1em; color: #999">Next</a> <a href="/tags/ViewPageIndicator/" style="font-size: 1.1em; color: #999">ViewPageIndicator</a> <a href="/tags/coding/" style="font-size: 1.1em; color: #999">coding</a> <a href="/tags/delvik/" style="font-size: 1.1em; color: #999">delvik</a> <a href="/tags/git/" style="font-size: 1.2em; color: #999da3">git</a> <a href="/tags/github/" style="font-size: 1.2em; color: #999da3">github</a> <a href="/tags/live2D/" style="font-size: 1.1em; color: #999">live2D</a> <a href="/tags/live2d/" style="font-size: 1.1em; color: #999">live2d</a> <a href="/tags/seo/" style="font-size: 1.1em; color: #999">seo</a> <a href="/tags/ui/" style="font-size: 1.1em; color: #999">ui</a> <a href="/tags/viewpage/" style="font-size: 1.1em; color: #999">viewpage</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 1.1em; color: #999">博客</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 1.1em; color: #999">域名</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 1.3em; color: #99a1ac">性能优化</a> <a href="/tags/%E7%BC%96%E7%A0%81/" style="font-size: 1.5em; color: #99a9bf">编码</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/11/"><span class="card-archive-list-date">十一月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/10/"><span class="card-archive-list-date">十月 2020</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/09/"><span class="card-archive-list-date">九月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/08/"><span class="card-archive-list-date">八月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/07/"><span class="card-archive-list-date">七月 2020</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/06/"><span class="card-archive-list-date">六月 2020</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/05/"><span class="card-archive-list-date">五月 2020</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/04/"><span class="card-archive-list-date">四月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item more is-center"><a class="card-archive-list-link-more" href="/archives/">
+              <span>查看更多</span><i class="fas fa-angle-right"  ></i></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">43</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">155.7k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2020-11-04T10:39:46.102Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>function subtitleType () {
+  $.getScript('https://sdk.jinrishici.com/v2/browser/jinrishici.js',function () {
+    jinrishici.load(function (result) {
+      if (true) {
+        var sub = "".length == 0 ? new Array() : "".split(',')
+        var content = result.data.content
+        var both = sub.unshift(content)
+        var typed = new Typed('#subtitle', {
+          strings: sub,
+          startDelay: 300,
+          typeSpeed: 150,
+          loop: false,
+          backSpeed: 50,
+        })
+      } else {
+        document.getElementById('subtitle').innerHTML = result.data.content
+      }
+    })
+  })
 }
-window.addEventListener('load', subtitleType)
-</script></body></html>
+
+if (true) {
+  if (typeof Typed === 'function') subtitleType()
+  else $.getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js', subtitleType)
+} else {
+  subtitleType()
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>

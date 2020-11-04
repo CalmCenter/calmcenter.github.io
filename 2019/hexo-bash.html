@@ -1,89 +1,152 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hexo 基础搭建 | CalmCenter</title><meta name="description" content="开始使用 Hexo 搭建基础页面，并发布到 Github Pages"><meta name="keywords" content="HEXO"><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = 'false'
-var t = Cookies.get("theme")
-if (autoChangeMode == '1'){
-  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
-  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
-  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
-  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-
-  if (t === undefined){
-    if (isLightMode) activateLightMode()
-    else if (isDarkMode) activateDarkMode()
-    else if (isNotSpecified || hasNoSupport){
-      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
-      var now = new Date()
-      var hour = now.getHours()
-      var isNight = hour < 6 || hour >= 18
-      isNight ? activateDarkMode() : activateLightMode()
-  }
-  } else if (t == 'light') activateLightMode()
-  else activateDarkMode()
-
-} else if (autoChangeMode == '2'){
-  now = new Date();
-  hour = now.getHours();
-  isNight = hour < 6 || hour >= 18
-  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
-  else if (t === 'light') activateLightMode()
-  else activateDarkMode() 
-} else {
-  if ( t == 'dark' ) activateDarkMode()
-  else if ( t == 'light') activateLightMode()
-}
-
-function activateDarkMode(){
-  document.documentElement.setAttribute('data-theme', 'dark')
-  if (document.querySelector('meta[name="theme-color"]') !== null){
-    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
-  }
-}
-function activateLightMode(){
-  document.documentElement.setAttribute('data-theme', 'light')
-  if (document.querySelector('meta[name="theme-color"]') !== null){
-  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
-  }
-}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="canonical" href="https://calmcenter.club/2019/hexo-bash.html"><link rel="prev" title="Hexo 管理代码" href="https://calmcenter.club/2019/hexo-code-management.html"><link rel="next" title="职场的真相" href="https://calmcenter.club/2019/zhi-chang-de-zhen-xiang.html"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hexo 基础搭建 | CalmCenter</title><meta name="keywords" content="HEXO"><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="开始使用 Hexo 搭建基础页面，并发布到 Github Pages">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 基础搭建">
+<meta property="og:url" content="https://calmcenter.club/2019/hexo-bash.html">
+<meta property="og:site_name" content="CalmCenter">
+<meta property="og:description" content="开始使用 Hexo 搭建基础页面，并发布到 Github Pages">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/CalmCenter/Pic/raw/master/cover14.webp">
+<meta property="article:published_time" content="2019-12-18T09:32:22.000Z">
+<meta property="article:modified_time" content="2019-12-18T09:32:22.000Z">
+<meta property="article:author" content="CalmCenter">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="github">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/CalmCenter/Pic/raw/master/cover14.webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://calmcenter.club/2019/hexo-bash"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var GLOBAL_CONFIG = { 
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  localSearch: undefined,
   translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
     noSupport: '浏览器不支持'
   },
-  bookmark: {
-    message_prev: '按',
-    message_next: '键将本页加入书签'
+  relativeDate: {
+    homepage: false,
+    post: false
   },
-  runtime_unit: '天',
-  runtime: true,
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
   copyright: undefined,
   ClickShowText: undefined,
-  medium_zoom: true,
-  fancybox: false,
-  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"top-right"},
-  baiduPush: false,
-  highlightCopy: true,
-  highlightLang: false,
-  highlightShrink: 'none',
-  isFontAwesomeV5: false,
-  isPhotoFigcaption: true,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"top-right"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
   islazyload: true,
   isanchor: false
-  
-}</script><script>var GLOBAL_CONFIG_SITE = { 
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
   isPost: true,
   isHome: false,
-  isSidebar: true  
-  }</script><noscript><style>
-#page-header {
-  opacity: 1
-}
-.justified-gallery img{
-  opacity: 1
-}
-</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">38</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">17</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#本文主要记载"><span class="toc-text">本文主要记载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、-搭建本地博客"><span class="toc-text">一、 搭建本地博客</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-首先安装-Node-js"><span class="toc-text">1.1 首先安装 Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-安装-Hexo"><span class="toc-text">1.2 安装 Hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-镜像相关（如果-npm-可以正常使用这里跳过！）"><span class="toc-text">1.2.1 镜像相关（如果 npm 可以正常使用这里跳过！）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Hexo初始化"><span class="toc-text">1.3 Hexo初始化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、部署到-Github-Pages"><span class="toc-text">二、部署到 Github Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-注册Github账户"><span class="toc-text">2.1 注册Github账户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-创建项目"><span class="toc-text">2.2 创建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-配置-SSH-密钥"><span class="toc-text">2.3 配置 SSH 密钥</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-查看是否存在-SSH-密钥"><span class="toc-text">2.3.1 查看是否存在 SSH 密钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-创建新的-SSH-密钥"><span class="toc-text">2.3.2 创建新的 SSH 密钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3-在-GitHub-添加你的公钥"><span class="toc-text">2.3.3 在 GitHub 添加你的公钥</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-将本地-Hexo-文件编译并上传-GitHub-的库中"><span class="toc-text">2.4 将本地 Hexo 文件编译并上传 GitHub 的库中</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover17.webp)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">CalmCenter</a></span><span class="pull_right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">Hexo 基础搭建</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2019-12-18 17:32:22"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-12-18</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-06-22 11:56:59"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-06-22</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Hexo/">Hexo</a></span></div><div class="meta-secondline"> <span class="post-meta-wordcount"><i class="post-meta__icon fa fa-file-word-o" aria-hidden="true"></i><span>字数总计:</span><span class="word-count">1.7k</span><span class="post-meta__separator">|</span><i class="post-meta__icon fa fa-clock-o" aria-hidden="true"></i><span>阅读时长: 6 分钟</span></span></div><div class="meta-thirdline"><span class="post-meta-pv-cv"><span class="post-meta__separator">|</span><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>目录请看 <a href="https://calmcenter.club/2019/Complete_works_of_hexo.html">Hexo 搭建博客大全</a></p>
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-12-18 17:32:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover14.webp)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">CalmCenter</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">Hexo 基础搭建</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-12-18T09:32:22.000Z" title="发表于 2019-12-18 17:32:22">2019-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-12-18T09:32:22.000Z" title="更新于 2019-12-18 17:32:22">2019-12-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Hexo/">Hexo</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>目录请看 <a href="https://calmcenter.club/2019/Complete_works_of_hexo.html">Hexo 搭建博客大全</a></p>
 <p><strong>注意：如果出现图片不显示问题请移步</strong> <a href="https://calmcenter.club/2019/PicNotShow.html">图片不显示问题</a></p>
 <h2 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h2><ul>
 <li>搭建本地博客</li>
@@ -94,16 +157,16 @@ function activateLightMode(){
 <hr>
 <a id="more"></a>
 
-<h2 id="一、-搭建本地博客"><a href="#一、-搭建本地博客" class="headerlink" title="一、 搭建本地博客"></a>一、 搭建本地博客</h2><h3 id="1-1-首先安装-Node-js"><a href="#1-1-首先安装-Node-js" class="headerlink" title="1.1 首先安装 Node.js"></a>1.1 首先安装 <code>Node.js</code></h3><p>首先去 <a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">官方页面</a> 下载安装文件，无脑安装就好 （<del>。</del>）</p>
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/picturesnode.png" style="zoom:20%">
+<h2 id="一、-搭建本地博客"><a href="#一、-搭建本地博客" class="headerlink" title="一、 搭建本地博客"></a>一、 搭建本地博客</h2><h3 id="1-1-首先安装-Node-js"><a href="#1-1-首先安装-Node-js" class="headerlink" title="1.1 首先安装 Node.js"></a>1.1 首先安装 <code>Node.js</code></h3><p>首先去 <a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">官方页面</a> 下载安装文件，无脑安装就好 （<del>。</del>）</p>
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/picturesnode.png" style="zoom:20%">
 
 
 
 <p>图中绿色选择部分，安装完成后输入 <code>npm -v</code> , 会告诉你版本号，就证明你安装成功了</p>
 <p>3.2 安装 <code>Git</code></p>
-<p>去 <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">git官网</a> 下载电脑对应版本，进行安装，安装完成后，输入 <code>git version</code> ，会告诉你版本号，就证明你安装成功了。安装成功后，鼠标右键菜单里会多出 <code>Git GUI Here</code> 和 <code>Git Bash Here</code> 两个按钮。</p>
-<p><strong><a href="https://www.cnblogs.com/wj-1314/p/7993819.html" target="_blank" rel="noopener">Git安装教程</a>  这个是百度的，如果不会查看本链接或重新百度就好~</strong></p>
-<p><strong>我管理代码都是在 <a href="https://www.sourcetreeapp.com/" target="_blank" rel="noopener">Sourcetree</a> 上进行，后续会说，当然也是要 Git 的支持，这个还是很方便的，无脑操作~6</strong></p>
+<p>去 <a target="_blank" rel="noopener" href="https://git-scm.com/download/win">git官网</a> 下载电脑对应版本，进行安装，安装完成后，输入 <code>git version</code> ，会告诉你版本号，就证明你安装成功了。安装成功后，鼠标右键菜单里会多出 <code>Git GUI Here</code> 和 <code>Git Bash Here</code> 两个按钮。</p>
+<p><strong><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wj-1314/p/7993819.html">Git安装教程</a>  这个是百度的，如果不会查看本链接或重新百度就好~</strong></p>
+<p><strong>我管理代码都是在 <a target="_blank" rel="noopener" href="https://www.sourcetreeapp.com/">Sourcetree</a> 上进行，后续会说，当然也是要 Git 的支持，这个还是很方便的，无脑操作~6</strong></p>
 <h3 id="1-2-安装-Hexo"><a href="#1-2-安装-Hexo" class="headerlink" title="1.2 安装 Hexo"></a>1.2 安装 <code>Hexo</code></h3><p>*<em>注意执行命令期间 <code>WARN</code> 不管 只看 <code>ERR</code> *</em></p>
 <p>在文件夹内如 <code>D:\blog</code> ，鼠标右键点击 <code>Git Bash Here</code> 一气呵成，来到了命令行界面。</p>
 <p>首先安装 <code>hexo</code> </p>
@@ -126,7 +189,7 @@ function activateLightMode(){
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
 
 <p>完成后，文件目录如下</p>
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/pictureshexo_file.png" style="zoom:100%">
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/pictureshexo_file.png" style="zoom:100%">
 
 <p>这样就证明初始化完成了，然后我们继续要生成静态页面，用到的命令是</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
@@ -139,7 +202,7 @@ function activateLightMode(){
 
 <p>其中， <code>s</code> 的全称是 <code>server</code>，当然也可以用 <code>hexo server</code> 这条命令</p>
 <p>然后，打开你的浏览器，输入<code>http://localhost:4000/</code> 即可看到本地静态博客</p>
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/pictureshexo_page.png" style="zoom:20%">
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/pictureshexo_page.png" style="zoom:20%">
 
 <p>本地静态博客完成 ~ </p>
 <p>如果出现 <code>Cannot GET/xxx</code> 等类似错误，意味着有文件未被找到。<code>Cannot GET/xxx</code> 错误本质是 <code>hexo server</code> 返回的一个404错误。</p>
@@ -147,16 +210,16 @@ function activateLightMode(){
 <p>如果说 <code>index.html</code> 不存在，那么执行 <code>hexo clean</code>，<code>hexo g</code> 重新生成一次，回到步骤1。</p>
 <p>步骤2执行完后 <code>index.html</code> 仍不存在，执行 <code>npm audit fix</code> ，查看是否少了什么组件，通过 <code>npm install hexo-xxx-xxx</code>  安装即可。</p>
 <p>步骤3完成之后，执行 <code>hexo clean</code>，<code>hexo g</code> 重新生成静态文件。</p>
-<p>仍然有问题，请再参考此文：<a href="https://www.cnblogs.com/Sroot/p/6305938.html" target="_blank" rel="noopener">https://www.cnblogs.com/Sroot/p/6305938.html</a></p>
-<p>感谢 <a href="https://www.jianshu.com/p/af83fc73e525" target="_blank" rel="noopener">Cannot GET 错误解决方式 原文地址</a></p>
+<p>仍然有问题，请再参考此文：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Sroot/p/6305938.html">https://www.cnblogs.com/Sroot/p/6305938.html</a></p>
+<p>感谢 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/af83fc73e525">Cannot GET 错误解决方式 原文地址</a></p>
 <hr>
-<h2 id="二、部署到-Github-Pages"><a href="#二、部署到-Github-Pages" class="headerlink" title="二、部署到 Github Pages"></a>二、部署到 Github Pages</h2><h3 id="2-1-注册Github账户"><a href="#2-1-注册Github账户" class="headerlink" title="2.1 注册Github账户"></a>2.1 注册Github账户</h3><p>进入 <a href="https://github.com/" target="_blank" rel="noopener">github首页</a> ，点击右上角 <a href="https://github.com/join?source=header-home" target="_blank" rel="noopener">sign up</a> 进行注册。</p>
-<h3 id="2-2-创建项目"><a href="#2-2-创建项目" class="headerlink" title="2.2 创建项目"></a>2.2 创建项目</h3><p>登录后，创建一个自己的 <code>GitHub Pages</code>。 点击头像中的 <a href="https://github.com/new" target="_blank" rel="noopener">New repository</a> 。</p>
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/picturesnew_repository.png" style="zoom:50%">
+<h2 id="二、部署到-Github-Pages"><a href="#二、部署到-Github-Pages" class="headerlink" title="二、部署到 Github Pages"></a>二、部署到 Github Pages</h2><h3 id="2-1-注册Github账户"><a href="#2-1-注册Github账户" class="headerlink" title="2.1 注册Github账户"></a>2.1 注册Github账户</h3><p>进入 <a target="_blank" rel="noopener" href="https://github.com/">github首页</a> ，点击右上角 <a target="_blank" rel="noopener" href="https://github.com/join?source=header-home">sign up</a> 进行注册。</p>
+<h3 id="2-2-创建项目"><a href="#2-2-创建项目" class="headerlink" title="2.2 创建项目"></a>2.2 创建项目</h3><p>登录后，创建一个自己的 <code>GitHub Pages</code>。 点击头像中的 <a target="_blank" rel="noopener" href="https://github.com/new">New repository</a> 。</p>
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/picturesnew_repository.png" style="zoom:50%">
 
 <p>*<em>敲黑板！！ 这里重点就是项目名称必须是 <code>自己名称.github.io</code>  *</em></p>
 <h3 id="2-3-配置-SSH-密钥"><a href="#2-3-配置-SSH-密钥" class="headerlink" title="2.3 配置 SSH 密钥"></a>2.3 配置 <code>SSH</code> 密钥</h3><h4 id="2-3-1-查看是否存在-SSH-密钥"><a href="#2-3-1-查看是否存在-SSH-密钥" class="headerlink" title="2.3.1 查看是否存在 SSH 密钥"></a>2.3.1 查看是否存在 <code>SSH</code> 密钥</h4><p>首先通过输入命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;. ssh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;. ssh </span><br></pre></td></tr></table></figure>
 
 <p>如果存在则会进入此目录,可以略过 4.3.2，否则会提示你不存在，那么继续 4.3.2</p>
 <h4 id="2-3-2-创建新的-SSH-密钥"><a href="#2-3-2-创建新的-SSH-密钥" class="headerlink" title="2.3.2 创建新的 SSH 密钥"></a>2.3.2 创建新的 <code>SSH</code> 密钥</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
@@ -171,28 +234,28 @@ function activateLightMode(){
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clip &lt; ~&#x2F;.ssh&#x2F;id_rsa.pub</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
-<li>然后登陆 <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> ，点击头像</li>
+<li>然后登陆 <a target="_blank" rel="noopener" href="https://github.com/">GitHub</a> ，点击头像</li>
 </ol>
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/picturessetting.png" style="zoom:50%">
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/picturessetting.png" style="zoom:50%">
 
 <ol start="3">
 <li>进入设置页，选择 <code>SSH</code> </li>
 </ol>
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/picturessetting_list.png" style="zoom:50%">
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/picturessetting_list.png" style="zoom:50%">
 
 
 
 <ol start="4">
 <li>粘贴密钥，添加即可</li>
 </ol>
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/picturesssh_content.png" style="zoom:50%">
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/picturesssh_content.png" style="zoom:50%">
 
 <ol start="5">
 <li>测试</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/picturestest_ssh.png" style="zoom:100%">
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/picturestest_ssh.png" style="zoom:100%">
 
 <ol start="6">
 <li>设置用户信息</li>
@@ -204,16 +267,16 @@ function activateLightMode(){
 
 <p>这样就配置好了SSH</p>
 <h3 id="2-4-将本地-Hexo-文件编译并上传-GitHub-的库中"><a href="#2-4-将本地-Hexo-文件编译并上传-GitHub-的库中" class="headerlink" title="2.4 将本地 Hexo 文件编译并上传 GitHub 的库中"></a>2.4 将本地 <code>Hexo</code> 文件编译并上传 <code>GitHub</code> 的库中</h3><ol>
-<li>打开 <a href="https://github.com/" target="_blank" rel="noopener">github首页</a> 登录，找到左上角自己的项目</li>
+<li>打开 <a target="_blank" rel="noopener" href="https://github.com/">github首页</a> 登录，找到左上角自己的项目</li>
 </ol>
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/picturesgithub_list.png" style="zoom:70%">
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/picturesgithub_list.png" style="zoom:70%">
 
 <ol start="2">
 <li><p>点击 clone 点击 Use SSH 并复制 <code>SSH</code> 路径</p>
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/picturesgithub_ssh_path.png" style="zoom:70%">
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/picturesgithub_ssh_path.png" style="zoom:70%">
 </li>
 <li><p>打开 <code>hexo</code> 目录，找到 <code>_config</code> 文件</p>
-<img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/pictureshexo_catalog_config.png" style="zoom:70%">
+<img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/pictureshexo_catalog_config.png" style="zoom:70%">
 </li>
 <li><p>打开并找到 <code>deploy</code> 关键字</p>
 </li>
@@ -235,43 +298,30 @@ function activateLightMode(){
 
 <p> 和 <code>hexo g</code> 、 <code>hexo d</code> 一样</p>
 <p><strong>提交后线上会有延迟才会展现最新效果，特别是配置样式之后</strong></p>
-<p>提交过程中会让你输入一次密码，完成后就可以在外网访问博客了。<a href="https://calmcenter.github.io/" target="_blank" rel="noopener">https://calmcenter.github.io/</a> <code>https://用户名.github.io</code></p>
+<p>提交过程中会让你输入一次密码，完成后就可以在外网访问博客了。<a target="_blank" rel="noopener" href="https://calmcenter.github.io/">https://calmcenter.github.io/</a> <code>https://用户名.github.io</code></p>
 <p>假如这时候，报错 <code>ERROR Deployer not found: git</code>，那么就是你的 <code>deployer</code> 没有安装成功，你需要执行如下命令再安装一次：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 
 <p>这样，你再执行 <code>hexo g -d</code> ，你的博客就部署到 <code>Github</code> 上了。</p>
-</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">CalmCenter</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://calmcenter.club/2019/hexo-bash.html">https://calmcenter.club/2019/hexo-bash.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://calmcenter.club" target="_blank">CalmCenter</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hexo/">Hexo</a><a class="post-meta__tags" href="/tags/git/">git</a><a class="post-meta__tags" href="/tags/github/">github</a></div><div class="post_share"></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.png" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.png" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2019/hexo-code-management.html"><img class="prev_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover12.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Hexo 管理代码</div></div></a></div><div class="next-post pull_right"><a href="/2019/zhi-chang-de-zhen-xiang.html"><img class="next_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover25.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">职场的真相</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2019/complete-works-of-hexo.html" title="Hexo 搭建博客篇"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover18.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-01</div><div class="relatedPosts_title">Hexo 搭建博客篇</div></div></a></div><div class="relatedPosts_item"><a href="/2019/hexo-code-management.html" title="Hexo 管理代码"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover12.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-19</div><div class="relatedPosts_title">Hexo 管理代码</div></div></a></div><div class="relatedPosts_item"><a href="/2019/hexo-functional-style.html" title="Hexo 功能样式配置"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover22.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-21</div><div class="relatedPosts_title">Hexo 功能样式配置</div></div></a></div><div class="relatedPosts_item"><a href="/2019/hexo-website-management.html" title="Hexo 网站管理"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover11.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-21</div><div class="relatedPosts_title">Hexo 网站管理</div></div></a></div><div class="relatedPosts_item"><a href="/2020/git-principle.html" title="Git 功能原理记录"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover47.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-07-16</div><div class="relatedPosts_title">Git 功能原理记录</div></div></a></div><div class="relatedPosts_item"><a href="/2019/picnotshow.html" title="GitHub 博客图片不显示问题"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover21.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-03-01</div><div class="relatedPosts_title">GitHub 博客图片不显示问题</div></div></a></div></div><div class="clear_both"></div></div><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var requestSetting = function (from,set) {
-  var from = from
-  var setting = set.split(',').filter(function(item){
-  return from.indexOf(item) > -1
-  });
-  setting = setting.length == 0 ? from :setting;
-  return setting
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">CalmCenter</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://calmcenter.club/2019/hexo-bash.html">https://calmcenter.club/2019/hexo-bash.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://calmcenter.club" target="_blank">CalmCenter</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hexo/">Hexo</a><a class="post-meta__tags" href="/tags/git/">git</a><a class="post-meta__tags" href="/tags/github/">github</a></div><div class="post_share"><div class="social-share" data-image="https://gitee.com/CalmCenter/Pic/raw/master/cover14.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/alipay.png" alt="支付寶"/></a><div class="post-qr-code-desc">支付寶</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/hexo-code-management.html"><img class="prev-cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover15.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Hexo 管理代码</div></div></a></div><div class="next-post pull-right"><a href="/2019/zhi-chang-de-zhen-xiang.html"><img class="next-cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover12.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">职场的真相</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/complete-works-of-hexo.html" title="Hexo 搭建博客篇"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover18.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-01</div><div class="title">Hexo 搭建博客篇</div></div></a></div><div><a href="/2019/hexo-code-management.html" title="Hexo 管理代码"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover15.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-19</div><div class="title">Hexo 管理代码</div></div></a></div><div><a href="/2019/hexo-functional-style.html" title="Hexo 功能样式配置"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover11.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-21</div><div class="title">Hexo 功能样式配置</div></div></a></div><div><a href="/2019/hexo-website-management.html" title="Hexo 网站管理"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover21.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-21</div><div class="title">Hexo 网站管理</div></div></a></div><div><a href="/2020/git-principle.html" title="Git 功能原理记录"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover47.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-16</div><div class="title">Git 功能原理记录</div></div></a></div><div><a href="/2019/picnotshow.html" title="GitHub 博客图片不显示问题"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover11.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-01</div><div class="title">GitHub 博客图片不显示问题</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo"></div></div></div></div></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">CalmCenter</div><div class="author-info__description">目标设置到月球，即使陨落也是在群星之间！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CalmCenter"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">不要努力成为一个成功的人，而要努力成为一个有价值的人。</div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="card-content"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E4%B8%BB%E8%A6%81%E8%AE%B0%E8%BD%BD"><span class="toc-text">本文主要记载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%8D%9A%E5%AE%A2"><span class="toc-text">一、 搭建本地博客</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E9%A6%96%E5%85%88%E5%AE%89%E8%A3%85-Node-js"><span class="toc-text">1.1 首先安装 Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AE%89%E8%A3%85-Hexo"><span class="toc-text">1.2 安装 Hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E9%95%9C%E5%83%8F%E7%9B%B8%E5%85%B3%EF%BC%88%E5%A6%82%E6%9E%9C-npm-%E5%8F%AF%E4%BB%A5%E6%AD%A3%E5%B8%B8%E4%BD%BF%E7%94%A8%E8%BF%99%E9%87%8C%E8%B7%B3%E8%BF%87%EF%BC%81%EF%BC%89"><span class="toc-text">1.2.1 镜像相关（如果 npm 可以正常使用这里跳过！）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Hexo%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">1.3 Hexo初始化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%83%A8%E7%BD%B2%E5%88%B0-Github-Pages"><span class="toc-text">二、部署到 Github Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%B3%A8%E5%86%8CGithub%E8%B4%A6%E6%88%B7"><span class="toc-text">2.1 注册Github账户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-text">2.2 创建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E9%85%8D%E7%BD%AE-SSH-%E5%AF%86%E9%92%A5"><span class="toc-text">2.3 配置 SSH 密钥</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E6%9F%A5%E7%9C%8B%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8-SSH-%E5%AF%86%E9%92%A5"><span class="toc-text">2.3.1 查看是否存在 SSH 密钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84-SSH-%E5%AF%86%E9%92%A5"><span class="toc-text">2.3.2 创建新的 SSH 密钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3-%E5%9C%A8-GitHub-%E6%B7%BB%E5%8A%A0%E4%BD%A0%E7%9A%84%E5%85%AC%E9%92%A5"><span class="toc-text">2.3.3 在 GitHub 添加你的公钥</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%B0%86%E6%9C%AC%E5%9C%B0-Hexo-%E6%96%87%E4%BB%B6%E7%BC%96%E8%AF%91%E5%B9%B6%E4%B8%8A%E4%BC%A0-GitHub-%E7%9A%84%E5%BA%93%E4%B8%AD"><span class="toc-text">2.4 将本地 Hexo 文件编译并上传 GitHub 的库中</span></a></li></ol></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>function loadTwikoo () {
+  function init () {
+    twikoo.init({ 
+      envId: 'calm-9gof91dkfcacdb0a' 
+    })
+  }
+
+  if (typeof twikoo.init === 'function') {
+    init()
+  } else {
+    $.getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js', init)
+  }
 }
 
-var guestInfo = requestSetting(['nick','mail','link'],'nick,mail,link')
-var requiredFields = requestSetting(['nick','mail','link'],'nick,mail')
-
-window.valine = new Valine({
-  el:'#vcomment',
-  appId: 'KiQHU70TUHYrumpFuuhC3UEg-gzGzoHsz',
-  appKey: 'wX1m2ATu8q4CyeRhOQ3FUucn',
-  notify: true,
-  verify: true,
-  placeholder: '💦💦既然来了何不留下你的足迹(支持 Markdown 哦~)',
-  avatar: 'robohash',
-  meta: guestInfo,
-  pageSize: '10',
-  lang: 'zh-CN',
-  recordIP: false,
-  serverURLs: '',
-  emojiCDN: '',
-  emojiMaps: "",
-  enableQQ: false,
-  requiredFields: requiredFields
-});</script></div></article></main><footer id="footer" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover17.webp)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="240" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
-var home_Path = 'https://calmcenter.club/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/xxb2/model.json");</script><link rel="stylesheet" href="/live2d/css/live2d.css"/></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><a id="to_comment" href="#post-comment" title="直达评论"><i class="scroll_to_comment fa fa-comments">  </i></a><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
- <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script id="ribbon_piao" mobile="true" src="/js/third-party/piao.js"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
-POWERMODE.shake = true;
-document.body.addEventListener('input', POWERMODE);
-</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script><script src="/js/search/local-search.js"></script></body></html>
+if ('Twikoo' === 'Twikoo' || !false) {
+  if (false) btf.loadComment(document.getElementById('twikoo'), loadTwikoo)
+  else loadTwikoo()
+} else {
+  function loadOtherComment () {
+    loadTwikoo()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>

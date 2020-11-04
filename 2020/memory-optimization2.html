@@ -1,89 +1,151 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>App 内存检测优化💦 | CalmCenter</title><meta name="description" content="🌞一个好的架构可以减少甚至避免我们犯错，而一个好的监控可以帮助我们及时发现问题🌞内存优化的重点在于监控和平时代码规范。 Memory Profiler、MAT、LeakCanary 使用知识你值得拥有 ~"><meta name="keywords" content="Android"><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="dns-prefetch" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="dns-prefetch" href="https://fonts.googleapis.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="dns-prefetch" href="//busuanzi.ibruce.info"/><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = 'false'
-var t = Cookies.get("theme")
-if (autoChangeMode == '1'){
-  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
-  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
-  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
-  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-
-  if (t === undefined){
-    if (isLightMode) activateLightMode()
-    else if (isDarkMode) activateDarkMode()
-    else if (isNotSpecified || hasNoSupport){
-      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
-      var now = new Date()
-      var hour = now.getHours()
-      var isNight = hour < 6 || hour >= 18
-      isNight ? activateDarkMode() : activateLightMode()
-  }
-  } else if (t == 'light') activateLightMode()
-  else activateDarkMode()
-
-} else if (autoChangeMode == '2'){
-  now = new Date();
-  hour = now.getHours();
-  isNight = hour < 6 || hour >= 18
-  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
-  else if (t === 'light') activateLightMode()
-  else activateDarkMode() 
-} else {
-  if ( t == 'dark' ) activateDarkMode()
-  else if ( t == 'light') activateLightMode()
-}
-
-function activateDarkMode(){
-  document.documentElement.setAttribute('data-theme', 'dark')
-  if (document.querySelector('meta[name="theme-color"]') !== null){
-    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
-  }
-}
-function activateLightMode(){
-  document.documentElement.setAttribute('data-theme', 'light')
-  if (document.querySelector('meta[name="theme-color"]') !== null){
-  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
-  }
-}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="canonical" href="https://calmcenter.club/2020/memory-optimization2.html"><link rel="prev" title="App UI优化💦" href="https://calmcenter.club/2020/ui-optimization.html"><link rel="next" title="App 内存知识介绍💦" href="https://calmcenter.club/2020/memory-optimization.html"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>App 内存检测优化💦 | CalmCenter</title><meta name="keywords" content="Android"><meta name="author" content="CalmCenter"><meta name="copyright" content="CalmCenter"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="🌞一个好的架构可以减少甚至避免我们犯错，而一个好的监控可以帮助我们及时发现问题🌞内存优化的重点在于监控和平时代码规范。 Memory Profiler、MAT、LeakCanary 使用知识你值得拥有 ~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="App 内存检测优化💦">
+<meta property="og:url" content="https://calmcenter.club/2020/memory-optimization2.html">
+<meta property="og:site_name" content="CalmCenter">
+<meta property="og:description" content="🌞一个好的架构可以减少甚至避免我们犯错，而一个好的监控可以帮助我们及时发现问题🌞内存优化的重点在于监控和平时代码规范。 Memory Profiler、MAT、LeakCanary 使用知识你值得拥有 ~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://calmcenter.club/img/avatar.jpg">
+<meta property="article:published_time" content="2020-02-29T11:59:00.000Z">
+<meta property="article:modified_time" content="2020-02-29T11:59:00.000Z">
+<meta property="article:author" content="CalmCenter">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="性能优化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://calmcenter.club/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://calmcenter.club/2020/memory-optimization2"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var GLOBAL_CONFIG = { 
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  localSearch: undefined,
   translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
     noSupport: '浏览器不支持'
   },
-  bookmark: {
-    message_prev: '按',
-    message_next: '键将本页加入书签'
+  relativeDate: {
+    homepage: false,
+    post: false
   },
-  runtime_unit: '天',
-  runtime: true,
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
   copyright: undefined,
   ClickShowText: undefined,
-  medium_zoom: true,
-  fancybox: false,
-  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"top-right"},
-  baiduPush: false,
-  highlightCopy: true,
-  highlightLang: false,
-  highlightShrink: 'none',
-  isFontAwesomeV5: false,
-  isPhotoFigcaption: true,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"top-right"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
   islazyload: true,
   isanchor: false
-  
-}</script><script>var GLOBAL_CONFIG_SITE = { 
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
   isPost: true,
   isHome: false,
-  isSidebar: true  
-  }</script><noscript><style>
-#page-header {
-  opacity: 1
-}
-.justified-gallery img{
-  opacity: 1
-}
-</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">38</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">17</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#本文主要记载"><span class="toc-text">本文主要记载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-什么是-Memory-Profiler"><span class="toc-text">1  什么是 Memory Profiler?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-使用介绍"><span class="toc-text">1.1 使用介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-启用高级分析"><span class="toc-text">1.1.1  启用高级分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-2-计算内存-每个内存类别当前使用多少内存"><span class="toc-text">1.1.2 计算内存(每个内存类别当前使用多少内存)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-3-查看内存分配-分配的对象数"><span class="toc-text">1.1.3 查看内存分配(分配的对象数)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-4-在分析时提高应用性能"><span class="toc-text">1.1.4 在分析时提高应用性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-5-捕获堆转储"><span class="toc-text">1.1.5 捕获堆转储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-6-将堆转储另存为-HPROF-文件"><span class="toc-text">1.1.6 将堆转储另存为 HPROF 文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-什么是-MAT"><span class="toc-text">2 什么是 MAT?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-使用前提"><span class="toc-text">2.1 使用前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-使用介绍"><span class="toc-text">2.2 使用介绍</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-什么是-LeakCanary？"><span class="toc-text">3 什么是 LeakCanary？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-LeakCanary-原理"><span class="toc-text">3.1 LeakCanary 原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-LeakCanary-使用"><span class="toc-text">3.2 LeakCanary 使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-自定义实现-Demo"><span class="toc-text">4 自定义实现 Demo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-自动化检测Demo"><span class="toc-text">4.1 自动化检测Demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-重复图片检测Demo"><span class="toc-text">4.2 重复图片检测Demo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-优化思路"><span class="toc-text">5 优化思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-设备分级"><span class="toc-text">5.1 设备分级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-Bitmap-优化"><span class="toc-text">5.2 Bitmap 优化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-更多"><span class="toc-text">6 更多</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-监听系统内存状态"><span class="toc-text">6.1 监听系统内存状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-1-ComponentCallback2"><span class="toc-text">6.1.1 ComponentCallback2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-2-ActivityManager-getMemoryInfo"><span class="toc-text">6.1.2 ActivityManager.getMemoryInfo()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-内存优化技巧"><span class="toc-text">6.2 内存优化技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-1-谨慎使用-Service"><span class="toc-text">6.2.1 谨慎使用 Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-2-选择优化后的数据容器"><span class="toc-text">6.2.2 选择优化后的数据容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-3-小心代码抽象"><span class="toc-text">6.2.3 小心代码抽象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-4-使用-protobuf-作为序列化数据"><span class="toc-text">6.2.4 使用 protobuf 作为序列化数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-5-Apk-瘦身"><span class="toc-text">6.2.5 Apk 瘦身</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-6-使用-Dagger2-进行依赖注入"><span class="toc-text">6.2.6 使用 Dagger2 进行依赖注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-7-谨慎使用第三方库"><span class="toc-text">6.2.7 谨慎使用第三方库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-8-使用-IntDef-和-StringDef-替代枚举类型"><span class="toc-text">6.2.8 使用  IntDef 和 StringDef 替代枚举类型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#感谢"><span class="toc-text">感谢</span></a></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover17.webp)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">CalmCenter</a></span><span class="pull_right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">App 内存检测优化💦</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2020-02-29 19:59:00"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2020-02-29</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-06-05 15:12:41"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-06-05</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Android/">Android</a></span></div><div class="meta-secondline"> <span class="post-meta-wordcount"><i class="post-meta__icon fa fa-file-word-o" aria-hidden="true"></i><span>字数总计:</span><span class="word-count">8.4k</span><span class="post-meta__separator">|</span><i class="post-meta__icon fa fa-clock-o" aria-hidden="true"></i><span>阅读时长: 27 分钟</span></span></div><div class="meta-thirdline"><span class="post-meta-pv-cv"><span class="post-meta__separator">|</span><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>🌞一个好的架构可以减少甚至避免我们犯错，而一个好的监控可以帮助我们及时发现问题🌞内存优化的重点在于监控，和平时代码规范。这篇文章带你了解监控工具 Memory Profiler、MAT、LeakCanary 的使用以及分析。</p>
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-02-29 19:59:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover10.webp)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">CalmCenter</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><h1 class="post-title">App 内存检测优化💦</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-02-29T11:59:00.000Z" title="发表于 2020-02-29 19:59:00">2020-02-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-02-29T11:59:00.000Z" title="更新于 2020-02-29 19:59:00">2020-02-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">8.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>27分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>🌞一个好的架构可以减少甚至避免我们犯错，而一个好的监控可以帮助我们及时发现问题🌞内存优化的重点在于监控，和平时代码规范。这篇文章带你了解监控工具 Memory Profiler、MAT、LeakCanary 的使用以及分析。</p>
 <h1 id="本文主要记载"><a href="#本文主要记载" class="headerlink" title="本文主要记载"></a>本文主要记载</h1><ul>
 <li><strong>1 什么是 Memory Profiler？</strong><ul>
 <li>1.1 使用介绍<ul>
@@ -131,7 +193,7 @@ function activateLightMode(){
 <li>下方的 Profiler 标签</li>
 <li>双击 shift 搜索 profiler</li>
 </ol>
-<h2 id="1-1-使用介绍"><a href="#1-1-使用介绍" class="headerlink" title="1.1 使用介绍"></a>1.1 使用介绍</h2><p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/20200413144637.png" alt=""></p>
+<h2 id="1-1-使用介绍"><a href="#1-1-使用介绍" class="headerlink" title="1.1 使用介绍"></a>1.1 使用介绍</h2><p><img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/20200413144637.png" alt=""></p>
 <ol>
 <li><p>用于强制执行垃圾回收事件的按钮（强制 <code>GC</code> ）。</p>
 </li>
@@ -167,7 +229,7 @@ function activateLightMode(){
 <li>点击 <strong>Profiling</strong> 标签，然后勾选 <strong>Enable advanced profiling</strong>。</li>
 <li>重新编译并运行应用。</li>
 </ol>
-<h3 id="1-1-2-计算内存-每个内存类别当前使用多少内存"><a href="#1-1-2-计算内存-每个内存类别当前使用多少内存" class="headerlink" title="1.1.2 计算内存(每个内存类别当前使用多少内存)"></a>1.1.2 计算内存(每个内存类别当前使用多少内存)</h3><p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/20200414112438.png" alt=""></p>
+<h3 id="1-1-2-计算内存-每个内存类别当前使用多少内存"><a href="#1-1-2-计算内存-每个内存类别当前使用多少内存" class="headerlink" title="1.1.2 计算内存(每个内存类别当前使用多少内存)"></a>1.1.2 计算内存(每个内存类别当前使用多少内存)</h3><p><img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/20200414112438.png" alt=""></p>
 <p>内存计数中的类别如下：</p>
 <ul>
 <li><p><strong>Java</strong>：从 <code>Java</code> 或 <code>Kotlin</code> 代码分配的对象的内存。</p>
@@ -190,7 +252,7 @@ function activateLightMode(){
 <p><strong>注意：</strong>高级分析配置会使编译过程变慢，所以仅在想要开始分析应用时，才应启用该配置。</p>
 <h3 id="1-1-3-查看内存分配-分配的对象数"><a href="#1-1-3-查看内存分配-分配的对象数" class="headerlink" title="1.1.3 查看内存分配(分配的对象数)"></a>1.1.3 查看内存分配(分配的对象数)</h3><p>对于 <code>Android 8.0</code> 及更高版本，选择一个现有时间轴区域以查看对象分配</p>
 <p>对于 <code>Android 7.1</code> 及更低版本，必须明确记录内存分配，点击 <code>Memory Profiler</code> 工具栏中的 <code>Record memory allocations</code> 图标或者 一个 <code>Record</code> 的按钮。记录时，<code>Memory Profiler</code> 会跟踪应用中发生的所有分配。完成后，请点击 <code>Stop recording</code> 图标或者一个 <code>Stop</code> 的按钮，查看分配。</p>
-<p><strong>注意</strong>：在 <code>Android 7.1</code> 及更低版本上，最多可以记录 <code>65535</code> 个分配。 如果记录会话超出此限制，则记录中仅保存最新的 <code>65535</code> 个分配。（在 <code>Android 8.0</code> 及更高版本上，则没有实际的限制。）<br><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/20200414135710.png" alt=""></p>
+<p><strong>注意</strong>：在 <code>Android 7.1</code> 及更低版本上，最多可以记录 <code>65535</code> 个分配。 如果记录会话超出此限制，则记录中仅保存最新的 <code>65535</code> 个分配。（在 <code>Android 8.0</code> 及更高版本上，则没有实际的限制。）<br><img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/20200414135710.png" alt=""></p>
 <ol>
 <li>浏览列表以查找堆计数异常大且可能存在泄露的对象。为帮助查找已知类，点击 <code>Class Name</code> 列标题以按字母顺序排序。然后，点击一个类名称。此时右侧将出现 <code>Instance View</code> 窗格，显示该类的每个实例。</li>
 <li>在 <code>Instance View</code> 窗格中，点击一个实例。此时下方将出现 <code>Call Stack</code> 标签页，显示该实例被分配到何处以及在哪个线程中。</li>
@@ -216,8 +278,8 @@ function activateLightMode(){
 <li><strong>Sampled</strong>：定期对内存中的对象分配进行采样。这是默认选项，在分析时对应用性能的影响较小。在短时间内分配大量对象的应用仍可能会表现出明显的速度减慢。</li>
 <li><strong>Off</strong>：停止跟踪应用的内存分配。</li>
 </ul>
-<h3 id="1-1-5-捕获堆转储"><a href="#1-1-5-捕获堆转储" class="headerlink" title="1.1.5 捕获堆转储"></a>1.1.5 捕获堆转储</h3><p>堆转储显示在捕获堆转储时应用中哪些对象正在使用内存。特别是在长时间的用户会话后，堆转储会显示认为不应再位于内存中却仍在内存中的对象，从而帮助识别内存泄露。<br><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/20200414161957.png" alt=""></p>
-<p>要捕获堆转储，请点击 Memory Profiler 工具栏中的 <strong>Dump Java heap</strong> 图标 <img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://developer.android.google.cn/studio/images/buttons/profiler-heap-dump.png" style="zoom:70%">  在转储堆期间，Java 内存量可能会暂时增加。 这很正常，因为堆转储与您的应用发生在同一进程中，并需要一些内存来收集数据。</p>
+<h3 id="1-1-5-捕获堆转储"><a href="#1-1-5-捕获堆转储" class="headerlink" title="1.1.5 捕获堆转储"></a>1.1.5 捕获堆转储</h3><p>堆转储显示在捕获堆转储时应用中哪些对象正在使用内存。特别是在长时间的用户会话后，堆转储会显示认为不应再位于内存中却仍在内存中的对象，从而帮助识别内存泄露。<br><img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/20200414161957.png" alt=""></p>
+<p>要捕获堆转储，请点击 Memory Profiler 工具栏中的 <strong>Dump Java heap</strong> 图标 <img src= "/img/loading.gif" data-lazy-src="https://developer.android.google.cn/studio/images/buttons/profiler-heap-dump.png" style="zoom:70%">  在转储堆期间，Java 内存量可能会暂时增加。 这很正常，因为堆转储与您的应用发生在同一进程中，并需要一些内存来收集数据。</p>
 <ul>
 <li><p><strong>Allocations</strong>：堆中的分配数。</p>
 </li>
@@ -238,13 +300,13 @@ function activateLightMode(){
 </ul>
 <p>如果你 <code>ClassName</code> 选中的是 <code>Bitmap</code> ,在 <code>7.1</code> 及以下版本的设备中 <code>Call Sack</code>位置会出现 <code>Bitmap Preview</code> 功能，来预览是哪张图片</p>
 <p><code>References</code> 标签页，显示对该对象的每个引用，如果发现某个引用可能在泄露内存，右键点击它并选择 <code>Go to Instance</code>。这样会从堆转储中选择相应的实例，从而显示它自己的实例数据。</p>
-<h3 id="1-1-6-将堆转储另存为-HPROF-文件"><a href="#1-1-6-将堆转储另存为-HPROF-文件" class="headerlink" title="1.1.6 将堆转储另存为 HPROF 文件"></a>1.1.6 将堆转储另存为 HPROF 文件</h3><p>在 Android Studio 3.1 及更低版本中，<code>Export capture to file</code> 按钮 <img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://developer.android.google.cn/studio/images/buttons/profiler-export-hprof.png" alt="img"> 位于时间轴下方工具栏的左侧</p>
+<h3 id="1-1-6-将堆转储另存为-HPROF-文件"><a href="#1-1-6-将堆转储另存为-HPROF-文件" class="headerlink" title="1.1.6 将堆转储另存为 HPROF 文件"></a>1.1.6 将堆转储另存为 HPROF 文件</h3><p>在 Android Studio 3.1 及更低版本中，<code>Export capture to file</code> 按钮 <img src= "/img/loading.gif" data-lazy-src="https://developer.android.google.cn/studio/images/buttons/profiler-export-hprof.png" alt="img"> 位于时间轴下方工具栏的左侧</p>
 <p>在 Android Studio 3.2 及更高版本中，<code>Sessions</code> 窗格中每个 <code>Heap Dump</code>条目的右侧都有一个 <code>Export Heap Dump</code> 按钮。在随即显示的 <code>Export As</code> 对话框中，使用 <code>.hprof</code>  文件扩展名保存文件。</p>
 <hr>
 <h1 id="2-什么是-MAT"><a href="#2-什么是-MAT" class="headerlink" title="2 什么是 MAT?"></a>2 什么是 MAT?</h1><p>对于内存泄漏问题，Memory Profiler 只能给我们提供一个简单的分析，不能够帮我们确认具体发生问题的地方。</p>
 <p>而 MAT 就可以帮我们做到这一点，MAT 的全称是 Memory Analyzer Tool，它是一款功能强大的 Java 堆内存分析工具，可以用于查找内存泄漏以及查看内存消耗情况。</p>
 <h2 id="2-1-使用前提"><a href="#2-1-使用前提" class="headerlink" title="2.1 使用前提"></a>2.1 使用前提</h2><ol>
-<li><p>到 MAT 的官网 <a href="https://www.eclipse.org/mat/downloads.php" target="_blank" rel="noopener">下载 MAT</a>。</p>
+<li><p>到 MAT 的官网 <a target="_blank" rel="noopener" href="https://www.eclipse.org/mat/downloads.php">下载 MAT</a>。</p>
 </li>
 <li><p>使用 <code>Memory Profiler</code> 的堆转储功能，导出 <code>hprof（Heap Profile）</code>文件。</p>
 </li>
@@ -259,7 +321,7 @@ function activateLightMode(){
 <li>打开 MAT</li>
 </ol>
 <p><code>File &gt; open Heap dump</code> ，选择我们转换后的文件</p>
-<h2 id="2-2-使用介绍"><a href="#2-2-使用介绍" class="headerlink" title="2.2 使用介绍"></a>2.2 使用介绍</h2><p><img src= data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs= data-src="https://gitee.com/CalmCenter/Pic/raw/master/20200414173426.png" alt=""></p>
+<h2 id="2-2-使用介绍"><a href="#2-2-使用介绍" class="headerlink" title="2.2 使用介绍"></a>2.2 使用介绍</h2><p><img src= "/img/loading.gif" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/20200414173426.png" alt=""></p>
 <ul>
 <li><p><strong>Overview</strong>：概览信息</p>
 <ul>
@@ -306,7 +368,7 @@ function activateLightMode(){
 </ul>
 <hr>
 <h1 id="3-什么是-LeakCanary？"><a href="#3-什么是-LeakCanary？" class="headerlink" title="3 什么是 LeakCanary？"></a>3 什么是 LeakCanary？</h1><p>如果使用 MAT 来分析内存问题，会有一些难度，而且效率也不是很高。</p>
-<p>为了能迅速发现内存泄漏，Square 公司基于 MAT 开源了 <a href="https://square.github.io/leakcanary" target="_blank" rel="noopener">LeakCanary</a>。</p>
+<p>为了能迅速发现内存泄漏，Square 公司基于 MAT 开源了 <a target="_blank" rel="noopener" href="https://square.github.io/leakcanary">LeakCanary</a>。</p>
 <p><code>LeakCanary</code> 是一个内存泄漏检测框架。</p>
 <h2 id="3-1-LeakCanary-原理"><a href="#3-1-LeakCanary-原理" class="headerlink" title="3.1 LeakCanary 原理"></a>3.1 LeakCanary 原理</h2><ol>
 <li><p><strong>检测保留的实例</strong></p>
@@ -320,23 +382,23 @@ function activateLightMode(){
 <p>当应用程序可见时，默认的阈值是5个被保留的对象，当应用程序不可见时，默认的阈值是 1 个被保留的对象。如果您看到保留的对象通知，然后将应用程序放在后台(例如通过按Home按钮)，那么阈值将从 5 更改为 1 ，<code>LeakCanary</code> 将在 5 秒内转储堆。点击通知将迫使<code>LeakCanary</code> 立即转储堆。</p>
 </li>
 <li><p><strong>分析堆</strong></p>
-<p><code>LeakCanary</code>  <code>.hprof</code>使用 <a href="https://square.github.io/leakcanary/shark/" target="_blank" rel="noopener">Shark</a> 解析文件，并在该堆转储中找到保留的对象。</p>
+<p><code>LeakCanary</code>  <code>.hprof</code>使用 <a target="_blank" rel="noopener" href="https://square.github.io/leakcanary/shark/">Shark</a> 解析文件，并在该堆转储中找到保留的对象。</p>
 <p>对于每个保留的对象，<code>LeakCanary</code> 会找到引用的路径，以防止对该保留的对象进行垃圾回收：其<strong>泄漏跟踪</strong>。泄漏跟踪是<em>从垃圾回收根到保留对象</em>的<em>最佳强引用路径的</em>另一个名称。</p>
 </li>
 <li><p><strong>泄漏分组</strong></p>
 <p>当有两个泄漏分析结果相同时，<code>LeakCanary</code> <strong>为每个泄漏跟踪</strong>创建一个<strong>签名</strong>，并将具有相同签名的泄漏（即，由同一 <code>bug</code> 引起的泄漏）组合在一起，以免重复显示同样的泄漏信息。</p>
 </li>
 </ol>
-<h2 id="3-2-LeakCanary-使用"><a href="#3-2-LeakCanary-使用" class="headerlink" title="3.2 LeakCanary 使用"></a>3.2 LeakCanary 使用</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">  debugImplementation <span class="string">'com.squareup.leakcanary:leakcanary-android:2.2'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-2-LeakCanary-使用"><a href="#3-2-LeakCanary-使用" class="headerlink" title="3.2 LeakCanary 使用"></a>3.2 LeakCanary 使用</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">  debugImplementation <span class="string">&#x27;com.squareup.leakcanary:leakcanary-android:2.2&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><code>2.2</code> 不需要初始化，如果你添加了</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">'android-aspectjx'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="attr">plugin:</span> <span class="string">&#x27;android-aspectjx&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <p>需要在文章添加</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aspectjx &#123; </span><br><span class="line">    exclude <span class="string">'com.squareup'</span> </span><br><span class="line">    exclude <span class="string">'leakcanary'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aspectjx &#123; </span><br><span class="line">    exclude <span class="string">&#x27;com.squareup&#x27;</span> </span><br><span class="line">    exclude <span class="string">&#x27;leakcanary&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>否则会报 <code>Unable to get provider leakcanary.internal.LeakCanaryFileProvider: java.lang.ClassNotFoundException: Didn&#39;t find class &quot;leakcanary.internal.LeakCanaryFileProvider&quot;</code></p>
-<h1 id="4-自定义实现-Demo"><a href="#4-自定义实现-Demo" class="headerlink" title="4 自定义实现 Demo"></a>4 自定义实现 Demo</h1><p><code>Profiler</code> 中使用了 <code>Allocation Tracker</code> 技术，<a href="https://mp.weixin.qq.com/s/b_lFfL1mDrNVKj_VAcA2ZA?" target="_blank" rel="noopener">Android内存申请分析</a> 这篇文章讲述了 <code>Allocation Tracker</code> 的使用方式，并且讲解了 <code>Android Studio</code> 是如何使用 <code>Allocation Tracker</code> 的。可以让我们更加熟悉 <code>Android Studio</code> 中 <code>Profiler</code> 各种工具的实现原理后。</p>
+<h1 id="4-自定义实现-Demo"><a href="#4-自定义实现-Demo" class="headerlink" title="4 自定义实现 Demo"></a>4 自定义实现 Demo</h1><p><code>Profiler</code> 中使用了 <code>Allocation Tracker</code> 技术，<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/b_lFfL1mDrNVKj_VAcA2ZA?">Android内存申请分析</a> 这篇文章讲述了 <code>Allocation Tracker</code> 的使用方式，并且讲解了 <code>Android Studio</code> 是如何使用 <code>Allocation Tracker</code> 的。可以让我们更加熟悉 <code>Android Studio</code> 中 <code>Profiler</code> 各种工具的实现原理后。</p>
 <p>文中提到了 <code>Allocation Tracker</code> 的三个缺点。</p>
 <ul>
 <li>获取的信息过于分散，中间夹杂着不少其他的信息，很多信息不是应用申请的，可能需要进行不少查找才能定位到具体的问题。</li>
@@ -345,15 +407,15 @@ function activateLightMode(){
 </ul>
 <p>因此我们希望可以做到脱离 <code>Android Studio</code>，实现一个自定义的 <code>Allocation Tracker</code>，实现对象内存的自动化分析。通过这个工具可以获取所有对象的申请信息（大小、类型、堆栈等），可以找到一段时间内哪些对象占用了大量的内存。</p>
 <p>我们可以用自定义的 <code>Allocation Tracker</code> 来监控 Java 内存的监控，也可以拓展成实时监控 <code>Java</code> 内存泄漏。不过任何一个工具如果只需要做到线下自动化测试，实现起来会相对简单，但想要移植到线上使用，那就要更加关注兼容性、稳定性和性能。</p>
-<h2 id="4-1-自动化检测Demo"><a href="#4-1-自动化检测Demo" class="headerlink" title="4.1 自动化检测Demo"></a>4.1 自动化检测Demo</h2><p>这是一个自定义 <code>Allocation Tracker</code> 的 <code>Demo</code> <a href="https://github.com/AndroidAdvanceWithGeektime/Chapter03" target="_blank" rel="noopener">极客时间 Android 高手课 Chapter03</a></p>
+<h2 id="4-1-自动化检测Demo"><a href="#4-1-自动化检测Demo" class="headerlink" title="4.1 自动化检测Demo"></a>4.1 自动化检测Demo</h2><p>这是一个自定义 <code>Allocation Tracker</code> 的 <code>Demo</code> <a target="_blank" rel="noopener" href="https://github.com/AndroidAdvanceWithGeektime/Chapter03">极客时间 Android 高手课 Chapter03</a></p>
 <blockquote>
 <p>项目使用了 inline hook 来拦截内存对象分配时候的 RecordAllocation 函数，通过拦截该接口可以快速获取到当时分配对象的类名和分配的内存大小。<br>在初始化的时候我们设置了一个分配对象数量的最大值，如果从 start 开始对象分配数量超过最大值就会触发内存 dump，然后清空 alloc 对象列表，重新计算。该功能和 Android Studio 里的 Allocation Tracker 类似，只不过可以在代码级别更细粒度的进行控制。可以精确到方法级别。</p>
 </blockquote>
 <ul>
 <li><code>ndk_dlopen</code> 用来获取动态链接库</li>
 <li><code>ndk_dlsym</code> 通过动态链接库和函数签名拿到函数地址</li>
-<li><code>Substrate</code> <a href="http://www.cydiasubstrate.com/api/c/MSHookFunction/" target="_blank" rel="noopener">MSHookFunction</a>  一款经典的 <code>hook</code> 框架，支持 <code>hook C/C++</code> 代码 </li>
-<li><a href="https://github.com/facebookincubator/profilo/tree/master/deps/fbjni" target="_blank" rel="noopener">fbjni</a> 是从 <code>Facebook</code> 开源的一款jni工具类库，主要提供了工具类，ref utils ，Global JniEnv。</li>
+<li><code>Substrate</code> <a target="_blank" rel="noopener" href="http://www.cydiasubstrate.com/api/c/MSHookFunction/">MSHookFunction</a>  一款经典的 <code>hook</code> 框架，支持 <code>hook C/C++</code> 代码 </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/facebookincubator/profilo/tree/master/deps/fbjni">fbjni</a> 是从 <code>Facebook</code> 开源的一款jni工具类库，主要提供了工具类，ref utils ，Global JniEnv。</li>
 <li><code>native-lib</code> 中 <code>JNI_OnLoad</code>  在 <code>System.loadLibrary(&quot;xxx&quot;);</code> 时执行</li>
 </ul>
 <p>代码运行流程：</p>
@@ -372,11 +434,11 @@ function activateLightMode(){
 <p><code>Logcat</code> 中 <code>saveARTAllocationData write file to XXXX</code> 能找到对应的日志文件路径</p>
 <p>看不到日志的输出情况，每个人设备内存情况不一样，<code>GC</code> 回收的频率也不一致，在你不停生产对象的时候，<code>GC</code> 不断的跟随回收，导致无法达到设置的最大的数据量，所以一直没有日志的写入。</p>
 <p><strong>总结：</strong></p>
-<p>这个 <code>Demo</code>  主要学习了 <code>Substrate</code> <a href="https://github.com/facebookincubator/profilo/tree/master/deps/fbjni" target="_blank" rel="noopener">fbjni</a> <code>ndk_dlopen</code> 这几个库的简单使用，<code>CmakeList</code>  的很多写法，以及 <code>native</code> 函数简写</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> JNI_METHOD_DECL(ret_type, method_name) \</span></span><br><span class="line">     <span class="keyword">extern</span> <span class="string">"C"</span> JNIEXPORT ret_type JNICALL Java_##com_dodola_alloctrack##_##AllocTracker##_##method_name</span><br></pre></td></tr></table></figure>
+<p>这个 <code>Demo</code>  主要学习了 <code>Substrate</code> <a target="_blank" rel="noopener" href="https://github.com/facebookincubator/profilo/tree/master/deps/fbjni">fbjni</a> <code>ndk_dlopen</code> 这几个库的简单使用，<code>CmakeList</code>  的很多写法，以及 <code>native</code> 函数简写</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> JNI_METHOD_DECL(ret_type, method_name) \</span></span><br><span class="line">     <span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> JNIEXPORT ret_type JNICALL Java_##com_dodola_alloctrack##_##AllocTracker##_##method_name</span><br></pre></td></tr></table></figure>
 
 <p>还了解了一些 <code>hook</code> 点以及 <code>hook</code> 方法。</p>
-<h2 id="4-2-重复图片检测Demo"><a href="#4-2-重复图片检测Demo" class="headerlink" title="4.2 重复图片检测Demo"></a>4.2 重复图片检测Demo</h2><p><a href="https://github.com/simplezhli/Chapter04" target="_blank" rel="noopener">极客时间 Android 高手课 Chapter04</a> 已完成的 <code>Demo</code> </p>
+<h2 id="4-2-重复图片检测Demo"><a href="#4-2-重复图片检测Demo" class="headerlink" title="4.2 重复图片检测Demo"></a>4.2 重复图片检测Demo</h2><p><a target="_blank" rel="noopener" href="https://github.com/simplezhli/Chapter04">极客时间 Android 高手课 Chapter04</a> 已完成的 <code>Demo</code> </p>
 <blockquote>
 <p>通过分析内存文件 hprof 快速判断内存中是否存在重复的图片，并且将这些重复图片的 PNG 、堆栈等信息输出。</p>
 <p><strong>需要注意的是需要使用8.0以下的机器，因为8.0以后Bitmap中的buffer已经放到native内存中了</strong></p>
@@ -387,19 +449,19 @@ function activateLightMode(){
 <p>然后手动 <code>GC</code> 生成 <code>hprof</code> 文件</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 手动触发GC</span></span><br><span class="line">Runtime.getRuntime().gc();</span><br><span class="line">System.runFinalization();</span><br><span class="line"><span class="comment">// 生成Hprof文件</span></span><br><span class="line">Debug.dumpHprofData(file.getAbsolutePath());</span><br></pre></td></tr></table></figure>
 
-<p>接下来在<code>DuplicatedBitmapAnalyzer</code> 的一个 <code>java</code> 项目里，利用 <a href="https://github.com/square/haha" target="_blank" rel="noopener">HAHA</a> 库进行文件分析，并输入重复图片。</p>
+<p>接下来在<code>DuplicatedBitmapAnalyzer</code> 的一个 <code>java</code> 项目里，利用 <a target="_blank" rel="noopener" href="https://github.com/square/haha">HAHA</a> 库进行文件分析，并输入重复图片。</p>
 <p>作者已经将代码打成 <code>JAR</code> 包，可以直接调用</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar tools&#x2F;DuplicatedBitmapAnalyzer-1.0.jar hprof文件路径</span><br></pre></td></tr></table></figure>
 
-<p>对于更多的信息，可以参看 <a href="https://github.com/square/leakcanary" target="_blank" rel="noopener">LeakCanary</a> 源码</p>
+<p>对于更多的信息，可以参看 <a target="_blank" rel="noopener" href="https://github.com/square/leakcanary">LeakCanary</a> 源码</p>
 <p><strong>总结：</strong></p>
-<p>这个 <code>Demo</code> 主要学到了如何主动生成 <code>hprof</code> 文件，以及如何用 <a href="https://github.com/square/haha" target="_blank" rel="noopener">HAHA</a> 这个库解析 <code>hprof</code> 文件。</p>
+<p>这个 <code>Demo</code> 主要学到了如何主动生成 <code>hprof</code> 文件，以及如何用 <a target="_blank" rel="noopener" href="https://github.com/square/haha">HAHA</a> 这个库解析 <code>hprof</code> 文件。</p>
 <p>联想：可以在特定场合去 <code>dump</code> 文件，比如内存大于最大内存 80%，因为 <code>hprof</code> 文件可能会很大，所以在用户 <code>wifi</code> 情况下回传。</p>
-<p><a href="https://github.com/Tencent/matrix#matrix_android_cn" target="_blank" rel="noopener">Tencent/matrix</a> 这个框架拥有更丰富的检测方式。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Tencent/matrix#matrix_android_cn">Tencent/matrix</a> 这个框架拥有更丰富的检测方式。</p>
 <hr>
 <h1 id="5-优化思路"><a href="#5-优化思路" class="headerlink" title="5 优化思路"></a>5 优化思路</h1><h2 id="5-1-设备分级"><a href="#5-1-设备分级" class="headerlink" title="5.1 设备分级"></a>5.1 设备分级</h2><p>内存优化首先需要根据设备环境来综合考虑</p>
 <ul>
-<li><strong>设备分级</strong>。使用类似 <a href="http://github.com/facebook/device-year-class" target="_blank" rel="noopener">device-year-class</a> 的策略对设备分级，对于低端机用户可以关闭复杂的动画，或者是某些功能；使用 565 格式的图片，使用更小的缓存内存等。<ul>
+<li><strong>设备分级</strong>。使用类似 <a target="_blank" rel="noopener" href="http://github.com/facebook/device-year-class">device-year-class</a> 的策略对设备分级，对于低端机用户可以关闭复杂的动画，或者是某些功能；使用 565 格式的图片，使用更小的缓存内存等。<ul>
 <li><code>device-year-class</code> 会根据手机的内存、CPU 核心数和频率等信息决定设备属于哪一个年份，这个示例表示对于 2013 年之后的设备可以使用复杂的动画，对于 2010 年之前的低端设备则不添加任何动画。</li>
 <li>565 格式图片：一张图片中每一个像素的大小取决于它的解码选项，而 Android 中能够选择的 Bitmap 解码选项有四种。<ul>
 <li>ARGB_8888 ：ARGB 四个通道的值都是 8 位，加起来 32 位，也就是每个像素占 4 个字节</li>
@@ -457,7 +519,7 @@ function activateLightMode(){
 <h3 id="6-2-4-使用-protobuf-作为序列化数据"><a href="#6-2-4-使用-protobuf-作为序列化数据" class="headerlink" title="6.2.4 使用 protobuf 作为序列化数据"></a>6.2.4 使用 protobuf 作为序列化数据</h3><p><code>Protocol buffers</code> 是 <code>Google</code> 设计的，它可以对结构化的数据序列化，与<code>XML</code> 类似，不过比<code>XML</code> 更小，更快，而且更简单。</p>
 <p>如果你决定使用 <code>protobuf</code> 作为序列化数据格式，那在客户端代码中应该使用轻量级的 <code>protobuf</code>。</p>
 <p>因为一般的 <code>protobuf</code> 会生成冗长的代码，这样会导致内存增加、<code>APK</code> 大小增加，执行速度变慢等问题。</p>
-<p>更多关于 <code>protobuf</code> 的信息可以查看 <a href="https://android.googlesource.com/platform/external/protobuf/+/master/java/README.md#installation-lite-version-with-maven" target="_blank" rel="noopener">protobuf readme</a> 中的 “轻量级版本”  。</p>
+<p>更多关于 <code>protobuf</code> 的信息可以查看 <a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/external/protobuf/+/master/java/README.md#installation-lite-version-with-maven">protobuf readme</a> 中的 “轻量级版本”  。</p>
 <h3 id="6-2-5-Apk-瘦身"><a href="#6-2-5-Apk-瘦身" class="headerlink" title="6.2.5 Apk 瘦身"></a>6.2.5 Apk 瘦身</h3><p>有些资源和第三方库会在我们不知情的情况下大量消耗内存。</p>
 <p><code>Bitmap</code> 大小、资源、动画以及第三方库会影响到 <code>APK</code> 的大小，<code>Android Studio</code> 提供了 <code>R8</code> 和 <code>ProGuard</code> 帮助我们缩小 <code>Apk</code>，去掉不必要的资源。</p>
 <p>如果你使用的 <code>Android Studio</code> 版本是 3.3 以下的，可以使用 <code>ProGuard</code>，3.3 及以上版本的可以使用 <code>R8</code>。</p>
@@ -469,49 +531,36 @@ function activateLightMode(){
 <h3 id="6-2-8-使用-IntDef-和-StringDef-替代枚举类型"><a href="#6-2-8-使用-IntDef-和-StringDef-替代枚举类型" class="headerlink" title="6.2.8 使用  IntDef 和 StringDef 替代枚举类型"></a>6.2.8 使用  IntDef 和 StringDef 替代枚举类型</h3><p>使用枚举类型的 <code>dex size</code> 是普通常量定义的 <code>dex size</code> 的 13 倍以上，同时，运行时的内存分配，一个 <code>enum</code> 值的声明会消耗至少 <code>20 bytes</code> 。</p>
 <p>枚举最大的优点是类型安全，但在Android平台上，枚举的内存开销是直接定义常量的三倍以上。所以Android提供了注解的方式检查类型安全。目前提供了int型和String型两种注解方式：<code>IntDef</code> 和 <code>StringDef</code> ，用来提供编译期的类型检查。</p>
 <p>使用 <code>IntDef</code>和 <code>StringDef</code> 需要在 <code>Gradle</code> 配置中引入相应的依赖包：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">'com.android.support:support-annotations:22.0.0'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">&#x27;com.android.support:support-annotations:22.0.0&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a><strong>感谢</strong></h1><blockquote>
-<p><a href="https://time.geekbang.org/column/article/74044" target="_blank" rel="noopener">极客时间 Android开发高手课</a>  </p>
-<p><a href="https://coding.imooc.com/learn/list/308.html" target="_blank" rel="noopener">慕课 Top团队大牛带你玩转Android性能分析与优化</a></p>
-<p><a href="https://juejin.im/post/5d3ada056fb9a07eb94fd1bc" target="_blank" rel="noopener">探索 Android 内存优化方法</a></p>
-<p><a href="https://juejin.im/post/58b80c3b61ff4b006cd8c33d" target="_blank" rel="noopener">Android 性能优化（四）之内存优化实战</a></p>
-<p><a href="https://square.github.io/leakcanary" target="_blank" rel="noopener">LeakCanary</a></p>
-<p><a href="https://developer.android.google.cn/studio/profile/memory-profiler" target="_blank" rel="noopener">AndroidDeveloper</a> </p>
+<p><a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/74044">极客时间 Android开发高手课</a>  </p>
+<p><a target="_blank" rel="noopener" href="https://coding.imooc.com/learn/list/308.html">慕课 Top团队大牛带你玩转Android性能分析与优化</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5d3ada056fb9a07eb94fd1bc">探索 Android 内存优化方法</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/58b80c3b61ff4b006cd8c33d">Android 性能优化（四）之内存优化实战</a></p>
+<p><a target="_blank" rel="noopener" href="https://square.github.io/leakcanary">LeakCanary</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/studio/profile/memory-profiler">AndroidDeveloper</a> </p>
 </blockquote>
-</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">CalmCenter</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://calmcenter.club/2020/memory-optimization2.html">https://calmcenter.club/2020/memory-optimization2.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://calmcenter.club" target="_blank">CalmCenter</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></div><div class="post_share"></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/wechat.png" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/alipay.png" alt="支付寶"/><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2020/ui-optimization.html"><img class="prev_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover32.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">App UI优化💦</div></div></a></div><div class="next-post pull_right"><a href="/2020/memory-optimization.html"><img class="next_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover35.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">App 内存知识介绍💦</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2020/ui-optimization.html" title="App UI优化💦"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover32.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-04-15</div><div class="relatedPosts_title">App UI优化💦</div></div></a></div><div class="relatedPosts_item"><a href="/2019/complete-works-of-android-performance.html" title="Android 性能优化篇"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/20200228233120.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-01</div><div class="relatedPosts_title">Android 性能优化篇</div></div></a></div><div class="relatedPosts_item"><a href="/2019/start-optimization.html" title="App 初体验-启动优化💦"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover23.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2019-12-24</div><div class="relatedPosts_title">App 初体验-启动优化💦</div></div></a></div><div class="relatedPosts_item"><a href="/2020/network-optimization.html" title="App 网络优化🌞"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover19.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-20</div><div class="relatedPosts_title">App 网络优化🌞</div></div></a></div><div class="relatedPosts_item"><a href="/2020/power-optimization.html" title="App 电量优化"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover13.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-05-10</div><div class="relatedPosts_title">App 电量优化</div></div></a></div><div class="relatedPosts_item"><a href="/2020/stability-optimization.html" title="稳定性优化"><img class="relatedPosts_cover" data-src="https://gitee.com/CalmCenter/Pic/raw/master/cover26.webp"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2020-06-02</div><div class="relatedPosts_title">稳定性优化</div></div></a></div></div><div class="clear_both"></div></div><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var requestSetting = function (from,set) {
-  var from = from
-  var setting = set.split(',').filter(function(item){
-  return from.indexOf(item) > -1
-  });
-  setting = setting.length == 0 ? from :setting;
-  return setting
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">CalmCenter</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://calmcenter.club/2020/memory-optimization2.html">https://calmcenter.club/2020/memory-optimization2.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://calmcenter.club" target="_blank">CalmCenter</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a><a class="post-meta__tags" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.png" target="_blank"><img class="post-qr-code-img" data-lazy-src="/img/alipay.png" alt="支付寶"/></a><div class="post-qr-code-desc">支付寶</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/ui-optimization.html"><img class="prev-cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover32.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">App UI优化💦</div></div></a></div><div class="next-post pull-right"><a href="/2020/memory-optimization.html"><img class="next-cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover35.webp" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">App 内存知识介绍💦</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/memory-optimization.html" title="App 内存知识介绍💦"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover35.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-02-28</div><div class="title">App 内存知识介绍💦</div></div></a></div><div><a href="/2019/complete-works-of-android-performance.html" title="Android 性能优化篇"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/20200228233120.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-01</div><div class="title">Android 性能优化篇</div></div></a></div><div><a href="/2020/stability-optimization.html" title="稳定性优化"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover26.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-02</div><div class="title">稳定性优化</div></div></a></div><div><a href="/2020/ui-optimization.html" title="App UI优化💦"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover32.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-15</div><div class="title">App UI优化💦</div></div></a></div><div><a href="/2020/hobble-optimization.html" title="App 直观感受-卡顿优化🌈"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover12.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-20</div><div class="title">App 直观感受-卡顿优化🌈</div></div></a></div><div><a href="/2020/network-optimization.html" title="App 网络优化🌞"><img class="cover" data-lazy-src="https://gitee.com/CalmCenter/Pic/raw/master/cover19.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-20</div><div class="title">App 网络优化🌞</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo"></div></div></div></div></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">CalmCenter</div><div class="author-info__description">目标设置到月球，即使陨落也是在群星之间！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">43</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CalmCenter"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">不要努力成为一个成功的人，而要努力成为一个有价值的人。</div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="card-content"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E4%B8%BB%E8%A6%81%E8%AE%B0%E8%BD%BD"><span class="toc-text">本文主要记载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-Memory-Profiler"><span class="toc-text">1  什么是 Memory Profiler?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D"><span class="toc-text">1.1 使用介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-%E5%90%AF%E7%94%A8%E9%AB%98%E7%BA%A7%E5%88%86%E6%9E%90"><span class="toc-text">1.1.1  启用高级分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-2-%E8%AE%A1%E7%AE%97%E5%86%85%E5%AD%98-%E6%AF%8F%E4%B8%AA%E5%86%85%E5%AD%98%E7%B1%BB%E5%88%AB%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E5%A4%9A%E5%B0%91%E5%86%85%E5%AD%98"><span class="toc-text">1.1.2 计算内存(每个内存类别当前使用多少内存)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-3-%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D-%E5%88%86%E9%85%8D%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%95%B0"><span class="toc-text">1.1.3 查看内存分配(分配的对象数)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-4-%E5%9C%A8%E5%88%86%E6%9E%90%E6%97%B6%E6%8F%90%E9%AB%98%E5%BA%94%E7%94%A8%E6%80%A7%E8%83%BD"><span class="toc-text">1.1.4 在分析时提高应用性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-5-%E6%8D%95%E8%8E%B7%E5%A0%86%E8%BD%AC%E5%82%A8"><span class="toc-text">1.1.5 捕获堆转储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-6-%E5%B0%86%E5%A0%86%E8%BD%AC%E5%82%A8%E5%8F%A6%E5%AD%98%E4%B8%BA-HPROF-%E6%96%87%E4%BB%B6"><span class="toc-text">1.1.6 将堆转储另存为 HPROF 文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF-MAT"><span class="toc-text">2 什么是 MAT?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E4%BD%BF%E7%94%A8%E5%89%8D%E6%8F%90"><span class="toc-text">2.1 使用前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D"><span class="toc-text">2.2 使用介绍</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E4%BB%80%E4%B9%88%E6%98%AF-LeakCanary%EF%BC%9F"><span class="toc-text">3 什么是 LeakCanary？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-LeakCanary-%E5%8E%9F%E7%90%86"><span class="toc-text">3.1 LeakCanary 原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-LeakCanary-%E4%BD%BF%E7%94%A8"><span class="toc-text">3.2 LeakCanary 使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AE%9E%E7%8E%B0-Demo"><span class="toc-text">4 自定义实现 Demo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%A3%80%E6%B5%8BDemo"><span class="toc-text">4.1 自动化检测Demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E9%87%8D%E5%A4%8D%E5%9B%BE%E7%89%87%E6%A3%80%E6%B5%8BDemo"><span class="toc-text">4.2 重复图片检测Demo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF"><span class="toc-text">5 优化思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E8%AE%BE%E5%A4%87%E5%88%86%E7%BA%A7"><span class="toc-text">5.1 设备分级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-Bitmap-%E4%BC%98%E5%8C%96"><span class="toc-text">5.2 Bitmap 优化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E6%9B%B4%E5%A4%9A"><span class="toc-text">6 更多</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E7%9B%91%E5%90%AC%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E7%8A%B6%E6%80%81"><span class="toc-text">6.1 监听系统内存状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-1-ComponentCallback2"><span class="toc-text">6.1.1 ComponentCallback2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-2-ActivityManager-getMemoryInfo"><span class="toc-text">6.1.2 ActivityManager.getMemoryInfo()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7"><span class="toc-text">6.2 内存优化技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-1-%E8%B0%A8%E6%85%8E%E4%BD%BF%E7%94%A8-Service"><span class="toc-text">6.2.1 谨慎使用 Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-2-%E9%80%89%E6%8B%A9%E4%BC%98%E5%8C%96%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8"><span class="toc-text">6.2.2 选择优化后的数据容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-3-%E5%B0%8F%E5%BF%83%E4%BB%A3%E7%A0%81%E6%8A%BD%E8%B1%A1"><span class="toc-text">6.2.3 小心代码抽象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-4-%E4%BD%BF%E7%94%A8-protobuf-%E4%BD%9C%E4%B8%BA%E5%BA%8F%E5%88%97%E5%8C%96%E6%95%B0%E6%8D%AE"><span class="toc-text">6.2.4 使用 protobuf 作为序列化数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-5-Apk-%E7%98%A6%E8%BA%AB"><span class="toc-text">6.2.5 Apk 瘦身</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-6-%E4%BD%BF%E7%94%A8-Dagger2-%E8%BF%9B%E8%A1%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-text">6.2.6 使用 Dagger2 进行依赖注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-7-%E8%B0%A8%E6%85%8E%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="toc-text">6.2.7 谨慎使用第三方库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-8-%E4%BD%BF%E7%94%A8-IntDef-%E5%92%8C-StringDef-%E6%9B%BF%E4%BB%A3%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B"><span class="toc-text">6.2.8 使用  IntDef 和 StringDef 替代枚举类型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%84%9F%E8%B0%A2"><span class="toc-text">感谢</span></a></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>function loadTwikoo () {
+  function init () {
+    twikoo.init({ 
+      envId: 'calm-9gof91dkfcacdb0a' 
+    })
+  }
+
+  if (typeof twikoo.init === 'function') {
+    init()
+  } else {
+    $.getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js', init)
+  }
 }
 
-var guestInfo = requestSetting(['nick','mail','link'],'nick,mail,link')
-var requiredFields = requestSetting(['nick','mail','link'],'nick,mail')
-
-window.valine = new Valine({
-  el:'#vcomment',
-  appId: 'KiQHU70TUHYrumpFuuhC3UEg-gzGzoHsz',
-  appKey: 'wX1m2ATu8q4CyeRhOQ3FUucn',
-  notify: true,
-  verify: true,
-  placeholder: '💦💦既然来了何不留下你的足迹(支持 Markdown 哦~)',
-  avatar: 'robohash',
-  meta: guestInfo,
-  pageSize: '10',
-  lang: 'zh-CN',
-  recordIP: false,
-  serverURLs: '',
-  emojiCDN: '',
-  emojiMaps: "",
-  enableQQ: false,
-  requiredFields: requiredFields
-});</script></div></article></main><footer id="footer" style="background-image: url(https://gitee.com/CalmCenter/Pic/raw/master/cover17.webp)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By CalmCenter</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div></div><div id="landlord"><div class="message" style="opacity:0"></div><canvas class="live2d" id="live2d" width="240" height="250"></canvas><div class="hide-button">隐藏</div></div><script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script><script type="text/javascript">var message_Path = '/live2d/'
-var home_Path = 'https://calmcenter.club/'</script><script type="text/javascript" src="/live2d/js/live2d.js"></script><script type="text/javascript" src="/live2d/js/message.js"></script><script type="text/javascript">loadlive2d("live2d", "/live2d/model/xxb2/model.json");</script><link rel="stylesheet" href="/live2d/css/live2d.css"/></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><a id="to_comment" href="#post-comment" title="直达评论"><i class="scroll_to_comment fa fa-comments">  </i></a><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
- <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script id="ribbon_piao" mobile="true" src="/js/third-party/piao.js"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
-POWERMODE.shake = true;
-document.body.addEventListener('input', POWERMODE);
-</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script><script src="/js/search/local-search.js"></script></body></html>
+if ('Twikoo' === 'Twikoo' || !false) {
+  if (false) btf.loadComment(document.getElementById('twikoo'), loadTwikoo)
+  else loadTwikoo()
+} else {
+  function loadOtherComment () {
+    loadTwikoo()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script></div></body></html>
