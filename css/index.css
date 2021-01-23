@@ -40,7 +40,9 @@ abbr[title] {
 
 b,
 strong {
-  font-weight: bolder
+  font-weight: bolder;
+  color: #333333;
+  font-size: large;
 }
 
 code,
@@ -209,7 +211,6 @@ figure.gallery-group .gallery-group-name {
   -webkit-box-orient: vertical;
 }
 .fontawesomeIcon,
-hr:before,
 #article-container.post-content h1:before,
 #article-container.post-content h2:before,
 #article-container.post-content h3:before,
@@ -1293,7 +1294,7 @@ canvas:not(#ribbon-canvas),
   --preloader-color: #fff;
   --tab-border-color: #f0f0f0;
   --tab-botton-bg: #f0f0f0;
-  --tab-botton-color: #1f2d3d;
+  --tab-botton-color: #353535;
   --tab-button-hover-bg: #dcdcdc;
   --tab-button-active-bg: #fff;
   --card-bg: #fff;
@@ -1304,7 +1305,7 @@ canvas:not(#ribbon-canvas),
   --text-bg-hover: #333;
   --light-grey: #eee;
   --white: #fff;
-  --text-highlight-color: #1f2d3d;
+  --text-highlight-color: #353535;
   --blockquote-color: #6a737d;
   --blockquote-bg: rgba(73,177,245,0.1);
   --reward-pop: #f5f5f5;
@@ -1319,9 +1320,9 @@ body {
   min-height: 100%;
   background: var(--global-bg);
   color: var(--font-color);
-  font-size: 14px;
+  font-size: 16px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  line-height: 2;
+  line-height: 1.8;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 *::-webkit-scrollbar {
@@ -1342,7 +1343,7 @@ input::placeholder {
   z-index: -999;
   width: 100%;
   height: 100%;
-  background: '';
+  background: #f1f1f1;
   background-attachment: local;
   background-position: center;
   -webkit-background-size: cover;
@@ -1378,25 +1379,6 @@ hr {
   position: relative;
   margin: 2rem auto;
   border: 2px dashed var(--hr-border);
-  width: calc(100% - 4px);
-}
-hr:hover:before {
-  left: calc(95% - 20px);
-}
-hr:before {
-  position: absolute;
-  top: -10px;
-  left: 5%;
-  z-index: 1;
-  color: var(--hr-before-color);
-  content: '\f0c4';
-  font-size: 20px;
-  line-height: 1;
-  -webkit-transition: all 1s ease-in-out;
-  -moz-transition: all 1s ease-in-out;
-  -o-transition: all 1s ease-in-out;
-  -ms-transition: all 1s ease-in-out;
-  transition: all 1s ease-in-out;
 }
 .table-wrap {
   overflow-x: scroll;
@@ -1588,7 +1570,9 @@ figure.highlight pre .number,
 figure.highlight pre .formula {
   color: #c3e88d;
 }
-figure.highlight pre .keyword,
+figure.highlight pre .keyword {
+  color: #e784a2;
+}
 figure.highlight pre .title,
 figure.highlight pre .css .hexcolor {
   color: #89ddff;
@@ -1663,7 +1647,7 @@ blockquote footer cite:before {
 }
 #article-container pre,
 #article-container code {
-  font-size: 14px;
+  font-size: 16px;
   font-family: consolas, Menlo, 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
 }
 #article-container code {
@@ -1694,7 +1678,7 @@ blockquote footer cite:before {
 #article-container figure.highlight figcaption,
 #article-container figure.highlight .caption {
   padding: 0.3rem 0 0.1rem 0.7rem;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1em;
 }
 #article-container figure.highlight figcaption a,
@@ -1726,7 +1710,7 @@ blockquote footer cite:before {
   height: 2.15em;
   background: #1c1c1c;
   color: rgba(238,255,255,0.8);
-  font-size: 14px;
+  font-size: 16px;
 }
 #article-container .highlight-tools.closed + table {
   display: none;
@@ -2168,12 +2152,8 @@ blockquote footer cite:before {
     width: calc(100% - 15px) !important;
   }
 }
-.flink#article-container .flink-list > .flink-list-item:hover img {
-  -webkit-transform: rotate(360deg);
-  -moz-transform: rotate(360deg);
-  -o-transform: rotate(360deg);
-  -ms-transform: rotate(360deg);
-  transform: rotate(360deg);
+.flink#article-container .flink-list > .flink-list-item:hover a {
+  color: #fff;
 }
 .flink#article-container .flink-list > .flink-list-item:before {
   position: absolute;
@@ -2258,7 +2238,7 @@ blockquote footer cite:before {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  height: 20em;
+  height: 16em;
   border-radius: 12px 8px 8px 12px;
   background: var(--card-bg);
   -webkit-box-shadow: 0 4px 8px 6px rgba(7,17,27,0.06);
@@ -2590,10 +2570,23 @@ blockquote footer cite:before {
 }
 #aside_content .card-tag-cloud a {
   display: inline-block;
-  padding: 0 0.1rem;
+  padding: 0 0.3rem;
 }
 #aside_content .card-tag-cloud a:hover {
-  color: #333 !important;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  -moz-transition: -moz-transform 0.2s ease-out;
+  -o-transition: -o-transform 0.2s ease-out;
+  -ms-transition: -ms-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -o-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+  border-radius: 8px 8px 8px 8px;
+  padding: 0 0.3rem;
+  background-color: #353535;
+  color: #fff !important;
 }
 #aside_content .aside-list > span {
   display: block;
@@ -2700,8 +2693,9 @@ blockquote footer cite:before {
 }
 #aside_content .card-archives ul.card-archive-list > .card-archive-list-item a:hover,
 #aside_content .card-categories ul.card-category-list > .card-category-list-item a:hover {
+  border-radius: 8px 8px 8px 8px;
   padding: 0.15rem 0.85rem;
-  background-color: var(--text-bg-hover);
+  background-color: #a8a8a2;
 }
 #aside_content .card-archives ul.card-archive-list > .card-archive-list-item a span,
 #aside_content .card-categories ul.card-category-list > .card-category-list-item a span {
@@ -3071,6 +3065,13 @@ blockquote footer cite:before {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
+}
+#footer:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  content: '';
 }
 #footer-wrap {
   position: relative;
